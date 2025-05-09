@@ -15,10 +15,10 @@ A social media web app that allows users to use markdown syntax on posts.
    - Support markdown in posts
    - Load newsfeed
 4. User Interaction System
-  - Add friend
-  - Remove friend
-  - React to posts
-  - Comment on posts
+   - Add friend
+   - Remove friend
+   - React to posts
+   - Comment on posts
 5. Responsive design
 
 ### Requirements:

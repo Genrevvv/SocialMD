@@ -1,7 +1,7 @@
 ## SocialMD
 A social media web app that allows users to use markdown syntax on posts.
 
-### Features (Checklist)
+### Features (Checklist):
 1. Login and Logout
    - Login ✅
    - Logout

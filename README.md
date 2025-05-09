@@ -19,7 +19,7 @@ A social media web app that allows users to use markdown syntax on posts.
    - Remove friend
    - React to posts
    - Comment on posts
-5. Responsive design
+5. Responsive Design
 
 ### Requirements:
 1. PHP

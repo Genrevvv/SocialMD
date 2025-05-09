@@ -7,11 +7,11 @@ A social media web app that allows users to use markdown syntax on posts.
 
 ### How to run:
 1. Navigate to the project directory:
-```bash
-  cd SocialMD
-```
+   ```bash
+   cd SocialMD
+   ```
 2. Start the PHP server:
-   ```bash 
+   ```bash
    php -S localhost:8000
    ```
 3. Open your browser and go to [localhost:8000](http://localhost:8000)

@@ -49,7 +49,7 @@
             exit();
         }
 
-        if (!password_verify($data['password'], $result['password'])) {
+        if (!password_verify($data['password'], $result['password'])) { 
             echo json_encode(['error' => 'Incorrect password']);
             exit();
         }

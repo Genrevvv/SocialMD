@@ -55,6 +55,12 @@
         }
 
         $_SESSION['username'] = $data['username'];
+        echo json_encode(['success' => true, 'username' => $data['username']]);
+    });
+
+    $router->add('/logout', function () {
+        unset($_SESSION['username']);
+        
         echo json_encode(['success' => true]);
     });
 

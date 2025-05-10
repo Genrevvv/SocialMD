@@ -24,7 +24,8 @@ form.addEventListener('submit', (e) => {
                 console.log(data);
                 
                 if (data['success']) {
-                    window.location.href = '/';                    
+                    sessionStorage.setItem('username', data['username']);                
+                    window.location.href = '/';
                 }
             });
     }

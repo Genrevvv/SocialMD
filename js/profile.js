@@ -26,8 +26,7 @@ profile.onclick = (e) => {
 
         profile.appendChild(profileMenu);
 
-        const settings = document.getElementById('settings');
-        settings.onclick = (e) => {
+        document.getElementById('settings').onclick = (e) => {
             e.stopPropagation();
 
             profileMenu.remove();
@@ -43,8 +42,7 @@ profile.onclick = (e) => {
 
             profile.appendChild(settingMenu);
 
-            const deleteAccount = document.getElementById('delete-account');
-            deleteAccount.onclick = (e) => {
+            document.getElementById('delete-account').onclick = (e) => {
                 e.stopPropagation();
 
                 settingMenu.remove();
@@ -64,8 +62,7 @@ profile.onclick = (e) => {
 
                 profile.appendChild(deleteMenu);
 
-                const deleteYes = document.getElementById('delete-yes');
-                deleteYes.onclick = (e) => {
+                document.getElementById('delete-yes').onclick = (e) => {
                     e.stopPropagation();
 
                     fetch('/delete-account')
@@ -78,8 +75,7 @@ profile.onclick = (e) => {
                         });
                     }
                 
-                const deleteNo = document.getElementById('delete-no');
-                deleteNo.onclick = (e) => {
+                document.getElementById('delete-no').onclick = (e) => {
                     e.stopPropagation();
 
                     deleteMenu.remove();
@@ -88,8 +84,7 @@ profile.onclick = (e) => {
             }
         }
 
-        const logout = document.getElementById('logout');
-        logout.onclick = () => {
+        document.getElementById('logout').onclick = () => {
             e.stopPropagation();
 
             fetch('/logout')
@@ -105,16 +100,12 @@ profile.onclick = (e) => {
     else {
         profileMenu.remove();
         profileMenu = null;
-
-        if (settingMenu != null) {
-            settingMenu.remove()
-            settingMenu = null;
-        }
     }
 
     console.log('hi');
 }
 
+// Remove menu when user clicked somewhere else in the DOM
 document.onclick = (e) => {
     if (profile.contains(e.target)) {
         return;

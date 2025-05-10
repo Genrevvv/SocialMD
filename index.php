@@ -45,7 +45,7 @@
 
         $result = $db->get_user_data($data['username']);
         if (isset($result['error'])) {
-            echo json_decode($result);
+            echo json_encode($result);
             exit();
         }
 
@@ -60,8 +60,21 @@
 
     $router->add('/logout', function () {
         unset($_SESSION['username']);
-        
-        echo json_encode(['success' => true]);
+
+        echo json_encode(['success' => true, 'message' => 'logout successful']);
+    });
+
+    $router->add('/delete-account', function () {        
+        $db = new SQLiteDB('socialMD.db');
+        $result = $db->delete_user($_SESSION['username']);
+
+        if ($result == 0) {
+            echo json_encode(['error' => 'Unable to delete user']);
+            exit();
+        }
+
+        unset($_SESSION['username']);
+        echo json_encode(['success' => true, 'message' => 'Account deletion successful']);
     });
 
     $router->dispatch($path);

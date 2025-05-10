@@ -49,5 +49,13 @@
 
             return $result->fetchArray();
         }
+
+        public function delete_user($username) {
+            $stmt = $this->db->prepare('DELETE FROM users WHERE username = :username');
+            $stmt->bindValue(':username', $username);
+            $result = $stmt->execute();
+
+            return $this->db->changes();
+        }
     }
 ?>

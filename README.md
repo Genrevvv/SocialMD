@@ -4,7 +4,7 @@ A social media web app that allows users to use markdown syntax on posts.
 ### Features (Checklist):
 1. Login and Logout
    - Login ✅
-   - Logout
+   - Logout ✅
 2. Account Management System
    - Register ✅
    - Delete account

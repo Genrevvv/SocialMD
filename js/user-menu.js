@@ -7,7 +7,7 @@ profile.onclick = (e) => {
     }
 
     if (menu !== null) {
-                menu.remove();
+        menu.remove();
         menu = null;
     }
 

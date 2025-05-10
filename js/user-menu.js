@@ -1,55 +1,64 @@
+const menuContent = {
+    mainMenu: `<div class="user-info">
+                    <div class="profile-img"></div>
+                    <h1>${sessionStorage.getItem('username')}</h1>
+               </div>
+               <div id="settings" class="menu-option">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="text">Settings</span>
+               </div>
+               <div id="logout" class="menu-option">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="text">Log Out</span>
+               </div>`,
+    settings: `<h2>Settings</h2>
+               <div id="delete-account" class="menu-option">
+                    <i class="fa-solid fa-trash"></i>
+                    <span class="text">Delete Account</span>
+               </div>`,
+    deleteMenu: `<h2>Delete Account</h2>
+                 <div class="content">
+                    <p>Are you sure you want to delete your account?</p>
+                    <div class="delete-option">
+                        <span id="delete-yes" class="option">Yes</span>
+                        <span id="delete-no" class="option">No</span>
+                    </div>
+                 </div>`
+};
+
+let menuDOM = null;
+
 const profile = document.getElementById('profile');
-let menu = null;
 
 profile.onclick = (e) => {
     if (!(e.target.id === 'profile')) {
         return;
     }
 
-    if (menu !== null) {
-        menu.remove();
-        menu = null;
+    if (menuDOM !== null) {
+        menuDOM.remove();
+        menuDOM = null;
+
+        return;
     }
 
-    menu = document.createElement('div');
-    menu.id = 'user-menu';
-    menu.innerHTML = `<div class="user-info">
-                        <div class="profile-img"></div>
-                        <h1>${sessionStorage.getItem('username')}</h1>
-                      </div>
-                      <div id="settings" class="menu-option">
-                        <i class="fa-solid fa-gear"></i>
-                        <span class="text">Settings</span>
-                      </div>
-                      <div id="logout" class="menu-option">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span class="text">Log Out</span>
-                     </div>`;
+    menuDOM = document.createElement('div');
+    menuDOM.id = 'user-menu';
+    menuDOM.innerHTML = menuContent.mainMenu;
 
-    profile.appendChild(menu);
+    profile.appendChild(menuDOM);
 
-    document.getElementById('settings').onclick = (e) => {
+    setOnClickAction('settings', (e) => {
         e.stopPropagation();
 
-        menu.innerHTML = `<h2>Settings</h2>
-                          <div id="delete-account" class="menu-option">
-                            <i class="fa-solid fa-trash"></i>
-                            <span class="text">Delete Account</span>
-                          </div>`;
+        menuDOM.innerHTML = menuContent.settings;
 
-        document.getElementById('delete-account').onclick = (e) => {
+        setOnClickAction('delete-account', (e) => {
             e.stopPropagation();
 
-            menu.innerHTML = `<h2>Delete Account</h2>
-                              <div class="content">
-                                <p>Are you sure you want to delete your account?</p>
-                                <div class="delete-option">
-                                    <span id="delete-yes" class="option">Yes</span>
-                                    <span id="delete-no" class="option">No</span>
-                                </div>
-                             </div>`;
+            menuDOM.innerHTML = menuContent.deleteMenu;
 
-            document.getElementById('delete-yes').onclick = (e) => {
+            setOnClickAction('delete-yes', (e) => {
                 e.stopPropagation();
 
                 fetch('/delete-account')
@@ -60,18 +69,18 @@ profile.onclick = (e) => {
                             window.location.href = '/';
                         }
                     });
-                }
+            });
             
-            document.getElementById('delete-no').onclick = (e) => {
+            setOnClickAction('delete-no', (e) => {
                 e.stopPropagation();
 
-                menu.remove();
-                menu = null;
-            }
-        }
-    }
-
-    document.getElementById('logout').onclick = () => {
+                menuDOM.remove();
+                menuDOM = null;
+            });
+        });
+    });
+    
+    setOnClickAction('logout', (e) => {
         e.stopPropagation();
 
         fetch('/logout')
@@ -82,7 +91,7 @@ profile.onclick = (e) => {
                     window.location.href = '/';
                 }
             });
-    } 
+    });
 }
 
 // Remove menu when user clicked somewhere else in the DOM
@@ -91,8 +100,12 @@ document.onclick = (e) => {
         return;
     }
 
-    if (menu !== null) {
-        menu.remove();
-        menu = null;
+    if (menuDOM !== null) {
+        menuDOM.remove();
+        menuDOM = null;
     }
+}
+
+function setOnClickAction(id, handler) {
+    document.getElementById(id).onclick = handler;
 }

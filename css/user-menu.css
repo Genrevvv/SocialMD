@@ -1,0 +1,101 @@
+#user-menu {
+    background-color: #444;
+    cursor: auto;
+
+    position: absolute;
+    top: 95%;
+    right: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    
+    width: 20rem;
+    padding: 0.5rem;
+
+    border-radius: 1rem;
+}
+
+#user-menu .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+#user-menu .user-info h1 {
+    color: white;
+}
+
+.menu-option {
+    color: #fff;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+
+    cursor: pointer;
+
+    padding: 0.3rem 1rem;
+}
+
+.menu-option .text {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.menu-option:hover {
+    background-color: #7778;
+    border-radius: 1rem;
+}
+
+.menu-option i {
+    background-color: #555;
+    padding: 0.7rem;
+
+    font-size: 1.5rem;
+    border-radius: 50%;
+    
+}
+
+#user-menu h2 {
+    color: #fff;
+    padding: 1rem;
+    margin: 0;
+}
+
+#user-menu .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#user-menu p {
+    color: #fff;
+    width: 90%;
+    font-size: 1.1rem;
+    text-align: center;
+    
+    margin-top: 0;
+}
+
+.delete-option {
+    display: flex;
+    gap: 0.5em;
+}
+
+.delete-option .option {
+    background-color: #777;
+
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+
+    padding: 0.5rem 2rem;
+    border-radius: 1rem;
+}
+
+.delete-option .option:hover {
+    background-color: #555;
+    cursor: pointer;
+}

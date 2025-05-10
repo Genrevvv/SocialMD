@@ -29,16 +29,13 @@ const menuContent = {
 let menuDOM = null;
 
 const profile = document.getElementById('profile');
-
 profile.onclick = (e) => {
     if (!(e.target.id === 'profile')) {
         return;
     }
 
     if (menuDOM !== null) {
-        menuDOM.remove();
-        menuDOM = null;
-
+        removeMenu();
         return;
     }
 
@@ -48,41 +45,40 @@ profile.onclick = (e) => {
 
     profile.appendChild(menuDOM);
 
-    setOnClickAction('settings', (e) => {
+    document.getElementById('settings').onclick = settings;
+}
+
+
+function settings(e) {
+    e.stopPropagation();
+    menuDOM.innerHTML = menuContent.settings;
+
+    // delete-account
+    document.getElementById('delete-account').onclick = (e) => {
         e.stopPropagation();
+        menuDOM.innerHTML = menuContent.deleteMenu;
 
-        menuDOM.innerHTML = menuContent.settings;
-
-        setOnClickAction('delete-account', (e) => {
+        document.getElementById('delete-yes').onclick = (e) => {
             e.stopPropagation();
+            fetch('/delete-account')
+                .then(res => res.json())
+                .then(data => {
+                    if (data['success']) {
+                        sessionStorage.removeItem('username');
+                        window.location.href = '/';
+                    }
+                });
+        }
 
-            menuDOM.innerHTML = menuContent.deleteMenu;
+        document.getElementById('delete-no').onclick = (e) => {
+            e.stopPropagation();
+            removeMenu();
+        }
+    }
 
-            setOnClickAction('delete-yes', (e) => {
-                e.stopPropagation();
-
-                fetch('/delete-account')
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data['success']) {
-                            sessionStorage.removeItem('username');
-                            window.location.href = '/';
-                        }
-                    });
-            });
-            
-            setOnClickAction('delete-no', (e) => {
-                e.stopPropagation();
-
-                menuDOM.remove();
-                menuDOM = null;
-            });
-        });
-    });
-    
-    setOnClickAction('logout', (e) => {
+    // logout
+    document.getElementById('logout').onclick = (e) => {
         e.stopPropagation();
-
         fetch('/logout')
             .then(res => res.json())
             .then(data => {
@@ -91,7 +87,12 @@ profile.onclick = (e) => {
                     window.location.href = '/';
                 }
             });
-    });
+    }
+}
+
+function removeMenu() {
+    menuDOM.remove();
+    menuDOM = null;
 }
 
 // Remove menu when user clicked somewhere else in the DOM
@@ -101,11 +102,6 @@ document.onclick = (e) => {
     }
 
     if (menuDOM !== null) {
-        menuDOM.remove();
-        menuDOM = null;
+        removeMenu();
     }
-}
-
-function setOnClickAction(id, handler) {
-    document.getElementById(id).onclick = handler;
 }

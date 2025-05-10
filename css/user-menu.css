@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     
-    width: 20rem;
+    width: 22rem;
     padding: 0.5rem;
 
     border-radius: 1rem;
@@ -51,11 +51,16 @@
 
 .menu-option i {
     background-color: #555;
-    padding: 0.7rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 3rem;
+    height: 3rem;
 
     font-size: 1.5rem;
     border-radius: 50%;
-    
 }
 
 #user-menu h2 {
@@ -98,4 +103,36 @@
 .delete-option .option:hover {
     background-color: #555;
     cursor: pointer;
+}
+
+#change-username-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    margin-bottom: 0.7rem;
+    width: 75%;
+}
+
+.input .text {
+    color: #fff;
+}
+
+.input input {
+    padding: 0.5rem 0.5rem;
+}
+
+.input button {
+    cursor: pointer;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
 }

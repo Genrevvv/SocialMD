@@ -40,17 +40,12 @@
     $router->add('/login', function () {
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
-
+         
         $db = new SQLiteDB('socialMD.db');
-
-        $result = $db->get_user_data($data['username']);
-        if (isset($result['error'])) {
+        
+        $result = $db->verify_password($data['username'], $data['password']);
+        if (!$result['success']) {
             echo json_encode($result);
-            exit();
-        }
-
-        if (!password_verify($data['password'], $result['password'])) {
-            echo json_encode(['error' => 'Incorrect password']);
             exit();
         }
 
@@ -75,6 +70,33 @@
 
         unset($_SESSION['username']);
         echo json_encode(['success' => true, 'message' => 'Account deletion successful']);
+    });
+
+    $router->add('/change-username', function ()  {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        if ($data['password'] != $data['confirm']) {
+            echo json_encode(['error' => 'Incorrect cofirmation password']);
+            exit();
+        }
+
+        $db = new SQLiteDB('socialMD.db');
+
+        $result = $db->verify_password($_SESSION['username'], $data['password']);
+        if (!$result['success']) {
+            echo json_encode($result);
+            exit();
+        }
+        
+        $result = $db->change_username($_SESSION['username'], $data['username']);
+        if ($result == 0) {
+            echo json_encode(['error' => 'Unable to change username']);
+            exit();
+        }
+
+        $_SESSION['username'] = $data['username'];
+        echo json_encode(['success' => true, 'username' => $data['username']]);
     });
 
     $router->dispatch($path);

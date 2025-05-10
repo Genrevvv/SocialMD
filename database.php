@@ -36,23 +36,37 @@
             return $stmt->execute();
         }
 
-        public function get_user_data($username) {
+        public function verify_password($username, $password) {
             $result = $this->user_exist($username);
 
             if ($result == false) {
-                return ['error' => 'User not found'];
+                return ['success' => false, 'error' => 'User not found'];
             }
 
-            $stmt = $this->db->prepare('SELECT username, password FROM users WHERE username = :username');
+            $stmt = $this->db->prepare('SELECT password FROM users WHERE username = :username');
             $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-            $result = $stmt->execute();
+            $result = $stmt->execute()->fetchArray();
 
-            return $result->fetchArray();
+            if (!password_verify($password, $result['password'])) {
+                echo json_encode(['success' => false, 'error' => 'Incorrect password']);
+                exit();
+            }
+
+            return ['success' => true];
         }
 
         public function delete_user($username) {
             $stmt = $this->db->prepare('DELETE FROM users WHERE username = :username');
             $stmt->bindValue(':username', $username);
+            $result = $stmt->execute();
+
+            return $this->db->changes();
+        }
+
+        public function change_username($old_username, $new_username) {
+            $stmt = $this->db->prepare('UPDATE users SET username = :new_username WHERE username = :old_username');
+            $stmt->bindValue(':new_username', $new_username, SQLITE3_TEXT);
+            $stmt->bindValue(':old_username', $old_username, SQLITE3_TEXT);
             $result = $stmt->execute();
 
             return $this->db->changes();

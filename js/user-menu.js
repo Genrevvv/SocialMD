@@ -12,10 +12,32 @@ const menuContent = {
                     <span class="text">Log Out</span>
                </div>`,
     settings: `<h2>Settings</h2>
+               <div id="change-username" class="menu-option">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <span class="text">Change Username</span>
+               </div>
                <div id="delete-account" class="menu-option">
                     <i class="fa-solid fa-trash"></i>
                     <span class="text">Delete Account</span>
                </div>`,
+    changeMenu: `<h2>Change Username</h2>
+                 <form id="change-username-form">
+                    <div class="input">
+                        <span class="text">New username:</span>
+                        <input id="username" name="username" type="text" placeholder="New username" autofocus>
+                    </div>
+                    <div class="input">
+                        <span class="text">Password:</span>
+                        <input id="password" name="password" type="password" placeholder="Password">
+                    </div>
+                    <div class="input">
+                        <span class="text">Confirm password:</span>
+                        <input id="confirm" name="confirm" type="password" placeholder="Confirm password">
+                    </div>
+                    <div class="input">
+                        <button type="submit">Submit</button>
+                    </div>
+                 </form>`,
     deleteMenu: `<h2>Delete Account</h2>
                  <div class="content">
                     <p>Are you sure you want to delete your account?</p>
@@ -46,12 +68,45 @@ profile.onclick = (e) => {
     profile.appendChild(menuDOM);
 
     document.getElementById('settings').onclick = settings;
+    document.getElementById('logout').onclick = logout;
 }
 
 
 function settings(e) {
     e.stopPropagation();
     menuDOM.innerHTML = menuContent.settings;
+
+    // change-username
+    document.getElementById('change-username').onclick = (e) => {
+        e.stopPropagation();
+        menuDOM.innerHTML = menuContent.changeMenu;
+
+        document.getElementById('change-username-form').onsubmit = (e) => {
+            e.preventDefault();
+
+            const username =  document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
+
+            const data = { username, password, confirm };
+            const options = {
+                method: 'POST',
+                header: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            };
+
+            fetch('/change-username', options)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+
+                    if (data['success']) {
+                        sessionStorage.setItem('username', data['username']);                
+                        window.location.href = '/';
+                    }
+                });
+        }
+    }
 
     // delete-account
     document.getElementById('delete-account').onclick = (e) => {
@@ -75,19 +130,18 @@ function settings(e) {
             removeMenu();
         }
     }
+}
 
-    // logout
-    document.getElementById('logout').onclick = (e) => {
-        e.stopPropagation();
-        fetch('/logout')
-            .then(res => res.json())
-            .then(data => {
-                if (data['success']) {
-                    sessionStorage.removeItem('username');
-                    window.location.href = '/';
-                }
-            });
-    }
+function logout(e) {
+    e.stopPropagation();
+    fetch('/logout')
+        .then(res => res.json())
+        .then(data => {
+            if (data['success']) {
+                sessionStorage.removeItem('username');
+                window.location.href = '/';
+            }
+        });
 }
 
 function removeMenu() {

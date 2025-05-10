@@ -126,3 +126,5 @@ document.onclick = (e) => {
         deleteMenu = null;
     }
 }
+
+// TODO: Refactor profileMenu, settingMenu, and deleteMenu to become a single menu

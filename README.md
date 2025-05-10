@@ -8,6 +8,7 @@ A social media web app that allows users to use markdown syntax on posts.
 2. Account Management System
    - Register ✅
    - Delete account ✅
+   - Change username ✅
 3. Content Management System
    - Create a post
    - Delete post

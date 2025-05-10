@@ -73,9 +73,7 @@ header {
     border-radius: 50%;
 }
 
-#profile-menu, 
-#setting-menu, 
-#delete-menu {
+#user-menu {
     background-color: #444;
     cursor: auto;
 
@@ -92,14 +90,14 @@ header {
     border-radius: 1rem;
 }
 
-#profile-menu .user-info {
+#user-menu .user-info {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 0 1rem;
 }
 
-#profile-menu .user-info h1 {
+#user-menu .user-info h1 {
     color: white;
 }
 
@@ -135,19 +133,19 @@ header {
     
 }
 
-#setting-menu h2, #delete-menu h2 {
+#user-menu h2 {
     color: #fff;
     padding: 1rem;
     margin: 0;
 }
 
-#delete-menu .content {
+#user-menu .content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#delete-menu p {
+#user-menu p {
     color: #fff;
     width: 90%;
     font-size: 1.1rem;

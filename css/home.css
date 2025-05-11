@@ -76,3 +76,19 @@ header {
 
     border-radius: 50%;
 }
+
+#profile #drop-down {
+    background-color: #444;
+
+    position: absolute;
+    top: 60%;
+    right: 1rem;
+    color: #fff;
+    text-align: center;
+
+    width: 1rem;
+    height: 1rem;
+
+    border: 1px solid #000;
+    border-radius: 50%;
+}

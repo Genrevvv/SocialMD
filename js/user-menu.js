@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let menuDOM = null;
 
+const friendsSection = document.getElementById('friends-section');
 const profile = document.getElementById('profile');
 profile.onclick = (e) => {
     if (!(e.target.id === 'profile')) {
@@ -65,6 +66,7 @@ profile.onclick = (e) => {
     menuDOM.id = 'user-menu';
     menuDOM.innerHTML = menuContent.mainMenu;
 
+    friendsSection.style.zIndex = -1;
     profile.appendChild(menuDOM);
 
     document.getElementById('settings').onclick = settings;
@@ -146,6 +148,8 @@ function logout(e) {
 function removeMenu() {
     menuDOM.remove();
     menuDOM = null;
+
+    friendsSection.style.zIndex = 'auto';
 }
 
 // Remove menu when user clicked somewhere else in the DOM

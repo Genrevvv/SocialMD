@@ -177,7 +177,6 @@ main {
 
     position: fixed;
     right: 0;
-    z-index: -1;
 }
 
 #friends-section h1 {

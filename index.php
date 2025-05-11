@@ -83,10 +83,16 @@
             echo json_encode($result);
             exit();
         }
+
+        $result = $db->user_exist($data['username']);
+        if ($result != false) {
+            echo json_encode(['success' => false, 'error' => 'Username already taken']);
+            exit();
+        }
         
         $result = $db->change_username($_SESSION['username'], $data['username']);
         if ($result == 0) {
-            echo json_encode(['error' => 'Unable to change username']);
+            echo json_encode(['success' => fasle, 'error' => 'Unable to change username']);
             exit();
         }
 

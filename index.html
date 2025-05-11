@@ -9,7 +9,7 @@
     <title>SocialMD</title>
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav id="nav-bar">
             <a id="logo" href="/">SocialMD</a>
             <div id="profile" class="profile-img">
@@ -17,12 +17,39 @@
         </div>
         </nav>
     </header>
-    <div id="container">
-        <div id="content">
-            <h1>This is homepage</h1>
-            <button onclick="window.location.href='/html/login.html'">Return</button>
+
+    <main id="main">
+        <div id="side-bar">
+            <div class="user-info">
+                <div class="profile-img"></div>
+                <h2 class="username-text">Username</h2>
+            </div>
+            <h1>(This is your sidebar)</h1>
         </div>
-    </div>
+        
+        <div id="container">
+            <div id="feed">
+                <div id="write-post-container">
+                    <div class="profile-img"></div>
+                    <div id="create-post">
+                        <span>Drop some random thoughts</span>
+                    </div>
+                </div>
+                <h1>This is homepage</h1>
+                <button onclick="window.location.href='/html/login.html'">Return</button>
+            </div>
+        </div>
+
+        <div id="friends-section">
+            <div class="content">
+                <h1>Friends</h1>
+                <div class="friend-list">
+                    <h1>(Your friends will be listed here)</h1>
+                </div>
+            </div>
+        </div>
+    </main>
+    
     <script src="/js/user-menu.js"></script>
 </body>
 </html>

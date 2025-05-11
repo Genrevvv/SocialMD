@@ -2,8 +2,8 @@
     background-color: #444;
     cursor: auto;
 
-    position: absolute;
-    top: 95%;
+    position: fixed;
+    top:7.2%;
     right: 0.5rem;
 
     display: flex;
@@ -13,6 +13,7 @@
     padding: 0.5rem;
 
     border-radius: 1rem;
+    z-index: 1;
 }
 
 #user-menu .user-info {
@@ -24,6 +25,7 @@
 
 #user-menu .user-info h1 {
     color: white;
+    font-size: 1.5rem;
 }
 
 .menu-option {

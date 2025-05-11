@@ -44,6 +44,10 @@ const menuContent = {
                  </div>`
 };
 
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.username-text').innerText = sessionStorage.getItem('username');
+});
+
 let menuDOM = null;
 
 const profile = document.getElementById('profile');
@@ -86,7 +90,7 @@ function settings(e) {
             const data = { username, password };
             const options = {
                 method: 'POST',
-                header: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             };
 
@@ -147,9 +151,8 @@ function removeMenu() {
 // Remove menu when user clicked somewhere else in the DOM
 document.onclick = (e) => {
     if (profile.contains(e.target)) {
-        return;
+       return;
     }
-
     if (menuDOM !== null) {
         removeMenu();
     }

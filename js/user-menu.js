@@ -31,10 +31,6 @@ const menuContent = {
                         <input id="password" name="password" type="password" placeholder="Password">
                     </div>
                     <div class="input">
-                        <span class="text">Confirm password:</span>
-                        <input id="confirm" name="confirm" type="password" placeholder="Confirm password">
-                    </div>
-                    <div class="input">
                         <button type="submit">Submit</button>
                     </div>
                  </form>`,
@@ -86,9 +82,8 @@ function settings(e) {
 
             const username =  document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const confirm = document.getElementById('confirm').value;
 
-            const data = { username, password, confirm };
+            const data = { username, password };
             const options = {
                 method: 'POST',
                 header: { 'Content-Type': 'application/json' },

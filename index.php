@@ -76,11 +76,6 @@
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
 
-        if ($data['password'] != $data['confirm']) {
-            echo json_encode(['error' => 'Incorrect cofirmation password']);
-            exit();
-        }
-
         $db = new SQLiteDB('socialMD.db');
 
         $result = $db->verify_password($_SESSION['username'], $data['password']);

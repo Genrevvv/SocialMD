@@ -65,6 +65,10 @@ header {
 
 #profile, .profile-img {
     background-color: #fff;
+    background-image: url('/media/Nyawi.png');
+    background-position: center;
+    background-size: cover;
+    
     cursor: pointer;
 
     width: 2.8rem;

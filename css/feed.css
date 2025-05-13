@@ -1,0 +1,58 @@
+#feed {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#feed .post {
+    background-color: #333;
+    
+    max-height: 35rem;
+    width: 80%;
+    height: 15rem;
+
+    padding: 1rem;
+
+    border-radius: 1rem;
+    overflow-y: auto;
+}
+
+#feed .post .post-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#feed .post .post-header .profile-img {
+    background-image: url('/media/Nyawi.png');
+    background-position: center;
+    background-size: cover;
+    
+    cursor: pointer;
+
+    width: 2.8rem;
+    height: 2.8rem;
+
+    border-radius: 50%;
+}
+
+#feed .post .post-header .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+#feed .post .user-info .display-username {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#feed .post .user-info .display-date {
+    color: #bbb;
+    font-size: smaller;
+}
+
+#feed .post .hover-date {
+    color: #fff;
+}

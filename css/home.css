@@ -112,8 +112,8 @@ main {
     font-size: 1.2rem;
 }
 
-/* FEED */
-#feed {
+/* MAIN CONTENT */
+#main-content {
     background-color: #222;
 
     width: 60%;
@@ -124,11 +124,11 @@ main {
     align-items: center;
 }
 
-#feed h1 {
+#main-content h1 {
     color: #fff;
 }
 
-#feed button {
+#main-content button {
     padding: 0.7rem 2rem;
 }
 

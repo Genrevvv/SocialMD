@@ -71,5 +71,28 @@
 
             return $this->db->changes();
         }
+
+        public function get_user_id($username) {
+            $stmt = $this->db->prepare('SELECT id from users WHERE username = :username');
+            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+            $result = $stmt->execute();
+
+            return $result->fetchArray();
+        }
+        
+        public function create_post($username, $caption, $date) {
+            $user_id = $this->get_user_id($username);
+            if ($user_id == false) {
+                return 0;
+            } 
+
+            $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
+            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
+            $stmt->bindValue(':date', $date, SQLITE3_TEXT);
+            $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
+            $stmt->execute();
+
+            return $this->db->changes();
+        }
     }
 ?>

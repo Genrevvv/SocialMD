@@ -100,5 +100,28 @@
         echo json_encode(['success' => true, 'username' => $data['username']]);
     });
 
+    $router->add('/create-post', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+        $date = date('Y-m-d');
+
+        $db = new SQLiteDB('socialMD.db');
+
+        date_default_timezone_set('Asia/Manila');
+        $date = [
+            'date-full' => date('Y-m-d'),
+            'date-ui' => date('M j'),
+            'date-time' => date('g:i A')
+        ];
+        $date = json_encode($date);
+
+        $result = $db->create_post($_SESSION['username'], $data['caption'], $date);
+        if ($result == 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to createa post']);
+        }
+
+        echo json_encode(['success' => true, 'date-data' => $date]);
+    });
+
     $router->dispatch($path);
 ?>

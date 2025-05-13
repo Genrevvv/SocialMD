@@ -1,3 +1,5 @@
+import { parse } from '/utils/parse-md/parse-md.js';
+
 const createPost = document.getElementById('create-post');
 
 let writePostUI = null;
@@ -77,8 +79,8 @@ function displayPost(postData, date) {
                                 </div>
                             </div>
                          </div>
-                         <div class="post-content">
-                            ${postData.caption}
+                         <div id="md-output" class="post-content">
+                            ${parse(postData.caption)}
                          </div>`;
 
     document.getElementById('feed').appendChild(newPost);

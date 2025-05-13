@@ -73,7 +73,7 @@ function displayPost(postData, date) {
                             <div class="user-info">
                                 <span class="post-username">${sessionStorage.getItem('username')}</span>
                                 <div class="post-date">${date['date-ui']}
-                                    <span class="hover-date">${date['date-full']}</span>
+                                    <span class="hover-date">${date['date-tooltip']}</span>
                                 </div>
                             <div>
                          </div>

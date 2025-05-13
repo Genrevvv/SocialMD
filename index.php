@@ -109,9 +109,8 @@
 
         date_default_timezone_set('Asia/Manila');
         $date = [
-            'date-full' => date('Y-m-d'),
-            'date-ui' => date('M j'),
-            'date-time' => date('g:i A')
+            'date-ui' => date('M j \a\t g:i A'),
+            'date-tooltip' => date('l, M j, Y \a\t g:i A')
         ];
         $date = json_encode($date);
 

@@ -1,7 +1,10 @@
 #feed {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: 1rem;
 }
 
 #feed .post {
@@ -42,17 +45,43 @@
     gap: 0.2rem;
 }
 
-#feed .post .user-info .display-username {
+#feed .post .post-username {
     color: #fff;
     font-size: 1rem;
     font-weight: bold;
 }
 
-#feed .post .user-info .display-date {
+#feed .post .post-date {
+    width: auto;
+    
+    position: relative;
     color: #bbb;
     font-size: smaller;
 }
 
+#feed .post .post-date:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 #feed .post .hover-date {
-    color: #fff;
+    color: #000;
+    width: 5rem;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0.5rem);
+
+    visibility: hidden;
+}
+
+#feed .post .post-date:hover .hover-date {
+    background-color: #bbb;
+
+    text-align: center;
+
+    padding: 1rem;
+    border-radius: 1rem;
+
+    visibility: visible;
 }

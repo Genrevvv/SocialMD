@@ -71,11 +71,13 @@ function displayPost(postData, date) {
     newPost.innerHTML = `<div class="post-header">
                             <div class="profile-img"></div>
                             <div class="user-info">
-                                <span class="display-username">${sessionStorage.getItem('username')}</span>
-                                <span class="display-date">${date['date-ui']}</span>
-                                <span class="hover-date">${date['date-full']}</span>
+                                <span class="post-username">${sessionStorage.getItem('username')}</span>
+                                <div class="post-date">${date['date-ui']}
+                                    <span class="hover-date">${date['date-full']}</span>
+                                </div>
                             <div>
-                         </div>`;
+                         </div>
+                         <div class="post-content"></div>`;
 
     document.getElementById('feed').appendChild(newPost);
 

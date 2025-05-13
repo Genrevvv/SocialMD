@@ -75,9 +75,11 @@ function displayPost(postData, date) {
                                 <div class="post-date">${date['date-ui']}
                                     <span class="hover-date">${date['date-tooltip']}</span>
                                 </div>
-                            <div>
+                            </div>
                          </div>
-                         <div class="post-content"></div>`;
+                         <div class="post-content">
+                            ${postData.caption}
+                         </div>`;
 
     document.getElementById('feed').appendChild(newPost);
 

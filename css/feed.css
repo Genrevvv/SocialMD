@@ -24,6 +24,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #777;
 }
 
 #feed .post .post-header .profile-img {
@@ -86,4 +89,10 @@
     border-radius: 0.5rem;
 
     visibility: visible;
+}
+
+#feed .post .post-content {
+    color: #eee;
+
+    padding: 1rem;
 }

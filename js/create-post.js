@@ -83,6 +83,6 @@ function displayPost(postData, date) {
                             ${parse(postData.caption)}
                          </div>`;
 
-    document.getElementById('feed').appendChild(newPost);
-
+    const feed = document.getElementById('feed');
+    feed.insertBefore(newPost, feed.firstChild);
 }

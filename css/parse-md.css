@@ -1,6 +1,6 @@
 #md-output > :is(h1, h2, h3, h4, h5, h6) {
     width: 100%;
-    color: #000;
+    color: var(--font-color);
 
     padding: 0;
     margin: 0;
@@ -8,17 +8,24 @@
 
 #md-output > :is(h1, h2) {
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid #777;
+}
+
+#md-output > :is(p) {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0.5rem;
 }
 
 #md-output span:is(.quote) {
-    width: calc(100% - 1.7rem);
+    display: block;
 
     background-color: #eee;
     color: #000;
 
     padding: 0.2rem 0.7rem;
-    border-left: 0.2rem solid #bbb;
+    border-left: 0.4rem solid #bbb;
 }
 
 #md-output span:is(.inline-code) {
@@ -29,16 +36,9 @@
 
 #md-output pre:is(.code-block) {
     background-color: #eee;
-    width: calc(100% - 2rem);
 
     padding: 1rem 1rem;
     border-radius: 0.3rem;
-}
-
-#md-output > :is(p) {
-    width: 100%;
-    padding: 0;
-    margin: 0.5rem;
 }
 
 #md-output > :is(strong, em) {

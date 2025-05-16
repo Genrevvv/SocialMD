@@ -12,7 +12,6 @@
     
     max-height: 35rem;
     width: 60%;
-    height: 15rem;
 
     padding: 1rem;
 
@@ -94,5 +93,5 @@
 #feed .post .post-content {
     color: #eee;
 
-    padding: 1rem;
+    padding: 1rem 0.3rem;
 }

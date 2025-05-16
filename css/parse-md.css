@@ -8,6 +8,7 @@
 
 #md-output > :is(h1, h2) {
     padding-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
     border-bottom: 1px solid #777;
 }
 
@@ -15,7 +16,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
 }
 
 #md-output span:is(.quote) {
@@ -31,8 +32,10 @@
 #md-output span:is(.inline-code) {
     background-color: #eee;
     color: var(--font-color-black);
+    
     padding: 0.1rem 0.4rem;
-    border-radius: 0.3rem;
+    margin-bottom: 0.7rem;
+    border-radius: 0.2rem;
 }
 
 #md-output pre:is(.code-block) {
@@ -40,7 +43,8 @@
     color: var(--font-color-black);
     
     padding: 1rem 0;
-    border-radius: 0.3rem;
+    margin-bottom: 0.7rem;
+    border-radius: 0.2rem;
 }
 
 #md-output > :is(strong, em) {

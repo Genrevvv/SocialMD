@@ -7,7 +7,7 @@
 }
 
 #md-output > :is(h1, h2) {
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.2rem;
     margin-bottom: 0.7rem;
     border-bottom: 1px solid #777;
 }
@@ -26,6 +26,7 @@
     color: var(--font-color-black);
 
     padding: 0.2rem 0.7rem;
+    margin-bottom: 0.7rem;
     border-left: 0.4rem solid #bbb;
 }
 
@@ -49,13 +50,19 @@
 
 #md-output > :is(strong, em) {
     display: inline-block;
+    margin-bottom: 0.7rem;
 }
 
 #md-output a {
     text-decoration: none;
-    color: #00f;
+    color: #3da8ff;
+    margin-bottom: 0.7rem;
 }
 
 #md-output a:hover {
     text-decoration: underline;
+}
+
+#md-output hr {
+    margin-bottom: 2rem;
 }

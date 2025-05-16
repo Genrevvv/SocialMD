@@ -9,20 +9,20 @@ function parse(input) {
         { regex: /^> (.+)$/gm, replace: '<span class="quote">$1</span>' },
         { regex: /^`([^`]+)`$/gm, replace: '<span class="inline-code">$1</span>' },
         { regex: /^```([\s\S]+)```$/gm, replace: '<pre class="code-block">$1</pre>' },
-        { regex: /((?:__|\*\*|\*|_).+?(?:__|\*\*|\*|_))/gm, replace: '<p>$1</p>' },
         { regex: /\[(.+)\]\((.+)\)/gm, replace:'<a href="$2">$1</a>' },
         { regex: /\*\*(.+?)\*\*/gm, replace: '<strong>$1</strong>' },
         { regex: /__(.+?)__/gm, replace: '<strong>$1</strong>' },
         { regex: /\*(.+?)\*/gm, replace: '<em>$1</em>' },
         { regex: /_(.+?)_/gm, replace: '<em>$1</em>' },
+        { regex: /^---$/gm, replace: '<hr>' },
         { regex: /^(?!<(?:.+)>)(.+\n)(?!<(?:.+)>)$/gm, replace: '<p>$1</p>' }
+        
     ];
 
     for (const { regex , replace } of patterns) {
         input = input.replace(regex, replace);
     }
 
-    console.log(input);
     return input;
 }
 

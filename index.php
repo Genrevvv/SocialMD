@@ -114,12 +114,20 @@
         ];
         $date = json_encode($date);
 
-        $result = $db->create_post($_SESSION['username'], $data['caption'], $date);
+        $result = $db->create_post($data['caption'], $date);
         if ($result == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to createa post']);
         }
 
         echo json_encode(['success' => true, 'date-data' => $date]);
+    });
+
+    $router->add('/load-feed', function () {
+        $db = new SQLiteDB('socialMD.db');
+
+        $result = $db->get_feed();
+
+        echo json_encode($result);
     });
 
     $router->dispatch($path);

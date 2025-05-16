@@ -72,27 +72,46 @@
             return $this->db->changes();
         }
 
-        public function get_user_id($username) {
-            $stmt = $this->db->prepare('SELECT id from users WHERE username = :username');
-            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+            public function get_user_id($username) {
+                $stmt = $this->db->prepare('SELECT id FROM users WHERE username = :username');
+                $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+                $result = $stmt->execute();
+
+                return $result->fetchArray();
+            }
+            
+            public function create_post($caption, $date) {
+                $result = $this->get_user_id($_SESSION['username']);
+                if ($result == false) {
+                    return 0;
+                } 
+
+                $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
+                $stmt->bindValue(':user_id', $result['id'], SQLITE3_INTEGER);
+                $stmt->bindValue(':date', $date, SQLITE3_TEXT);
+                $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
+                $stmt->execute();
+
+                return $this->db->changes();
+            }
+
+        public function get_feed() {
+            $stmt = $this->db->prepare('
+                SELECT username, date, caption
+                FROM posts
+                JOIN users ON posts.user_id = users.id
+                WHERE users.username = :username'
+            );
+
+            $stmt->bindValue(':username', $_SESSION['username'], SQLITE3_TEXT);
             $result = $stmt->execute();
 
-            return $result->fetchArray();
-        }
-        
-        public function create_post($username, $caption, $date) {
-            $user_id = $this->get_user_id($username);
-            if ($user_id == false) {
-                return 0;
-            } 
+            $data = [];
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                $data[] = $row;
+            }
 
-            $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
-            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
-            $stmt->bindValue(':date', $date, SQLITE3_TEXT);
-            $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
-            $stmt->execute();
-
-            return $this->db->changes();
+            return $data;
         }
     }
 ?>

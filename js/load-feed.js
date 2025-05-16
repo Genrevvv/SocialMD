@@ -1,4 +1,4 @@
-import { parse } from '/utils/parse-md/parse-md.js';
+import { parse } from './parse-md.js';
 
 const feed = document.getElementById('feed');
 fetch('/load-feed')

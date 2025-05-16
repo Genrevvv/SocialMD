@@ -1,4 +1,4 @@
-import { parse } from '/utils/parse-md/parse-md.js';
+import { parse } from './parse-md.js';
 
 const createPost = document.getElementById('create-post');
 let writePostUI = null;

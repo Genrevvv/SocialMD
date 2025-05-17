@@ -10,11 +10,11 @@ A social media web app that allows users to use markdown syntax on posts.
    - Delete account ✅
    - Change username ✅
 3. Content Management System
-   - Create a post ✅ (Can't add image yet)
-   - Delete post
+   - Create a post ✅ (Can't upload image yet)
+   - Delete post ✅ (No access control yet)
    - Edit post
-   - Support markdown in posts
-   - Load newsfeed ✅ (Currently only load posts by the same user)
+   - Support markdown in posts ✅
+   - Load newsfeed ✅ (Only load user's post for now)
 4. User Interaction System
    - Add friend
    - Remove friend

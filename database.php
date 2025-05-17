@@ -72,32 +72,37 @@
             return $this->db->changes();
         }
 
-            public function get_user_id($username) {
-                $stmt = $this->db->prepare('SELECT id FROM users WHERE username = :username');
-                $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-                $result = $stmt->execute();
+        public function get_user_id($username) {
+            $stmt = $this->db->prepare('SELECT id FROM users WHERE username = :username');
+            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+            $result = $stmt->execute();
 
-                return $result->fetchArray();
+            return $result->fetchArray();
+        }
+        
+        public function create_post($caption, $date) {
+            $result = $this->get_user_id($_SESSION['username']);
+            if ($result == false) {
+                return 0;
+            } 
+
+            $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
+            $stmt->bindValue(':user_id', $result['id'], SQLITE3_INTEGER);
+            $stmt->bindValue(':date', $date, SQLITE3_TEXT);
+            $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
+            $stmt->execute();
+
+            $changes = $this->db->changes();
+            if ($changes == 0) {
+                return ['changes' => $changes];
             }
             
-            public function create_post($caption, $date) {
-                $result = $this->get_user_id($_SESSION['username']);
-                if ($result == false) {
-                    return 0;
-                } 
-
-                $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
-                $stmt->bindValue(':user_id', $result['id'], SQLITE3_INTEGER);
-                $stmt->bindValue(':date', $date, SQLITE3_TEXT);
-                $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
-                $stmt->execute();
-
-                return $this->db->changes();
-            }
+            return ['changes' => $changes, 'post_id' => $this->db->lastInsertRowID()];
+        }
 
         public function get_feed() {
             $stmt = $this->db->prepare('
-                SELECT username, date, caption
+                SELECT posts.id AS post_id, username, date, caption
                 FROM posts
                 JOIN users ON posts.user_id = users.id
                 WHERE users.username = :username'
@@ -112,6 +117,14 @@
             }
 
             return $data;
+        }
+
+        public function delete_post($post_id) {
+            $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :post_id');
+            $stmt->bindValue(':post_id', $post_id);
+            $stmt->execute();
+
+            return $this->db->changes();
         }
     }
 ?>

@@ -1,5 +1,7 @@
 import { parse } from './parse-md.js';
 
+let postMenu = null;
+
 const feed = document.getElementById('feed');
 fetch('/load-feed')
     .then(res => res.json())
@@ -8,16 +10,9 @@ fetch('/load-feed')
             return;
         }
         
-        let date = null;
         for (let postData of data) {
-            date = JSON.parse(postData['date']);
-            console.log(postData['date']);
-            console.log(date);
-            console.log(date['date-ui']);
-            displayPost(postData, date);
+            displayPost(postData, JSON.parse(postData['date']));
         }
-
-        console.table(data);
     });
 
 
@@ -34,6 +29,7 @@ function displayPost(postData, date) {
                                     </div>
                                 </div>
                             </div>
+                            <i class="post-menu-button fa-solid fa-ellipsis"></i>
                          </div>
                          <div id="md-output" class="post-content">
                             ${parse(postData['caption'])}
@@ -41,11 +37,44 @@ function displayPost(postData, date) {
 
     feed.insertBefore(newPost, feed.firstChild);
 
-    const postHeader = newPost.querySelector('.post-header');
-    const postMenu = document.createElement('i');
-    postMenu.classList.add('post-menu', 'fa-solid', 'fa-ellipsis');
+    const postMenuButton = newPost.querySelector('.post-menu-button');    
+    postMenuButton.onclick = () => {
+        if (postMenu !== null) {
+            postMenu.remove();
+            postMenu = null;
+        }
 
-    postHeader.appendChild(postMenu);
+        postMenu = document.createElement('div');
+        postMenu.id = 'post-menu';
+        postMenu.innerHTML = `<div id="delete-post" class="option">
+                                <i class="fa-solid fa-trash"></i>
+                                <span>Delete Post</span>
+                              </div>`;
+
+        const postHeader = newPost.querySelector('.post-header');
+        postHeader.appendChild(postMenu);
+
+        const deletePost = document.getElementById('delete-post');
+        deletePost.onclick = () => {
+            const postID = {
+                post_id: postData['post_id']
+            };
+
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(postID)
+            };
+
+            fetch('/delete-post', options)
+                .then(res => res.json())
+                .then(data => {
+                    if (data['success']) {
+                        newPost.remove();
+                    }
+                });
+        }
+    }
     
     const postContent = newPost.querySelector('.post-content');
 

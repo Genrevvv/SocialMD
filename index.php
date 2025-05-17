@@ -115,11 +115,14 @@
         $date = json_encode($date);
 
         $result = $db->create_post($data['caption'], $date);
-        if ($result == 0) {
+        if ($result['changes'] == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to createa post']);
         }
 
-        echo json_encode(['success' => true, 'date-data' => $date]);
+        $data['date'] = $date;
+        $data['post_id'] = $result['post_id']; 
+
+        echo json_encode(['success' => true, 'post_data' => $data]);
     });
 
     $router->add('/load-feed', function () {
@@ -128,6 +131,20 @@
         $result = $db->get_feed();
 
         echo json_encode($result);
+    });
+
+    $router->add('/delete-post', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
+        $result = $db->delete_post($data['post_id']);
+
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+        }
+
+        echo json_encode(['success' => true]);
     });
 
     $router->dispatch($path);

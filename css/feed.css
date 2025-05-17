@@ -19,6 +19,20 @@
     overflow-y: auto;
 }
 
+#feed .post::-webkit-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #777 #444;
+}
+
+#feed .post::-webkit-scrollbar-track {
+    background-color: #444;
+}
+
+#feed .post::-webkit-scrollbar-thumb {
+    background-color: #777;
+    border-radius: 1rem;
+}
+
 #feed .post .post-header {
     display: flex;
     align-items: center;

@@ -17,6 +17,8 @@
     padding: 0;
     margin: 0;
     margin-bottom: 0.7rem;
+    letter-spacing: 0.5px;
+    line-height: 1.5;
 }
 
 #md-output span:is(.quote) {

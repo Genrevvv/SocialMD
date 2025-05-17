@@ -10,13 +10,12 @@
 #feed .post {
     background-color: #333;
     
-    max-height: 35rem;
     width: 60%;
 
     padding: 1rem;
 
     border-radius: 1rem;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 #feed .post::-webkit-scrollbar {
@@ -106,6 +105,47 @@
 
 #feed .post .post-content {
     color: #eee;
+    max-height: 10rem;
+    
+    position: relative;
 
     padding: 1rem 0.3rem;
+    overflow-y: hidden;
+}
+
+#feed .post .more-button {
+    background: linear-gradient(to top, 
+        #333 0%,
+        #333 40%,
+        #333e 60%,
+        #333d 80%,
+        #333c 100%
+        );
+    color: #999;
+    font-weight: bold;
+
+    width: 99%;
+    height: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+#feed .post .more-button:hover {
+    background: linear-gradient(to top, 
+        #333 0%,
+        #333a 40%,
+        #3339 60%,
+        #3338 80%,
+        #3337 100%
+    );
+
+    color: #fff;
 }

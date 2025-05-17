@@ -38,4 +38,22 @@ function displayPost(postData, date) {
                          </div>`;
 
     feed.insertBefore(newPost, feed.firstChild);
+
+    const postContent = newPost.querySelector('.post-content');
+
+    if (postContent.scrollHeight > postContent.clientHeight) {
+        postContent.classList.add('truncate');
+
+        const more = document.createElement('div');
+        more.classList.add('more-button');
+        more.textContent = '(See more)';
+
+        postContent.appendChild(more);
+
+        more.onclick = () => {
+            postContent.style.maxHeight = 'none';
+            more.remove();
+        }
+    }
+
 }

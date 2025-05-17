@@ -42,7 +42,7 @@ function displayPost(postData, date) {
     const postContent = newPost.querySelector('.post-content');
 
     if (postContent.scrollHeight > postContent.clientHeight) {
-        postContent.classList.add('truncate');
+        postContent.classList.add('truncate'); 
 
         const more = document.createElement('div');
         more.classList.add('more-button');

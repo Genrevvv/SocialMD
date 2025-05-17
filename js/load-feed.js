@@ -25,11 +25,13 @@ function displayPost(postData, date) {
     const newPost = document.createElement('div');
     newPost.classList.add('post');
     newPost.innerHTML = `<div class="post-header">
-                            <div class="profile-img"></div>
                             <div class="user-info">
-                                <span class="post-username">${postData['username']}</span>
-                                <div class="post-date">${date['date-ui']}
-                                    <span class="hover-date">${date['date-tooltip']}</span>
+                                <div class="profile-img"></div>
+                                <div class="post-info">
+                                    <span class="post-username">${postData['username']}</span>
+                                    <div class="post-date">${date['date-ui']}
+                                        <span class="hover-date">${date['date-tooltip']}</span>
+                                    </div>
                                 </div>
                             </div>
                          </div>
@@ -39,6 +41,12 @@ function displayPost(postData, date) {
 
     feed.insertBefore(newPost, feed.firstChild);
 
+    const postHeader = newPost.querySelector('.post-header');
+    const postMenu = document.createElement('i');
+    postMenu.classList.add('post-menu', 'fa-solid', 'fa-ellipsis');
+
+    postHeader.appendChild(postMenu);
+    
     const postContent = newPost.querySelector('.post-content');
 
     if (postContent.scrollHeight > postContent.clientHeight) {

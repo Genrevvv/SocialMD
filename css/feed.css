@@ -18,22 +18,9 @@
     overflow-y: hidden;
 }
 
-#feed .post::-webkit-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #777 #444;
-}
-
-#feed .post::-webkit-scrollbar-track {
-    background-color: #444;
-}
-
-#feed .post::-webkit-scrollbar-thumb {
-    background-color: #777;
-    border-radius: 1rem;
-}
-
 #feed .post .post-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
 
@@ -56,12 +43,12 @@
 
 #feed .post .post-header .user-info {
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 #feed .post .post-username {
-    color: #fff;
+    color: #eee;
     font-size: 1rem;
     font-weight: bold;
 }
@@ -101,6 +88,25 @@
     border-radius: 0.5rem;
 
     visibility: visible;
+}
+
+#feed .post .post-header .post-menu {
+    width: 2rem;
+    height: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ddd;
+    font-size: 1.3rem;
+
+    border-radius: 50%;
+}
+
+#feed .post .post-header .post-menu:hover {
+    background-color: #444;
+    cursor: pointer;
 }
 
 #feed .post .post-content {

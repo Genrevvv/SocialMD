@@ -1,11 +1,22 @@
 let postMenu = null;
+let tempButton = null;
 
 function createPostMenu(postMenuButton, newPost, postData) {
     postMenuButton.onclick = () => {
         if (postMenu !== null) {
+            if (postMenuButton === tempButton) {
+                postMenu.remove();
+                postMenu = null;
+
+                tempButton = null;
+                return;
+            }
+
             postMenu.remove();
             postMenu = null;
         }
+
+        tempButton = postMenuButton;
 
         postMenu = document.createElement('div');
         postMenu.id = 'post-menu';

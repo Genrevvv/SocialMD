@@ -1,4 +1,13 @@
 :root {
-    --font-color-white: #eee;
-    --font-color-black: #000;
+    --bright: #eee;
+    --brightest: #fff;
+
+    --dark: #333;
+    --darker: #222;
+    --darkest: #000;
+
+    --lighter-gray: #999;
+    --light-gray: #777;
+    --gray: #555;
+    --dark-gray: #444;
 }

@@ -1,5 +1,5 @@
 #user-menu {
-    background-color: #444;
+    background-color: var(--dark-gray);
     cursor: auto;
 
     position: fixed;
@@ -24,12 +24,12 @@
 }
 
 #user-menu .user-info h1 {
-    color: white;
+    color: var(--bright);
     font-size: 1.5rem;
 }
 
 .menu-option {
-    color: #fff;
+    color: var(--bright);
 
     display: flex;
     justify-content: left;
@@ -47,12 +47,12 @@
 }
 
 .menu-option:hover {
-    background-color: #7778;
+    background-color: var(--gray)8;
     border-radius: 1rem;
 }
 
 .menu-option i {
-    background-color: #555;
+    background-color: var(--gray);
 
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@
 }
 
 #user-menu h2 {
-    color: #fff;
+    color: var(--bright);
     padding: 1rem;
     margin: 0;
 }
@@ -78,7 +78,7 @@
 }
 
 #user-menu p {
-    color: #fff;
+    color: var(--bright);
     width: 90%;
     font-size: 1.1rem;
     text-align: center;
@@ -92,9 +92,9 @@
 }
 
 .delete-option .option {
-    background-color: #777;
+    background-color: var(--gray);
 
-    color: #fff;
+    color: var(--bright);
     font-size: 1rem;
     font-weight: bold;
 
@@ -103,7 +103,7 @@
 }
 
 .delete-option .option:hover {
-    background-color: #555;
+    background-color: var(--gray);
     cursor: pointer;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .input .text {
-    color: #fff;
+    color: var(--bright);
 }
 
 .input input {

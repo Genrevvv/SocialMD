@@ -1,13 +1,21 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
 :root {
     --bright: #eee;
     --brightest: #fff;
 
     --dark: #333;
     --darker: #222;
+    --very-dark: #111;
     --darkest: #000;
 
     --lighter-gray: #999;
     --light-gray: #777;
     --gray: #555;
     --dark-gray: #444;
+
+    --link: #3da8ff;
 }

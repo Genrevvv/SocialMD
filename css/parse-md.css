@@ -59,7 +59,7 @@
 
 #md-output a {
     text-decoration: none;
-    color: #3da8ff;
+    color: var(--link);
     margin-bottom: 0.7rem;
 }
 

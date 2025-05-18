@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/root.css">
     <link rel="stylesheet" href="/css/auth.css">
-    <title>Login</title>
+    <title>SocialMD - Login</title>
 </head>
 <body>
     <div id="container">
-        <h1>Login</h1>
-        <form id="form">
-            <div class="input">
-                <span>Username</span>
-                <input id="username" type="text" name="username" autofocus>
-            </div>
-            <div class="input">
-                <span>Password</span>
-                <input id="password" type="password" name="password">
-            </div>
-            <div id="submit">
-                <button id="login" type="submit">Login</button>
-            </div>
-        </form>
-        <p>Don't have an account? <a href="/html/register.html">click here</a></p>
+        <div id="header-content">
+            <span>You've drifted to SocialMD</span>
+        </div>
+
+        <div id="form-container">
+            <h1>Login</h1>
+            <form id="form">
+                <div class="input">
+                    <span>Username</span>
+                    <input id="username" type="text" name="username" autofocus>
+                </div>
+                <div class="input">
+                    <span>Password</span>
+                    <input id="password" type="password" name="password">
+                </div>
+                <div id="submit">
+                    <button id="login" type="submit">Login</button>
+                </div>
+            </form>
+            <p>Don't have an account? <a href="/html/register.html">click here</a></p>
+        </div>
     </div>
-    <script src="/js/login.js"></script>
+
+    <script src="/js/login.js"></script>    
 </body>
 </html>

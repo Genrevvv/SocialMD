@@ -130,7 +130,7 @@
 
         $result = $db->get_feed();
 
-        echo json_encode($result);
+        echo json_encode(['result' => $result]);
     });
 
     $router->add('/delete-post', function () {

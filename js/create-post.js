@@ -18,6 +18,10 @@ createPost.onclick = () => {
                                 <div id="post-text" contenteditable="true" autofocus></div>
                                 <div id="placeholder">Drop some random thoughts...</div>
                              </div>
+                             <div id="add-to-your-post">
+                                <h2>Add to your post</h2>
+                                <i class="fa-solid fa-image"></i>
+                             </div>
                              <div id="submit-post">Post</div>`;
         
     document.getElementById('main').appendChild(writePostUI);

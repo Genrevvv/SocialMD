@@ -10,7 +10,7 @@ A social media web app that allows users to use markdown syntax on posts.
    - Delete account ✅
    - Change username ✅
 3. Content Management System
-   - Create a post ✅ (Can't upload image yet)
+   - Create a post ✅ (Images are stored with caption as base64 for now. Not recommended for production.)
    - Delete post ✅ (No access control yet)
    - Edit post
    - Support markdown in posts ✅

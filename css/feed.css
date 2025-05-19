@@ -113,7 +113,7 @@
 
 #feed .post .post-content {
     color: var(--bright);
-    max-height: 10rem;
+    max-height: 10rem; /* ADJUST TO SOMETHING HIGHER LATER*/
     
     position: relative;
 
@@ -162,6 +162,10 @@
     color: var(--bright);
 }
 
+#feed .post img {
+    max-width: 20rem;
+    max-height: 20rem;
+}
 #post-menu {
     background-color: var(--dark-gray);
     width: 10rem;

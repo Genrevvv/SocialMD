@@ -30,20 +30,21 @@ function displayPost(postData) {
     
     const postContent = newPost.querySelector('.post-content');
 
-    if (postContent.scrollHeight > postContent.clientHeight) {
-        postContent.classList.add('truncate'); 
+    setTimeout(() => {
+        if (postContent.scrollHeight > postContent.clientHeight) {
+            const more = document.createElement('div');
+            more.classList.add('more-button');
+            more.textContent = '(See more)';
 
-        const more = document.createElement('div');
-        more.classList.add('more-button');
-        more.textContent = '(See more)';
+            postContent.appendChild(more);
 
-        postContent.appendChild(more);
-
-        more.onclick = () => {
-            postContent.style.maxHeight = 'none';
-            more.remove();
+            more.onclick = () => {
+                postContent.style.maxHeight = 'none';
+                more.remove();
+            }
         }
-    }
+    }, 0); // Delay to allow content rendering
 }
+
 
 export { displayPost };

@@ -147,5 +147,19 @@
         echo json_encode(['success' => true]);
     });
 
+    $router->add('/update-post', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
+        $result = $db->update_post($data['post_id'], $data['caption']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
     $router->dispatch($path);
 ?>

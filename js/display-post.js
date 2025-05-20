@@ -19,7 +19,7 @@ function displayPost(postData) {
                             </div>
                             <i class="post-menu-button fa-solid fa-ellipsis"></i>
                          </div>
-                         <div id="md-output" class="post-content">
+                         <div class="md-output post-content">
                             ${parse(decodeHTML(postData['caption']))}
                          </div>`;
 
@@ -47,9 +47,11 @@ function displayPost(postData) {
 
 // Convert HTML input into string
 function decodeHTML(input) {
+    console.log(input);
     const patterns = [
         { regex: /(?:<div>)?<br>(?:<\/div>)?/gm, replace: '\n' },
         { regex: /<div>([\s\S]+?)<\/div>/gm, replace: '\n$1' },
+        { regex: /<img (.+?)>/gm, replace: '\n<img $1>' },
         { regex: /&lt;/gm, replace: '<' },
         { regex: /&gt;/gm, replace: '>' },
         { regex: /&amp;/gm, replace: '&' },
@@ -67,4 +69,4 @@ function decodeHTML(input) {
     return input;
 }
 
-export { displayPost };
+export { decodeHTML, displayPost };

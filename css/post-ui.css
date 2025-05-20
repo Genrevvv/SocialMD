@@ -73,6 +73,8 @@
 #post-text img {
     max-width: 20rem;
     max-height: 20rem;
+
+    display: block;
 }
 
 #placeholder  {
@@ -85,7 +87,7 @@
     pointer-events: none;
 }
 
-#submit-post {
+#submit-post, #update-post {
     background-color: rgb(49, 87, 255);
 
     width: 90%;

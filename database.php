@@ -126,5 +126,14 @@
 
             return $this->db->changes();
         }
+
+        public function update_post($post_id, $caption) {
+            $stmt = $this->db->prepare('UPDATE posts SET caption = :caption WHERE id = :post_id');
+            $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
+            $stmt->bindValue(':post_id', $post_id, SQLITE3_INTEGER);
+            $stmt->execute();
+
+            return $this->db->changes();
+        }
     }
 ?>

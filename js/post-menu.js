@@ -1,3 +1,5 @@
+import { editPostMenu } from './edit-post.js';
+
 let postMenu = null;
 let tempButton = null;
 
@@ -35,7 +37,7 @@ function createPostMenu(postMenuButton, newPost, postData) {
         // Edit Post
         const editPost = postMenu.querySelector('.edit-post');
         editPost.onclick = () => {
-            console.log(postData);
+            editPostMenu(postMenu, newPost, postData);
         }
 
         // Delete Post

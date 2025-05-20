@@ -1,37 +1,38 @@
-import { displayPost } from "./display-post.js";
+import { parse } from './parse-md.js';
+import { decodeHTML } from './display-post.js';
 
-const createPost = document.getElementById('create-post');
-let writePostUI = null;
+let editPostUI = null;
 
-createPost.onclick = () => {    
-    if (writePostUI !== null) {
+function editPostMenu(postMenu, postDOM, postData) {
+    if (postMenu !== null) {
+        postMenu.remove();
+        postMenu = null;
+    }
+
+    if (editPostUI !== null) {
         return;
     }
 
-    // Creat the UI
-    writePostUI = document.createElement('div');
-    writePostUI.id = 'write-post';
-    writePostUI.innerHTML = `<div class="header">
-                                <h2>Create Post</h2>
-                                <i id="cancel-create" class="fa-solid fa-xmark"></i>
-                             </div>
-                             <div id="post-container">
+    console.log(postData['caption']);
+    editPostUI = document.createElement('div');
+    editPostUI.id = 'write-post';
+    editPostUI.innerHTML = `<div class="header">
+                                <h2>Edit Post</h2>
+                                <i id="cancel-edit" class="fa-solid fa-xmark"></i>
+                            </div>
+                            <div id="post-container">
                                 <div id="post-text" contenteditable="true"></div>
                                 <div id="placeholder">Drop some random thoughts...</div>
-                             </div>
-                             <div id="add-to-your-post">
+                            </div>
+                            <div id="add-to-your-post">
                                 <h2>Add to your post</h2>
                                 <i id="add-image" class="fa-solid fa-image"></i>
-                             </div>
-                             <div id="submit-post">Post</div>`;
-        
-    document.getElementById('main').appendChild(writePostUI);
+                            </div>
+                            <div id="update-post">Save</div>`;
 
-    const postText = document.getElementById('post-text'); 
-    postText.innerText = '';
-    postText.focus();
+    document.getElementById('main').appendChild(editPostUI);
 
-    // Handle event for displaying the placeholder
+    const postText = document.getElementById('post-text');
     postText.oninput = () => {
         const placeholder = document.getElementById('placeholder');
 
@@ -44,6 +45,10 @@ createPost.onclick = () => {
             postText.focus();
         }
     }
+
+    // Set post input content
+    postText.innerHTML = postData['caption'];
+    postText.dispatchEvent(new Event('input'));
 
     // Add to your post (Insert image)
     const addImage = document.getElementById('add-image');
@@ -66,7 +71,7 @@ createPost.onclick = () => {
                 const newImage = document.createElement('img');
                 newImage.src = imageData;
                 
-                // postText.innerHTML += '\n';
+                postText.innerHTML += '\n';
                 postText.appendChild(newImage);
                 postText.dispatchEvent(new Event('input'));
 
@@ -80,41 +85,41 @@ createPost.onclick = () => {
         input.click();
     }
 
-    // Close create post UI
-    const cancelCreate = document.getElementById('cancel-create');
-    cancelCreate.onclick = () => {
-        writePostUI.remove()
-        writePostUI = null;
+    // Close edit post UI
+    const cancelEdit = document.getElementById('cancel-edit');
+    cancelEdit.onclick = () => {
+        editPostUI.remove()
+        editPostUI = null;
     }
 
-    // Submit post
-    const submitPost = document.getElementById('submit-post');
-    submitPost.onclick = () => {
-        const postData = {
-            username: sessionStorage.getItem('username'),
+    // Update post
+    const updatePost = document.getElementById('update-post');
+    updatePost.onclick = () => {
+        const updatedPostData = {
+            post_id: postData['post_id'],
             caption: document.getElementById('post-text').innerHTML
         };
 
-        console.log(postData);
+        console.log(updatedPostData);
 
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postData)
+            body: JSON.stringify(updatedPostData)
         };
 
-        fetch('/create-post', options)
+        fetch('/update-post', options)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                const postData = data['post_data'];
-                console.log(postData);
-                console.log(postData['date']);
-                console.log(JSON.parse(postData['date']));
-                displayPost(postData);
-                
-                writePostUI.remove();
-                writePostUI = null;
+                if (data['success']) {
+                    const postContent = postDOM.querySelector('.post-content');
+                    postContent.innerHTML = parse(decodeHTML(postText.innerHTML));
+
+                    editPostUI.remove();
+                    editPostUI = null;
+                }
             });
     }
 }
+
+export { editPostMenu };

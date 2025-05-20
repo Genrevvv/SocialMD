@@ -1,4 +1,4 @@
-#md-output > :is(h1, h2, h3, h4, h5, h6) {
+.md-output > :is(h1, h2, h3, h4, h5, h6) {
     width: 100%;
     color: var(--bright);
 
@@ -6,71 +6,76 @@
     margin: 0;
 }
 
-#md-output > :is(h1, h2) {
+.md-output > :is(h1, h2) {
     padding-bottom: 0.2rem;
-    margin-bottom: 0.7rem;
+    margin: 0.4rem 0;
     border-bottom: 1px solid var(--light-gray);
 }
 
-#md-output > :is(p) {
+.md-output > :is(p) {
     width: 100%;
     padding: 0;
-    margin: 0;
+    margin: 0.4rem 0;
 
     letter-spacing: 0.5px;
     line-height: 1.5;
 }
 
-#md-output span:is(.quote) {
+.md-output span:is(.quote) {
     display: block;
 
     background-color: #444;
     color: var(--bright);
 
     padding: 0.2rem 0.7rem;
-    margin-bottom: 0.7rem;
+    margin: 0.4rem 0;
     border-left: 0.3rem solid var(--light-gray);
 }
 
-#md-output span:is(.inline-code) {
+.md-output span:is(.inline-code) {
     background-color: var(--dark-gray);
     color: var(--bright);
     
     padding: 0.1rem 0.4rem;
-    margin-bottom: 0.7rem;
+    margin: 0.4rem 0;
     border: 1px solid var(--light-gray);
     border-radius: 0.2rem;
 }
 
-#md-output pre:is(.code-block) {
+.md-output pre:is(.code-block) {
     background-color: var(--dark-gray);
     color: var(--bright);
     
     padding: 0.7rem 0;
-    margin-bottom: 0.7rem;
+    margin: 0.4rem 0;
     border: 1px solid var(--light-gray);
     border-radius: 0.2rem;
 }
 
-#md-output > :is(strong, em) {
+.md-output > :is(strong, em) {
     display: inline-block;
-    margin-bottom: 0.7rem;
+    margin: 0.4rem 0;
 }
 
-#md-output a {
+.md-output a {
     text-decoration: none;
     color: var(--link);
-    margin-bottom: 0.7rem;
+    margin: 0.4rem 0;
 }
 
-#md-output a:hover {
+.md-output a:hover {
     text-decoration: underline;
 }
 
-#md-output hr {
+.md-output hr {
     margin-bottom: 2rem;
 }
 
-#md-output strong {
+.md-output strong {
     letter-spacing: 0.5px;
+}
+
+.md-output img {
+    display: block;
+    margin: 0.5rem 0;
 }

@@ -20,17 +20,16 @@ function displayPost(postData) {
                             <i class="post-menu-button fa-solid fa-ellipsis"></i>
                          </div>
                          <div id="md-output" class="post-content">
-                            ${parse(postData['caption'])}
+                            ${parse(decodeHTML(postData['caption']))}
                          </div>`;
 
     feed.insertBefore(newPost, feed.firstChild);
 
-    const postMenuButton = newPost.querySelector('.post-menu-button');    
-    createPostMenu(postMenuButton, newPost, postData);
-    
-    const postContent = newPost.querySelector('.post-content');
-
     setTimeout(() => {
+        const postMenuButton = newPost.querySelector('.post-menu-button');    
+        createPostMenu(postMenuButton, newPost, postData);
+
+        const postContent = newPost.querySelector('.post-content');
         if (postContent.scrollHeight > postContent.clientHeight) {
             const more = document.createElement('div');
             more.classList.add('more-button');
@@ -46,5 +45,26 @@ function displayPost(postData) {
     }, 0); // Delay to allow content rendering
 }
 
+// Convert HTML input into string
+function decodeHTML(input) {
+    const patterns = [
+        { regex: /(?:<div>)?<br>(?:<\/div>)?/gm, replace: '\n' },
+        { regex: /<div>([\s\S]+?)<\/div>/gm, replace: '\n$1' },
+        { regex: /&lt;/gm, replace: '<' },
+        { regex: /&gt;/gm, replace: '>' },
+        { regex: /&amp;/gm, replace: '&' },
+        { regex: /&quot;/gm, replace: '"' },
+        { regex: /(?:&#39|&apos;)/gm, replace: '\'' }
+    ];
+
+    for (const { regex, replace } of patterns) {
+        input = input.replace(regex, replace);
+    }
+    
+    input = input.replace(/\s*$/, '');
+    
+    console.log(input);
+    return input;
+}
 
 export { displayPost };

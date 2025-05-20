@@ -166,6 +166,7 @@
     max-width: 20rem;
     max-height: 20rem;
 }
+
 #post-menu {
     background-color: var(--dark-gray);
     width: 10rem;
@@ -173,12 +174,16 @@
     position: absolute;
     top: 65%;
     right: 0;
+    z-index: 1;
+    
+    display: flex;
+    flex-direction: column;
 
     border-radius: 0.5rem;
-    overflow: hidden;
 }
 
 #post-menu .option {
+    color: var(--bright);
     padding: 0.5rem;
 }
 
@@ -187,7 +192,7 @@
     cursor: pointer;
 }
 
-#post-menu #delete-post {
+#post-menu .delete-post {
     color: var(--bright);
 }
 

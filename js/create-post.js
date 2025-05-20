@@ -48,7 +48,6 @@ createPost.onclick = () => {
     // Add to your post (Insert image)
     const addImage = document.getElementById('add-image');
     addImage.onclick = () => {
-        console.log('hi');
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
@@ -93,9 +92,8 @@ createPost.onclick = () => {
     submitPost.onclick = () => {
         const postData = {
             username: sessionStorage.getItem('username'),
-            caption: formatInput(document.getElementById('post-text').innerHTML)
+            caption: document.getElementById('post-text').innerHTML
         };
-        console.log('dw');
 
         console.log(postData);
 
@@ -119,26 +117,4 @@ createPost.onclick = () => {
                 writePostUI = null;
             });
     }
-}
-
-function formatInput(input) {
-    console.log(input);
-
-    const patterns = [
-        { regex: /(?:<div>)?<br>(?:<\/div>)?/gm, replace: '\n' },
-        { regex: /<div>(.+?)<\/div>/gm, replace: '$1\n' },
-        { regex: /&lt;/gm, replace: '<' },
-        { regex: /&gt;/gm, replace: '>' },
-        { regex: /&amp;/gm, replace: '&' },
-        { regex: /&quot;/gm, replace: '"' },
-        { regex: /(?:&#39|&apos;)/gm, replace: '\'' }
-    ];
-
-    for (const { regex, replace } of patterns) {
-        input = input.replace(regex, replace);
-    }
-    
-    console.log(input);
-
-    return input;
 }

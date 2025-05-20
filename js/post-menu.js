@@ -20,15 +20,26 @@ function createPostMenu(postMenuButton, newPost, postData) {
 
         postMenu = document.createElement('div');
         postMenu.id = 'post-menu';
-        postMenu.innerHTML = `<div id="delete-post" class="option">
+        postMenu.innerHTML = `<div class="edit-post option">
+                                <i class="fa-solid fa-pen"></i>
+                                <span>Edit Post</span>
+                             </div>
+                             <div class="delete-post option">
                                 <i class="fa-solid fa-trash"></i>
                                 <span>Delete Post</span>
-                            </div>`;
+                             </div>`;
 
         const postHeader = newPost.querySelector('.post-header');
         postHeader.appendChild(postMenu);
 
-        const deletePost = document.getElementById('delete-post');
+        // Edit Post
+        const editPost = postMenu.querySelector('.edit-post');
+        editPost.onclick = () => {
+            console.log(postData);
+        }
+
+        // Delete Post
+        const deletePost = postMenu.querySelector('.delete-post');
         deletePost.onclick = () => {
             const postID = {
                 post_id: postData['post_id']
@@ -48,6 +59,7 @@ function createPostMenu(postMenuButton, newPost, postData) {
                     }
                 });
         }
+
     }
 }
 

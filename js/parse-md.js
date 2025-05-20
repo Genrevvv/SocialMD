@@ -4,6 +4,7 @@ function parse(input) {
     }
     
     const patterns = [
+        { regex: /^\s*$/gm, replace: '<br>' },
         { regex: /^# (.+)$/gm, replace: '<h1>$1</h1>' },
         { regex: /^## (.+)$/gm, replace: '<h2>$1</h2>' },
         { regex: /^### (.+)$/gm, replace: '<h3>$1</h3>' },

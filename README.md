@@ -12,7 +12,7 @@ A social media web app that allows users to use markdown syntax on posts.
 3. Content Management System
    - Create a post ✅ (Images are stored with caption as base64 for now. Not recommended for production.)
    - Delete post ✅ (No access control yet)
-   - Edit post
+   - Edit post ✅ (No access control yet)
    - Support markdown in posts ✅
    - Load newsfeed ✅ (Only load user's post for now)
 4. User Interaction System

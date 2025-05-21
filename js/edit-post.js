@@ -1,5 +1,6 @@
 import { parse } from './parse-md.js';
 import { decodeHTML } from './display-post.js';
+import { createPostMenu } from './post-menu.js';
 
 let editPostUI = null;
 
@@ -95,9 +96,11 @@ function editPostMenu(postMenu, postDOM, postData) {
     // Update post
     const updatePost = document.getElementById('update-post');
     updatePost.onclick = () => {
+        postData['caption'] = postText.innerHTML;
+
         const updatedPostData = {
             post_id: postData['post_id'],
-            caption: document.getElementById('post-text').innerHTML
+            caption: postData['caption']
         };
 
         console.log(updatedPostData);
@@ -113,10 +116,31 @@ function editPostMenu(postMenu, postDOM, postData) {
             .then(data => {
                 if (data['success']) {
                     const postContent = postDOM.querySelector('.post-content');
-                    postContent.innerHTML = parse(decodeHTML(postText.innerHTML));
+                    postContent.innerHTML = parse(decodeHTML(postData['caption']));
 
                     editPostUI.remove();
                     editPostUI = null;
+                    
+                    setTimeout(() => {
+                        // Create a new post menu with the updated data
+                        const postMenuButton = postDOM.querySelector('.post-menu-button');
+                        createPostMenu(postMenuButton, postDOM, postData);
+
+                        // Adjust post styling againa fter editing when overflowing
+                        const postContent = document.querySelector('.post-content');
+                        if (postContent.scrollHeight > postContent.clientHeight) {
+                            const more = document.createElement('div');
+                            more.classList.add('more-button');
+                            more.textContent = '(See more)';
+
+                            postContent.appendChild(more);
+
+                            more.onclick = () => {
+                                postContent.style.maxHeight = 'none';
+                                more.remove();
+                            }
+                        }
+                    }, 10); // Delay to allow content rendering
                 }
             });
     }

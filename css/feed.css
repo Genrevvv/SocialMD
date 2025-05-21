@@ -165,6 +165,8 @@
 #feed .post img {
     max-width: 20rem;
     max-height: 20rem;
+
+    margin: 1rem 0;
 }
 
 #post-menu {

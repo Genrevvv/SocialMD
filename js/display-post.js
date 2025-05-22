@@ -5,9 +5,9 @@ function displayPost(postData) {
     const feed = document.getElementById('feed');
     const date = JSON.parse(postData['date']);
 
-    const newPost = document.createElement('div');
-    newPost.classList.add('post');
-    newPost.innerHTML = `<div class="post-header">
+    const postDOM = document.createElement('div');
+    postDOM.classList.add('post');
+    postDOM.innerHTML = `<div class="post-header">
                             <div class="user-info">
                                 <div class="profile-img"></div>
                                 <div class="post-info">
@@ -23,13 +23,13 @@ function displayPost(postData) {
                             ${parse(decodeHTML(postData['caption']))}
                          </div>`;
 
-    feed.insertBefore(newPost, feed.firstChild);
+    feed.insertBefore(postDOM, feed.firstChild);
 
     setTimeout(() => {
-        const postMenuButton = newPost.querySelector('.post-menu-button');    
-        createPostMenu(postMenuButton, newPost, postData);
+        const postMenuButton = postDOM.querySelector('.post-menu-button');    
+        createPostMenu(postMenuButton, postDOM, postData);
 
-        const postContent = newPost.querySelector('.post-content');
+        const postContent = postDOM.querySelector('.post-content');
         if (postContent.scrollHeight > postContent.clientHeight) {
             const more = document.createElement('div');
             more.classList.add('more-button');

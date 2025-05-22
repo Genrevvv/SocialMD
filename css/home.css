@@ -36,11 +36,34 @@ header {
     justify-content: space-between;
     align-items: center;
  
-    padding: 0.3rem 1rem;
+    padding: 0.2rem 1rem;
 }
 
 #nav-bar > :is(#logo, #profile) {
     text-decoration: none;
+}
+
+#nav-bar > ul {
+    color: var(--bright);
+    width: 35rem;
+
+    display: flex;
+    justify-content: left; /* Change to center when more option are added, or change display layout */
+    gap: 5rem;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#nav-bar > ul li a {
+    text-decoration: none;
+}
+
+#nav-bar > ul li a i {
+    color: var(--bright);
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 #logo {

@@ -68,27 +68,30 @@ function addFriendHandler(userData, userCard, userCardOptions) {
             
             const cancelRequest = userCardOptions.querySelector('.cancel-request');
             cancelRequest.onclick = () => {
-                fetch('/cancel-friend-request', options)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!data['success']) {
-                            return;
-                        }
-
-                        userCardOptions.innerHTML = `<div class="add-friend button">Add friend</div>
-                                                        <div class="remove-user button">Remove</div>`;
-
-                        const addFriend = userCardOptions.querySelector('.add-friend');
-                        addFriend.onclick = () => {
-                            addFriendHandler(userData, userCardOptions);
-                        }
-
-                        const removeUser = userCardOptions.querySelector('.remove-user');
-                        removeUser.onclick = () => {
-                            userCard.remove();
-                        }
-                    });
-
+                cancelRequestHandler(userData, userCard, userCardOptions, options);
             }
         });
+}
+
+function cancelRequestHandler(userData, userCard, userCardOptions, options) {
+    fetch('/cancel-friend-request', options)
+    .then(res => res.json())
+    .then(data => {
+        if (!data['success']) {
+            return;
+        }
+
+        userCardOptions.innerHTML = `<div class="add-friend button">Add friend</div>
+                                        <div class="remove-user button">Remove</div>`;
+
+        const addFriend = userCardOptions.querySelector('.add-friend');
+        addFriend.onclick = () => {
+        addFriendHandler(userData, userCard, userCardOptions);
+        }
+
+        const removeUser = userCardOptions.querySelector('.remove-user');
+        removeUser.onclick = () => {
+            userCard.remove();
+        }
+    });
 }

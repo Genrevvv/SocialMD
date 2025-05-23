@@ -10,15 +10,12 @@
     padding: 1rem;
 }
 
-#container hr {
-    width: calc(100% - 1rem);
-}
-
 #friend-request {
     background-color: inherit;
     color: var(--bright);
 
     padding: 1rem;
+    border-bottom: 1px solid var(--bright);
 }
 
 #find-friends {
@@ -26,5 +23,4 @@
     color: var(--bright);
 
     padding: 1rem;
-    
 }

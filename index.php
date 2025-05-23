@@ -8,7 +8,7 @@
     $router = new Router;
 
     $router->add('/', function () {
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
             header('Location: index.html');
         }
         else {
@@ -16,6 +16,7 @@
         }
     });
 
+    // Authentications
     $router->add('/register', function () {
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
@@ -50,6 +51,7 @@
         }
 
         $_SESSION['username'] = $data['username'];
+        $_SESSION['user_id'] = $data['id'];
         echo json_encode(['success' => true, 'username' => $data['username']]);
     });
 
@@ -59,6 +61,7 @@
         echo json_encode(['success' => true, 'message' => 'logout successful']);
     });
 
+    // User Management
     $router->add('/delete-account', function () {        
         $db = new SQLiteDB('socialMD.db');
         $result = $db->delete_user($_SESSION['username']);
@@ -100,6 +103,15 @@
         echo json_encode(['success' => true, 'username' => $data['username']]);
     });
 
+    // Content Management
+    $router->add('/load-feed', function () {
+        $db = new SQLiteDB('socialMD.db');
+
+        $result = $db->get_feed();
+
+        echo json_encode(['result' => $result]);
+    });
+
     $router->add('/create-post', function () {
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
@@ -123,14 +135,6 @@
         $data['post_id'] = $result['post_id']; 
 
         echo json_encode(['success' => true, 'post_data' => $data]);
-    });
-
-    $router->add('/load-feed', function () {
-        $db = new SQLiteDB('socialMD.db');
-
-        $result = $db->get_feed();
-
-        echo json_encode(['result' => $result]);
     });
 
     $router->add('/delete-post', function () {
@@ -161,8 +165,16 @@
         echo json_encode(['success' => true]);
     });
 
+    // Friends
     $router->add('/friends', function () {
         header('Location: /html/friends.html');
+    });
+
+    $router->add('/find-friends', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
     });
 
     $router->dispatch($path);

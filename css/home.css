@@ -14,7 +14,7 @@
     position: fixed;
 }
 
-#side-bar h1 {
+#side-bar span {
     color: var(--bright);
     font-size: 1rem;
     margin: 1rem;
@@ -102,7 +102,7 @@
     right: 0;
 }
 
-#friends-section h1 {
+#friends-section h2 {
     color: var(--bright);
 
     padding: 1rem;
@@ -110,6 +110,9 @@
     margin-bottom: 0;
 }
 
-#friends-section .friend-list h1 {
+#friends-section .friend-list span {
+    color: var(--bright);
     font-size: 1rem;
+    
+    padding: 1rem;
 }

@@ -6,6 +6,7 @@
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router = new Router;
+    $db = new SqliteDB('socialMD.db');
 
     $router->add('/', function () {
         if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
@@ -17,11 +18,8 @@
     });
 
     // Authentications
-    $router->add('/register', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-
-        $db = new SqliteDB('socialMD.db');
+    $router->add('/register', function () use ($db) {
+        $data = get_json_input();
 
         $result = $db->user_exist($data['username']);
         if ($result != false) {
@@ -38,11 +36,8 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/login', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-         
-        $db = new SQLiteDB('socialMD.db');
+    $router->add('/login', function () use ($db) {
+        $data = get_json_input();
         
         $result = $db->verify_password($data['username'], $data['password']);
         if (!$result['success']) {
@@ -66,8 +61,7 @@
     });
 
     // User Management
-    $router->add('/delete-account', function () {        
-        $db = new SQLiteDB('socialMD.db');
+    $router->add('/delete-account', function () use ($db) {        
         $result = $db->delete_user($_SESSION['username']);
 
         if ($result == 0) {
@@ -79,11 +73,8 @@
         echo json_encode(['success' => true, 'message' => 'Account deletion successful']);
     });
 
-    $router->add('/change-username', function ()  {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-
-        $db = new SQLiteDB('socialMD.db');
+    $router->add('/change-username', function () use ($db) {
+        $data = get_json_input();
 
         $result = $db->verify_password($_SESSION['username'], $data['password']);
         if (!$result['success']) {
@@ -108,21 +99,14 @@
     });
 
     // Content Management
-    $router->add('/load-feed', function () {
-        $db = new SQLiteDB('socialMD.db');
-
+    $router->add('/load-feed', function () use ($db) {
         $result = $db->get_feed();
-
         echo json_encode(['result' => $result]);
     });
 
-    $router->add('/create-post', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-        $date = date('Y-m-d');
-
-        $db = new SQLiteDB('socialMD.db');
-
+    $router->add('/create-post', function () use ($db) {
+        $data = get_json_input();
+        
         date_default_timezone_set('Asia/Manila');
         $date = [
             'date-ui' => date('M j \a\t g:i A'),
@@ -141,13 +125,10 @@
         echo json_encode(['success' => true, 'post_data' => $data]);
     });
 
-    $router->add('/delete-post', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+    $router->add('/delete-post', function () use ($db) {
+        $data = get_json_input();
 
-        $db = new SQLiteDB('socialMD.db');
         $result = $db->delete_post($data['post_id']);
-
         if ($result == 0) {
             echo json_encode(['success' => false]);
         }
@@ -155,11 +136,9 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/update-post', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+    $router->add('/update-post', function () use ($db) {
+        $data = get_json_input();
 
-        $db = new SQLiteDB('socialMD.db');
         $result = $db->update_post($data['post_id'], $data['caption']);
         if ($result == 0) {
             echo json_encode(['success' => false]);
@@ -179,18 +158,14 @@
         }
     });
 
-    $router->add('/friend-requests', function () {
-        $db = new SQLiteDB('socialMD.db');
+    $router->add('/friend-requests', function () use ($db) {
         $result = $db->get_friend_requests();
-
         echo json_encode(['users' => $result]);
     });
 
-    $router->add('/accept-friend-request', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+    $router->add('/accept-friend-request', function () use ($db) {
+        $data = get_json_input();
 
-        $db = new SQLiteDB('socialMD.db');
         $result = $db->accept_friend_request($data['username']);
         if ($result === 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to accept friend request']);
@@ -200,11 +175,9 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/delete-friend-request', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+    $router->add('/delete-friend-request', function () use ($db) {
+        $data = get_json_input();
 
-        $db = new SQLiteDB('socialMD.db');
         $result = $db->delete_friend_request($data['username']);
         if ($result === 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to delete friend request']);
@@ -214,18 +187,13 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/find-friends', function () {
-        $db = new SQLiteDB('socialMD.db');
+    $router->add('/find-friends', function () use ($db) {
         $result = $db->find_friends();
-
         echo json_encode(['users' => $result]);
     });
 
-    $router->add('/add-friend', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-
-        $db = new SQLiteDB('socialMD.db');
+    $router->add('/add-friend', function () use ($db) {
+        $data = get_json_input();
 
         $friend_id = $db->get_user_id($data['username']);
         if ($friend_id == false) {
@@ -243,11 +211,9 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/cancel-friend-request', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+    $router->add('/cancel-friend-request', function () use ($db) {
+        $data = get_json_input();
 
-        $db = new SQLiteDB('socialMD.db');
         $friend_id = $db->get_user_id($data['username']);
         if ($friend_id == false) {
             echo json_encode(['success' => false, 'error' => 'friend_id not found']);
@@ -265,4 +231,10 @@
     });
 
     $router->dispatch($path);
+
+    // Auxilliary
+    function get_json_input() {
+        $input = file_get_contents('php://input');
+        return json_decode($input, true);
+    }
 ?>

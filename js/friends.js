@@ -29,8 +29,8 @@ function createUserCard(userData) {
                             <span class="username">${userData['username']}</span>
                           </div>
                           <div class="options">
-                            <div id="confirm-friend-req" class="button">Confirm</div>
-                            <div id="delete-friend-req" class="button">Delete</div>
+                            <div id="add-friend" class="button">Add friend</div>
+                            <div id="remove-user" class="button">Remove</div>
                           </div>`; 
 
     findFriends.querySelector('.people').appendChild(userCard);

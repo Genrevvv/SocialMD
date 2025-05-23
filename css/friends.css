@@ -84,10 +84,10 @@
 }
 
 
-#confirm-friend-req {
+#add-friend {
     background-color: var(--blue-button);
 }
 
-#delete-friend-req {
+#remove-user {
     background-color: var(--dark-gray);
 }

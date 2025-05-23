@@ -138,6 +138,64 @@
         }
 
         // Friends
+        public function get_friend_requests() {
+            $stmt = $this->db->prepare('
+                SELECT username
+                FROM users
+                WHERE id IN (
+                    SELECT user_id 
+                    FROM friends 
+                    WHERE friend_id = :user_id 
+                    AND status = "P"
+                )'
+            );
+
+            $stmt->bindValue('user_id', $_SESSION['user_id'], SQLITE3_INTEGER);
+            $result = $stmt->execute();
+
+            $data = [];
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+
+        public function accept_friend_request($username) {
+            $friend_id = $this->get_user_id($username);
+            if ($friend_id === false) {
+                return 0;
+            }
+            $friend_id = $friend_id['id'];
+
+            $stmt = $this->db->prepare('
+                UPDATE friends 
+                SET status = "F" 
+                WHERE user_id = :friend_id
+                AND friend_id = :user_id'
+            );
+            $stmt->bindValue('friend_id', $friend_id, SQLITE3_INTEGER);
+            $stmt->bindValue('user_id', $_SESSION['user_id'], SQLITE3_INTEGER);
+            $stmt->execute();
+
+            return $this->db->changes();
+        }
+
+        public function delete_friend_request($username) {
+            $friend_id = $this->get_user_id($username);
+            if ($friend_id === false) {
+                return 0;
+            }
+            $friend_id = $friend_id['id'];
+
+            $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :friend_id AND friend_id = :user_id');
+            $stmt->bindValue('friend_id', $friend_id, SQLITE3_INTEGER);
+            $stmt->bindValue('user_id', $_SESSION['user_id'], SQLITE3_INTEGER);
+            $stmt->execute();
+
+            return $this->db->changes();
+        }
+
         public function find_friends() {
             $result = $this->get_user_id($_SESSION['username']);
             $user_id = $result['id'];

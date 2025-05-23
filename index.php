@@ -179,6 +179,41 @@
         }
     });
 
+    $router->add('/friend-requests', function () {
+        $db = new SQLiteDB('socialMD.db');
+        $result = $db->get_friend_requests();
+
+        echo json_encode(['users' => $result]);
+    });
+
+    $router->add('/accept-friend-request', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
+        $result = $db->accept_friend_request($data['username']);
+        if ($result === 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to accept friend request']);
+            exit();
+        }
+        
+        echo json_encode(['success' => true]);
+    });
+
+    $router->add('/delete-friend-request', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
+        $result = $db->delete_friend_request($data['username']);
+        if ($result === 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to delete friend request']);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
     $router->add('/find-friends', function () {
         $db = new SQLiteDB('socialMD.db');
         $result = $db->find_friends();
@@ -200,8 +235,8 @@
         $friend_id = $friend_id['id'];
 
         $result = $db->send_friend_request($_SESSION['user_id'], $friend_id);
-        if ($result == 0) {
-            echo json_encode(['success' => false, 'error' => 'Unable to add user']);
+        if ($result === 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to send friend request']);
             exit();
         }
 

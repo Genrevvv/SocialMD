@@ -9,15 +9,7 @@
     padding: 1rem;
 }
 
-#friend-request {
-    background-color: inherit;
-    color: var(--bright);
-
-    padding: 1rem;
-    border-bottom: 1px solid var(--bright);
-}
-
-#find-friends {
+#friend-requests, #find-friends {
     background-color: inherit;
     color: var(--bright);
 
@@ -28,15 +20,19 @@
     padding: 1rem;
 }
 
-#find-friends .sub-header {
+#friend-requests {
+    border-bottom: 1px solid var(--bright);
+}
+
+.sub-header {
     width: 100%;
 }
 
-#find-friends .people {
+.people {
     width: 90%;
     
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fit, 17rem);
     gap: 1rem;
 
     margin: 0 auto;
@@ -94,10 +90,44 @@
     border-radius: 0.5rem;
 }
 
-.add-friend {
-    background-color: var(--blue-button);
+
+.confirm-friend-request {
+    background-color: #3157ff;
+    color: var(--bright);
+    font-weight: bold;
 }
 
-.remove-user, .cancel-request {
-    background-color: var(--dark-gray);
+.confirm-friend-request:hover {
+    background-color: #486aff;
 }
+
+.add-friend {
+    background-color: #27314e;
+    color: #00a2ff;
+    font-weight: bold;
+}
+
+.add-friend:hover {
+    background-color: #3e4d7a;
+}
+
+.remove-user,
+.cancel-request, 
+.delete-friend-request{
+    background-color: var(--dark-gray);
+    font-weight: bold;
+}
+
+.remove-user:hover,
+.cancel-request:hover, 
+.delete-friend-request:hover {
+    background-color: var(--gray);
+}
+
+.request-accepted {
+    background-color: var(--dark-gray);
+    user-select: none;
+    color: var(--light-gray);
+    cursor: not-allowed !important;
+}
+

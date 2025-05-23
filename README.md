@@ -16,8 +16,9 @@ A social media web app that allows users to use markdown syntax on posts.
    - Support markdown in posts ✅
    - Load newsfeed ✅ (Only load user's post for now)
 4. User Interaction System
-   - Add friend
-   - Remove friend
+   - Confirm and delete friend request✅
+   - Send and cancel friend request ✅
+   - Remove friend 
    - React to posts
    - Comment on posts
 5. Responsive Design

@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/18d11cd56e.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/root.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/user-menu.css">
-    <link rel="stylesheet" href="css/post-ui.css">
-    <link rel="stylesheet" href="css/feed.css">
-    <link rel="stylesheet" href="css/parse-md.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/nav-bar.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/user-menu.css">
+    <link rel="stylesheet" href="/css/post-ui.css">
+    <link rel="stylesheet" href="/css/feed.css">
+    <link rel="stylesheet" href="/css/parse-md.css">
     <title>SocialMD</title>
 </head>
 <body>
@@ -18,10 +19,10 @@
             <a id="logo" href="/">SocialMD</a>
             <ul>
                 <li>
-                    <a href="/"><i class="fa-solid fa-house"></i></a>
+                    <i id="home-icon" class="fa-solid fa-house"></i>
                 </li>
                 <li>
-                    <a href=""><i class="fa-solid fa-user-group"></i></a>
+                    <i id="friends-icon"class="fa-solid fa-user-group"></i>
                 </li>
             </ul>
             <div id="profile" class="profile-img">
@@ -65,7 +66,7 @@
         </div>
     </main>
     
-    <script src="/js/user-menu.js"></script>
+    <script src="/js/nav-bar.js"></script>
     <script type="module" src="/js/load-feed.js"></script>
     <script type="module" src="/js/create-post.js"></script>
 </body>

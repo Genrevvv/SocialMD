@@ -161,5 +161,9 @@
         echo json_encode(['success' => true]);
     });
 
+    $router->add('/friends', function () {
+        header('Location: /html/friends.html');
+    });
+
     $router->dispatch($path);
 ?>

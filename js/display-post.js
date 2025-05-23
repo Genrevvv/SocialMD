@@ -50,7 +50,7 @@ function decodeHTML(input) {
     console.log(input);
     const patterns = [
         { regex: /(?:<div>)?<br>(?:<\/div>)?/gm, replace: '\n' },
-        { regex: /<div>([\s\S]+?)<\/div>/gm, replace: '$1\n' },
+        { regex: /<div>((?:(?!<img ).)*?)<\/div>/gms, replace: '\n$1\n' },
         { regex: /<img (.+?)>/gm, replace: '\n<img $1>' },
         { regex: /&lt;/gm, replace: '<' },
         { regex: /&gt;/gm, replace: '>' },

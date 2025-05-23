@@ -44,9 +44,16 @@ const menuContent = {
                  </div>`
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('.username-text').innerText = sessionStorage.getItem('username');
-});
+// Nav-bar icons
+const home = document.getElementById('home-icon');
+home.onclick = () => {
+    window.location = '/';
+}
+
+const friends = document.getElementById('friends-icon');
+friends.onclick = () => {
+    window.location = '/friends';
+}
 
 let menuDOM = null;
 

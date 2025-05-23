@@ -9,8 +9,7 @@
         public function dispatch($path) {
             if (array_key_exists($path, $this->routes)) {
                 $handler = $this->routes[$path];
-
-                call_user_func($handler);
+                $handler();
             }
             else {
                 echo 'Page not found';

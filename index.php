@@ -1,8 +1,8 @@
 <?php
+    session_start();
+
     require 'database.php';
     require 'router.php';
-
-    session_start();
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router = new Router;
@@ -50,13 +50,17 @@
             exit();
         }
 
+        $user_id = $db->get_user_id($data['username']);
+        $user_id = $user_id['id'];
+
         $_SESSION['username'] = $data['username'];
-        $_SESSION['user_id'] = $data['id'];
+        $_SESSION['user_id'] = $user_id;
         echo json_encode(['success' => true, 'username' => $data['username']]);
     });
 
     $router->add('/logout', function () {
         unset($_SESSION['username']);
+        unset($_SESSION['user_id']);
 
         echo json_encode(['success' => true, 'message' => 'logout successful']);
     });
@@ -167,7 +171,12 @@
 
     // Friends
     $router->add('/friends', function () {
-        header('Location: /html/friends.html');
+        if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
+            header('Location: /html/friends.html');
+        }
+        else {
+            header('Location: /html/login.html');
+        }
     });
 
     $router->add('/find-friends', function () {
@@ -175,6 +184,9 @@
         $data = json_decode($input, true);
 
         $db = new SQLiteDB('socialMD.db');
+        $result = $db->find_friends();
+
+        echo json_encode(['users' => $result]);
     });
 
     $router->dispatch($path);

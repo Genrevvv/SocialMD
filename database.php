@@ -137,12 +137,21 @@
             return $this->db->changes();
         }
 
+        // Friends
         public function find_friends() {
             $result = $this->get_user_id($_SESSION['username']);
             $user_id = $result['id'];
             
-            $stmt = $this->db->prepare('SELECT * FROM users WHERE id != :user_id');
+            $stmt = $this->db->prepare('SELECT username FROM users WHERE id != :user_id');
             $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
+            $result = $stmt->execute();
+
+            $data = [];
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                $data[] = $row;
+            }
+
+            return $data;
         }
     }
 ?>

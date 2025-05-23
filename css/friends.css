@@ -1,7 +1,6 @@
 #container {
     display: grid;
     grid-template-columns: 90%;
-    grid-template-rows: 50%;
     justify-content: center;
 
     width: 100%;
@@ -22,5 +21,73 @@
     background-color: inherit;
     color: var(--bright);
 
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
+}
+
+#find-friends .people {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 20%);
+    gap: 1rem;
+}
+
+.people .user-card {
+    height: 24rem;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    border: 1px solid var(--gray);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.user-card .user-profile {
+    background: url("/media/user.png");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 70%;
+}
+
+.user-card .user-info {
+    padding: 0.5rem;
+}
+
+.user-card .user-info span {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.user-card .options {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    padding: 1rem;
+    padding-top: 0;
+}
+
+.user-card .options .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 2.5rem;
+
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+
+#confirm-friend-req {
+    background-color: var(--blue-button);
+}
+
+#delete-friend-req {
+    background-color: var(--dark-gray);
 }

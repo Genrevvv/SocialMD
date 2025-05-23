@@ -35,26 +35,60 @@ function createUserCard(userData) {
 
     findFriends.querySelector('.people').appendChild(userCard);
 
-    const addFriend = userCard.querySelector('.add-friend');
-    addFriend.onclick = () => {
-        console.log('You\'ve added ' + userData['username']);
-        
-        const options  = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
-        }
+    const userCardOptions = userCard.querySelector('.options');
+    const addFriend = userCardOptions.querySelector('.add-friend');
+    const removeUser = userCardOptions.querySelector('.remove-user');
 
-        fetch('/add-user', options)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-            });
+    addFriend.onclick = () => {
+        addFriendHandler(userData, userCard, userCardOptions);
     }
 
-    const removeUser = userCard.querySelector('.remove-user');
     removeUser.onclick = () => {
         userCard.remove();
     }
 
+}
+
+function addFriendHandler(userData, userCard, userCardOptions) {
+    console.log('You\'ve added ' + userData['username']);
+        
+    const options  = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+    }
+
+    fetch('/add-friend', options)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            userCardOptions.innerHTML = `<div class="request-status">Request Sent</div>
+                                         <div class="cancel-request button">Cancel</div>`;
+            
+            const cancelRequest = userCardOptions.querySelector('.cancel-request');
+            cancelRequest.onclick = () => {
+                fetch('/cancel-friend-request', options)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data['success']) {
+                            return;
+                        }
+
+                        userCardOptions.innerHTML = `<div class="add-friend button">Add friend</div>
+                                                        <div class="remove-user button">Remove</div>`;
+
+                        const addFriend = userCardOptions.querySelector('.add-friend');
+                        addFriend.onclick = () => {
+                            addFriendHandler(userData, userCardOptions);
+                        }
+
+                        const removeUser = userCardOptions.querySelector('.remove-user');
+                        removeUser.onclick = () => {
+                            userCard.remove();
+                        }
+                    });
+
+            }
+        });
 }

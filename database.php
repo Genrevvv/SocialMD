@@ -142,7 +142,17 @@
             $result = $this->get_user_id($_SESSION['username']);
             $user_id = $result['id'];
             
-            $stmt = $this->db->prepare('SELECT username FROM users WHERE id != :user_id');
+            $stmt = $this->db->prepare('
+                SELECT username 
+                FROM users 
+                WHERE id != :user_id
+                AND id NOT IN (
+                    SELECT user_id FROM friends WHERE friend_id = :user_id
+                    UNION
+                    SELECT friend_id FROM friends WHERE user_id = :user_id
+                )'
+            );
+
             $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
             $result = $stmt->execute();
 
@@ -154,13 +164,22 @@
             return $data;
         }
 
-        public function add_friend($user_id, $friend_id) {
+        public function send_friend_request($user_id, $friend_id) {
             $stmt = $this->db->prepare('INSERT OR IGNORE INTO friends (user_id, friend_id) VALUES (:user_id, :friend_id)');
             $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
             $stmt->bindValue(':friend_id', $friend_id, SQLITE3_INTEGER);
             $stmt->execute();
 
             return $this->db->changes();
+        }
+
+        public function cancel_friend_request($user_id, $friend_id) {
+            $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :user_id AND friend_id = :friend_id');
+            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
+            $stmt->bindValue(':friend_id', $friend_id, SQLITE3_INTEGER);
+            $stmt->execute();
+
+            return $this->db->changes();        
         }
     }
 ?>

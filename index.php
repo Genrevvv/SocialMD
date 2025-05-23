@@ -186,7 +186,7 @@
         echo json_encode(['users' => $result]);
     });
 
-    $router->add('/add-user', function () {
+    $router->add('/add-friend', function () {
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
 
@@ -194,13 +194,35 @@
 
         $friend_id = $db->get_user_id($data['username']);
         if ($friend_id == false) {
-            echo json_encode(['success' => false]);
+            echo json_encode(['success' => false, 'error' => 'friend_id not found']);
+            exit();
+        }
+        $friend_id = $friend_id['id'];
+
+        $result = $db->send_friend_request($_SESSION['user_id'], $friend_id);
+        if ($result == 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to add user']);
             exit();
         }
 
-        $result = $db->add_friend($_SESSION['user_id'], $friend_id);
+        echo json_encode(['success' => true]);
+    });
+
+    $router->add('/cancel-friend-request', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
+        $friend_id = $db->get_user_id($data['username']);
+        if ($friend_id == false) {
+            echo json_encode(['success' => false, 'error' => 'friend_id not found']);
+            exit();
+        }
+        $friend_id = $friend_id['id'];
+
+        $result = $db->cancel_friend_request($_SESSION['user_id'], $friend_id);
         if ($result == 0) {
-            echo json_encode(['success' => false]);
+            echo json_encode(['success' => false, 'error' => 'Unable to cancel friend request']);
             exit();
         }
 

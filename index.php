@@ -180,13 +180,31 @@
     });
 
     $router->add('/find-friends', function () {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-
         $db = new SQLiteDB('socialMD.db');
         $result = $db->find_friends();
 
         echo json_encode(['users' => $result]);
+    });
+
+    $router->add('/add-user', function () {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $db = new SQLiteDB('socialMD.db');
+
+        $friend_id = $db->get_user_id($data['username']);
+        if ($friend_id == false) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        $result = $db->add_friend($_SESSION['user_id'], $friend_id);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
     });
 
     $router->dispatch($path);

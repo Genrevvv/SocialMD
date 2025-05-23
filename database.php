@@ -153,5 +153,14 @@
 
             return $data;
         }
+
+        public function add_friend($user_id, $friend_id) {
+            $stmt = $this->db->prepare('INSERT OR IGNORE INTO friends (user_id, friend_id) VALUES (:user_id, :friend_id)');
+            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
+            $stmt->bindValue(':friend_id', $friend_id, SQLITE3_INTEGER);
+            $stmt->execute();
+
+            return $this->db->changes();
+        }
     }
 ?>

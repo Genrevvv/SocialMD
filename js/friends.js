@@ -21,7 +21,7 @@ fetch('/find-friends')
 
 
 function createUserCard(userData) {
-    const userCard= document.createElement('div');
+    const userCard = document.createElement('div');
     userCard.classList.add('user-card');
     userCard.innerHTML = `<div class="user-profile">
                           </div>
@@ -29,9 +29,32 @@ function createUserCard(userData) {
                             <span class="username">${userData['username']}</span>
                           </div>
                           <div class="options">
-                            <div id="add-friend" class="button">Add friend</div>
-                            <div id="remove-user" class="button">Remove</div>
+                            <div class="add-friend button">Add friend</div>
+                            <div class="remove-user button">Remove</div>
                           </div>`; 
 
     findFriends.querySelector('.people').appendChild(userCard);
+
+    const addFriend = userCard.querySelector('.add-friend');
+    addFriend.onclick = () => {
+        console.log('You\'ve added ' + userData['username']);
+        
+        const options  = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+        }
+
+        fetch('/add-user', options)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            });
+    }
+
+    const removeUser = userCard.querySelector('.remove-user');
+    removeUser.onclick = () => {
+        userCard.remove();
+    }
+
 }

@@ -1,4 +1,4 @@
-function parse(input) {
+function parse(input, imagesObject) {
     if (!input) {
         return;
     }
@@ -23,6 +23,11 @@ function parse(input) {
         { regex: /^(?!<(?:.+?)>)(.+|\n)(?!<\/(?:.+?)>)$/gm, replace: '<p>$1</p>' }
         
     ];
+
+    const regex = /!\[(.+?)\]\((.+?)\)/gm;
+    input = input.replace(regex, (match, alt, src) => {
+        return `<img alt="${alt}" src="${imagesObject[src]}"`;
+    });
 
     for (const { regex , replace } of patterns) {
         input = input.replace(regex, replace);

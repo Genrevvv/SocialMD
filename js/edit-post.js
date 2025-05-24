@@ -1,5 +1,5 @@
+import { insertNewImage } from './create-post.js';
 import { parse } from './parse-md.js';
-import { decodeHTML } from './display-post.js';
 import { createPostMenu } from './post-menu.js';
 
 let editPostUI = null;
@@ -22,37 +22,47 @@ function editPostMenu(postMenu, postDOM, postData) {
                                 <i id="cancel-edit" class="fa-solid fa-xmark"></i>
                             </div>
                             <div id="post-container">
-                                <div id="post-text" contenteditable="true"></div>
-                                <div id="placeholder">Drop some random thoughts...</div>
+                            <div id="post-editor">
+                                <div class="editor-section text-editor-section">
+                                    <span class="sub-header">Text Editor</span>
+                                    <textarea id="post-text" placeholder="Drop some random thoughts"></textarea>
+                                </div>
+                                <div class="editor-section images-list-section">
+                                    <span class="sub-header">Images list</span>
+                                    <div id="images-list"></div>
+                                </div>
                             </div>
                             <div id="add-to-your-post">
                                 <h2>Add to your post</h2>
                                 <i id="add-image" class="fa-solid fa-image"></i>
                             </div>
-                            <div id="update-post">Save</div>`;
+                            <div id="update-post">Save</div>
+                            </div>`;   
 
     document.getElementById('main').appendChild(editPostUI);
 
     const postText = document.getElementById('post-text');
-    postText.oninput = () => {
-        const placeholder = document.getElementById('placeholder');
+    const addImage = document.getElementById('add-image');
+    const cancelEdit = document.getElementById('cancel-edit');
+    const updatePost = document.getElementById('update-post');
+    const imagesList = document.getElementById('images-list')
+    let imagesObject = {};
 
-        if (postText.innerText.trim() !== '' || postText.querySelector('img')) {
-            placeholder.innerText = '';
-            postText.focus();
-        }
-        else {
-            placeholder.innerText = 'Drop some random thoughts...';
-            postText.focus();
-        }
-    }
+    postText.focus();
 
     // Set post input content
-    postText.innerHTML = postData['caption'];
-    postText.dispatchEvent(new Event('input'));
+    postText.value = postData['caption'];
+
+    // Insert images on image list
+    let imagesData = postData['images'];
+    imagesData = typeof imagesData === 'object' ? imagesData : JSON.parse(imagesData);
+
+    for (let key in imagesData) {
+        console.log(key);
+        insertNewImage(key, imagesData[key], imagesList, imagesObject);
+    }
 
     // Add to your post (Insert image)
-    const addImage = document.getElementById('add-image');
     addImage.onclick = () => {
         const input = document.createElement('input');
         input.type = 'file';
@@ -68,16 +78,9 @@ function editPostMenu(postMenu, postDOM, postData) {
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 const imageData = fileReader.result;
-                
-                const newImage = document.createElement('img');
-                newImage.src = imageData;
-                
-                postText.innerHTML += '\n';
-                postText.appendChild(newImage);
-                postText.dispatchEvent(new Event('input'));
+                insertNewImage(file.name, imageData, imagesList, imagesObject);
 
-                postText.focus;
-
+                postText.focus();
                 console.log(imageData);
             }
 
@@ -87,20 +90,20 @@ function editPostMenu(postMenu, postDOM, postData) {
     }
 
     // Close edit post UI
-    const cancelEdit = document.getElementById('cancel-edit');
     cancelEdit.onclick = () => {
         editPostUI.remove()
         editPostUI = null;
     }
 
     // Update post
-    const updatePost = document.getElementById('update-post');
     updatePost.onclick = () => {
-        postData['caption'] = postText.innerHTML;
+        postData['caption'] = postText.value;
+        postData['images'] = imagesObject;
 
         const updatedPostData = {
             post_id: postData['post_id'],
-            caption: postData['caption']
+            caption: postData['caption'],
+            images: postData['images']
         };
 
         console.log(updatedPostData);
@@ -116,7 +119,7 @@ function editPostMenu(postMenu, postDOM, postData) {
             .then(data => {
                 if (data['success']) {
                     const postContent = postDOM.querySelector('.post-content');
-                    postContent.innerHTML = parse(decodeHTML(postData['caption']));
+                    postContent.innerHTML = parse(postData['caption'], postData['images']);
 
                     editPostUI.remove();
                     editPostUI = null;

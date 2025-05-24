@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS posts (
     user_id INT NOT NULL,
     date TEXT NOT NULL,
     caption TEXT,
+    images TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

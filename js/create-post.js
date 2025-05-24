@@ -16,37 +16,35 @@ createPost.onclick = () => {
                                 <i id="cancel-create" class="fa-solid fa-xmark"></i>
                              </div>
                              <div id="post-container">
-                                <div id="post-text" contenteditable="true"></div>
-                                <div id="placeholder">Drop some random thoughts...</div>
-                             </div>
-                             <div id="add-to-your-post">
-                                <h2>Add to your post</h2>
-                                <i id="add-image" class="fa-solid fa-image"></i>
-                             </div>
-                             <div id="submit-post">Post</div>`;
-        
+                                <div id="post-editor">
+                                    <div class="editor-section text-editor-section">
+                                        <span class="sub-header">Text Editor</span>
+                                        <textarea id="post-text" placeholder="Drop some random thoughts"></textarea>
+                                    </div>
+                                    <div class="editor-section images-list-section">
+                                        <span class="sub-header">Images list</span>
+                                        <div id="images-list"></div>
+                                    </div>
+                                </div>
+                                <div id="add-to-your-post">
+                                    <h2>Add to your post</h2>
+                                    <i id="add-image" class="fa-solid fa-image"></i>
+                                </div>
+                                <div id="submit-post">Post</div>
+                             </div>`;   
+
     document.getElementById('main').appendChild(writePostUI);
 
     const postText = document.getElementById('post-text'); 
-    postText.innerText = '';
+    const addImage = document.getElementById('add-image');
+    const cancelCreate = document.getElementById('cancel-create');
+    const submitPost = document.getElementById('submit-post');
+    const imagesList = document.getElementById('images-list')
+    let imagesObject = {};
+    
     postText.focus();
 
-    // Handle event for displaying the placeholder
-    postText.oninput = () => {
-        const placeholder = document.getElementById('placeholder');
-
-        if (postText.innerText.trim() !== '' || postText.querySelector('img')) {
-            placeholder.innerText = '';
-            postText.focus();
-        }
-        else {
-            placeholder.innerText = 'Drop some random thoughts...';
-            postText.focus();
-        }
-    }
-
     // Add to your post (Insert image)
-    const addImage = document.getElementById('add-image');
     addImage.onclick = () => {
         const input = document.createElement('input');
         input.type = 'file';
@@ -62,16 +60,9 @@ createPost.onclick = () => {
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 const imageData = fileReader.result;
-                
-                const newImage = document.createElement('img');
-                newImage.src = imageData;
-                
-                // postText.innerHTML += '\n';
-                postText.appendChild(newImage);
-                postText.dispatchEvent(new Event('input'));
+                insertNewImage(file.name, imageData, imagesList, imagesObject);
 
-                postText.focus;
-
+                postText.focus();
                 console.log(imageData);
             }
 
@@ -81,18 +72,17 @@ createPost.onclick = () => {
     }
 
     // Close create post UI
-    const cancelCreate = document.getElementById('cancel-create');
     cancelCreate.onclick = () => {
         writePostUI.remove()
         writePostUI = null;
     }
 
     // Submit post
-    const submitPost = document.getElementById('submit-post');
     submitPost.onclick = () => {
         const postData = {
             username: sessionStorage.getItem('username'),
-            caption: document.getElementById('post-text').innerHTML
+            caption: postText.value,
+            images: imagesObject
         };
 
         console.log(postData);
@@ -111,6 +101,7 @@ createPost.onclick = () => {
                 console.log(postData);
                 console.log(postData['date']);
                 console.log(JSON.parse(postData['date']));
+
                 displayPost(postData);
                 
                 writePostUI.remove();
@@ -118,3 +109,26 @@ createPost.onclick = () => {
             });
     }
 }
+
+function insertNewImage(imageName, imageData, imagesList, imagesObject) {
+    if (imagesObject[imageName]) {
+        return;
+    }
+    
+    imagesObject[imageName] = imageData;
+    console.log(imagesObject);
+
+    const imageDOM = document.createElement('div');
+    imageDOM.classList.add('image');
+    imageDOM.innerHTML = `<span>${imageName}</span><i class="remove-image fa-solid fa-xmark"></i>`;
+
+    imagesList.appendChild(imageDOM);
+
+    const removeImage = imageDOM.querySelector('.remove-image');
+    removeImage.onclick = () => {
+        delete imagesObject[imageName];
+        imageDOM.remove();
+    }
+}
+
+export { insertNewImage };

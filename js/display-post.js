@@ -4,6 +4,8 @@ import { parse } from './parse-md.js';
 function displayPost(postData) {
     const feed = document.getElementById('feed');
     const date = JSON.parse(postData['date']);
+    let imagesData = postData['images'];
+    imagesData = typeof imagesData === 'object' ? imagesData : JSON.parse(imagesData);
 
     const postDOM = document.createElement('div');
     postDOM.classList.add('post');
@@ -20,7 +22,7 @@ function displayPost(postData) {
                             <i class="post-menu-button fa-solid fa-ellipsis"></i>
                          </div>
                          <div class="md-output post-content">
-                            ${parse(decodeHTML(postData['caption']))}
+                            ${parse(postData['caption'], imagesData)}
                          </div>`;
 
     feed.insertBefore(postDOM, feed.firstChild);
@@ -46,27 +48,26 @@ function displayPost(postData) {
 }
 
 // Convert HTML input into string
-function decodeHTML(input) {
-    console.log(input);
-    const patterns = [
-        { regex: /(?:<div>)?<br>(?:<\/div>)?/gm, replace: '\n' },
-        { regex: /<div>((?:(?!<img ).)*?)<\/div>/gms, replace: '\n$1\n' },
-        { regex: /<img (.+?)>/gm, replace: '\n<img $1>' },
-        { regex: /&lt;/gm, replace: '<' },
-        { regex: /&gt;/gm, replace: '>' },
-        { regex: /&amp;/gm, replace: '&' },
-        { regex: /&quot;/gm, replace: '"' },
-        { regex: /(?:&#39|&apos;)/gm, replace: '\'' }
-    ];
+// function decodeHTML(input) {
+//     console.log(input);
+//     const patterns = [
+//         { regex: /<div>(.+)<\/div>/gms, replace: '$1\n' },
+//         { regex: /<img (.+?)>/gm, replace: '\n<img $1>' },
+//         { regex: /&lt;/gm, replace: '<' },
+//         { regex: /&gt;/gm, replace: '>' },
+//         { regex: /&amp;/gm, replace: '&' },
+//         { regex: /&quot;/gm, replace: '"' },
+//         { regex: /(?:&#39|&apos;)/gm, replace: '\'' }
+//     ];
 
-    for (const { regex, replace } of patterns) {
-        input = input.replace(regex, replace);
-    }
+//     for (const { regex, replace } of patterns) {
+//         input = input.replace(regex, replace);
+//     }
     
-    input = input.replace(/\s*$/, '');
+//     input = input.replace(/\s*$/, '');
     
-    console.log(input);
-    return input;
-}
+//     console.log(input);
+//     return input;
+// }
 
-export { decodeHTML, displayPost };
+export { displayPost };

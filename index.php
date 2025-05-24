@@ -114,15 +114,28 @@
         ];
         $date = json_encode($date);
 
-        $result = $db->create_post($data['caption'], $date);
+        $result = $db->create_post($data['caption'], $data['images'], $date);
         if ($result['changes'] == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to createa post']);
         }
 
         $data['date'] = $date;
         $data['post_id'] = $result['post_id']; 
+        $data['images'] = $data['images'];
 
         echo json_encode(['success' => true, 'post_data' => $data]);
+    });
+
+    $router->add('/update-post', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->update_post($data['post_id'], $data['caption'], $data['images']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
     });
 
     $router->add('/delete-post', function () use ($db) {
@@ -131,18 +144,6 @@
         $result = $db->delete_post($data['post_id']);
         if ($result == 0) {
             echo json_encode(['success' => false]);
-        }
-
-        echo json_encode(['success' => true]);
-    });
-
-    $router->add('/update-post', function () use ($db) {
-        $data = get_json_input();
-
-        $result = $db->update_post($data['post_id'], $data['caption']);
-        if ($result == 0) {
-            echo json_encode(['success' => false]);
-            exit();
         }
 
         echo json_encode(['success' => true]);

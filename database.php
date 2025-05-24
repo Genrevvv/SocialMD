@@ -90,7 +90,7 @@
         // Content Management
         public function get_feed() {
             $stmt = $this->db->prepare('
-                SELECT posts.id AS post_id, username, date, caption
+                SELECT posts.id AS post_id, username, date, caption, images
                 FROM posts
                 JOIN users ON posts.user_id = users.id
                 WHERE users.username = :username'
@@ -101,12 +101,13 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function create_post($caption, $date) {
-            $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
+        public function create_post($caption, $images, $date) {
+            $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption, images) VALUES (:user_id, :date, :caption, :images)');
             $stmt->execute([
                 'user_id' => $_SESSION['user_id'],
                 'date' => $date,
-                'caption' => $caption
+                'caption' => $caption,
+                'images' => json_encode($images)
             ]);
 
             if ($stmt->rowCount() == 0) {
@@ -116,16 +117,20 @@
             return ['changes' => $stmt->rowCount(), 'post_id' => $this->db->lastInsertID()];
         }
 
-        public function delete_post($post_id) {
-            $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :post_id');
-            $stmt->execute(['post_id' => $post_id]);
+        public function update_post($post_id, $caption, $images) {
+            $stmt = $this->db->prepare('UPDATE posts SET caption = :caption, images = :images WHERE id = :post_id');
+            $stmt->execute([
+                'caption' => $caption, 
+                'images' => json_encode($images), 
+                'post_id' => $post_id
+            ]);
 
             return $stmt->rowCount();
         }
 
-        public function update_post($post_id, $caption) {
-            $stmt = $this->db->prepare('UPDATE posts SET caption = :caption WHERE id = :post_id');
-            $stmt->execute(['caption' => $caption, 'post_id' => $post_id]);
+        public function delete_post($post_id) {
+            $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :post_id');
+            $stmt->execute(['post_id' => $post_id]);
 
             return $stmt->rowCount();
         }

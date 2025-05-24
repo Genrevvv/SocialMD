@@ -182,6 +182,7 @@
     flex-direction: column;
 
     border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 #post-menu .option {

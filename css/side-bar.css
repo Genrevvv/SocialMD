@@ -1,0 +1,50 @@
+#side-bar {
+    /* Uncomment this bg-color to see area of #side-bar */
+    /* background-color: #ff0000aa; */
+    width: 20%;
+    height: 100%;
+    
+    display: flex;
+
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 1rem 0;
+}
+
+#side-bar span {
+    width: 90%;
+    color: var(--bright);
+    font-size: 1rem;
+
+    margin: 0.5rem 0;
+}
+
+#side-bar .user-info {
+    width: 90%;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+#side-bar .user-info:hover {
+    background-color: var(--gray);
+    cursor: pointer;
+}
+
+#side-bar .user-info .profile-img {
+    width: 2rem;
+    height: 2rem;
+}
+
+#side-bar .user-info .username-text {
+    color: var(--bright);
+    font-size: 1.2rem;
+    padding: 0;
+    margin: 0;
+}

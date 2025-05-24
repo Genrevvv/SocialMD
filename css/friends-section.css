@@ -1,4 +1,6 @@
 #friends-section {
+    /* Uncomment thisbg-color to see area of #friends-section */
+    /* background-color: #ffff00aa; */
     display: flex;
     flex-direction: column;
 
@@ -8,7 +10,7 @@
     position: fixed;
     right: 0;
 
-    margin: 1rem 0;
+    padding: 1rem 0;
 }
 
 #friends-section h2 {
@@ -33,6 +35,8 @@
 }
 
 .friend-element {    
+    width: 90%;
+    
     display: flex;
     align-items: center;
     gap: 0.7rem;

@@ -6,41 +6,10 @@
     height: 100%;
 }
 
-/* SIDE-BAR */
-#side-bar {
-    width: 20%;
-
-    height: 100%;
-    position: fixed;
-    margin: 1rem 0;
-}
-
-#side-bar span {
-    color: var(--bright);
-    font-size: 1rem;
-    margin: 1rem;
-}
-
-#side-bar .user-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    padding: 0 1rem;
-}
-
-#side-bar .user-info .profile-img {
-    width: 2rem;
-    height: 2rem;
-}
-
-#side-bar .user-info h2 {
-    color: var(--bright);
-    font-size: 1.2rem;
-}
-
 /* MAIN CONTENT */
 #main-content {
+    /* Uncomment this bg-color to see area of #main-content */
+    /* background-color: blue; */
     width: 60%;
     height: 100%;
 

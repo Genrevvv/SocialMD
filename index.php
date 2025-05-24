@@ -6,7 +6,7 @@
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router = new Router;
-    $db = new SqliteDB('socialMD.db');
+    $db = new Database('socialMD.db');
 
     $router->add('/', function () {
         if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
@@ -18,24 +18,6 @@
     });
 
     // Authentications
-    $router->add('/register', function () use ($db) {
-        $data = get_json_input();
-
-        $result = $db->user_exist($data['username']);
-        if ($result != false) {
-            echo json_encode(['error' => 'Username already exist']);
-            exit();
-        }
-        
-        $result = $db->insert_user($data['username'], $data['password'], $data['confirm']);
-        if (is_array($result) && isset($result['error'])) {
-            echo json_encode($result);
-            exit();    
-        }
-
-        echo json_encode(['success' => true]);
-    });
-
     $router->add('/login', function () use ($db) {
         $data = get_json_input();
         
@@ -58,6 +40,24 @@
         unset($_SESSION['user_id']);
 
         echo json_encode(['success' => true, 'message' => 'logout successful']);
+    });
+
+    $router->add('/register', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->user_exist($data['username']);
+        if ($result != false) {
+            echo json_encode(['error' => 'Username already exist']);
+            exit();
+        }
+        
+        $result = $db->insert_user($data['username'], $data['password'], $data['confirm']);
+        if (is_array($result) && isset($result['error'])) {
+            echo json_encode($result);
+            exit();    
+        }
+
+        echo json_encode(['success' => true]);
     });
 
     // User Management
@@ -202,7 +202,7 @@
         }
         $friend_id = $friend_id['id'];
 
-        $result = $db->send_friend_request($_SESSION['user_id'], $friend_id);
+        $result = $db->send_friend_request($friend_id);
         if ($result === 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to send friend request']);
             exit();
@@ -221,7 +221,7 @@
         }
         $friend_id = $friend_id['id'];
 
-        $result = $db->cancel_friend_request($_SESSION['user_id'], $friend_id);
+        $result = $db->cancel_friend_request($friend_id);
         if ($result == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to cancel friend request']);
             exit();

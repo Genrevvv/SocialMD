@@ -1,13 +1,22 @@
 <?php
-    class SqliteDB {
+    class Database {
         private $db = null;
 
         public function __construct($db_name = 'socialMD.db') {
+            $config = require 'config.php';
+            $config = require 'config.php';
+
             try {
-                $this->db = new SQLite3($db_name);
+                $this->db = new PDO(
+                    "mysql:host={$config['db_host']};dbname={$config['db_name']}",
+                    $config['db_user'],
+                    $config['db_pass']
+                );
+
+               $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
-            catch (Exception $e) {
-                echo json_encode(['error' => 'Unable to connect to the database']);
+            catch (PDOException $e) {
+                echo json_encode(['error' => 'Unable to connect', 'log' => $e->getMessage()]);
                 exit();
             }
         }
@@ -15,18 +24,16 @@
         // Auxiliaries
         public function user_exist($username) {
             $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username');
-            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-            $result = $stmt->execute();
+            $stmt->execute(['username' => $username]);
 
-            return $result->fetchArray();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         public function get_user_id($username) {
             $stmt = $this->db->prepare('SELECT id FROM users WHERE username = :username');
-            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-            $result = $stmt->execute();
+            $stmt->execute(['username' => $username]);
 
-            return $result->fetchArray();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         public function verify_password($username, $password) {
@@ -37,8 +44,8 @@
             }
 
             $stmt = $this->db->prepare('SELECT password FROM users WHERE username = :username');
-            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-            $result = $stmt->execute()->fetchArray();
+            $stmt->execute(['username' => $username]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (!password_verify($password, $result['password'])) {
                 echo json_encode(['success' => false, 'error' => 'Incorrect password']);
@@ -59,27 +66,25 @@
             }
             
             $stmt = $this->db->prepare('INSERT INTO users (username, password) VALUES (:username, :password)');
-            $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-            $stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), SQLITE3_TEXT);
-            
-            return $stmt->execute();
+
+            return $stmt->execute([
+                'username' => $username, 
+                'password' => password_hash($password, PASSWORD_DEFAULT)
+            ]);
         }
 
         public function delete_user($username) {
             $stmt = $this->db->prepare('DELETE FROM users WHERE username = :username');
-            $stmt->bindValue(':username', $username);
-            $result = $stmt->execute();
+            $stmt->execute(['username' => $username]);
 
-            return $this->db->changes();
+            return $stmt>rowCount();
         }
 
         public function change_username($old_username, $new_username) {
             $stmt = $this->db->prepare('UPDATE users SET username = :new_username WHERE username = :old_username');
-            $stmt->bindValue(':new_username', $new_username, SQLITE3_TEXT);
-            $stmt->bindValue(':old_username', $old_username, SQLITE3_TEXT);
-            $result = $stmt->execute();
+            $stmt->execute(['new_username' => $new_username, 'old_username' => $old_username]);
 
-            return $this->db->changes();
+            return $stmt->rowCount();
         }
         
         // Content Management
@@ -91,50 +96,38 @@
                 WHERE users.username = :username'
             );
 
-            $stmt->bindValue(':username', $_SESSION['username'], SQLITE3_TEXT);
-            $result = $stmt->execute();
+            $stmt->execute(['username' => $_SESSION['username']]);
 
-            $data = [];
-            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                $data[] = $row;
-            }
-
-            return $data;
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function create_post($caption, $date) {
-            $result = $this->get_user_id($_SESSION['username']);
-            $user_id = $result['id'];
-
             $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption) VALUES (:user_id, :date, :caption)');
-            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
-            $stmt->bindValue(':date', $date, SQLITE3_TEXT);
-            $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
-            $stmt->execute();
+            $stmt->execute([
+                'user_id' => $_SESSION['user_id'],
+                'date' => $date,
+                'caption' => $caption
+            ]);
 
-            $changes = $this->db->changes();
-            if ($changes == 0) {
+            if ($stmt->rowCount() == 0) {
                 return ['changes' => $changes];
             }
             
-            return ['changes' => $changes, 'post_id' => $this->db->lastInsertRowID()];
+            return ['changes' => $stmt->rowCount(), 'post_id' => $this->db->lastInsertID()];
         }
 
         public function delete_post($post_id) {
             $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :post_id');
-            $stmt->bindValue(':post_id', $post_id);
-            $stmt->execute();
+            $stmt->execute(['post_id' => $post_id]);
 
-            return $this->db->changes();
+            return $stmt->rowCount();
         }
 
         public function update_post($post_id, $caption) {
             $stmt = $this->db->prepare('UPDATE posts SET caption = :caption WHERE id = :post_id');
-            $stmt->bindValue(':caption', $caption, SQLITE3_TEXT);
-            $stmt->bindValue(':post_id', $post_id, SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute(['caption' => $caption, 'post_id' => $post_id]);
 
-            return $this->db->changes();
+            return $stmt->rowCount();
         }
 
         // Friends
@@ -149,24 +142,18 @@
                     AND status = "P"
                 )'
             );
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
 
-            $stmt->bindValue('user_id', $_SESSION['user_id'], SQLITE3_INTEGER);
-            $result = $stmt->execute();
-
-            $data = [];
-            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                $data[] = $row;
-            }
-
-            return $data;
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function accept_friend_request($username) {
             $friend_id = $this->get_user_id($username);
-            if ($friend_id === false) {
+            $friend_id = $friend_id['id'] ?? 0;
+
+            if ($friend_id === 0) {
                 return 0;
             }
-            $friend_id = $friend_id['id'];
 
             $stmt = $this->db->prepare('
                 UPDATE friends 
@@ -174,26 +161,23 @@
                 WHERE user_id = :friend_id
                 AND friend_id = :user_id'
             );
-            $stmt->bindValue('friend_id', $friend_id, SQLITE3_INTEGER);
-            $stmt->bindValue('user_id', $_SESSION['user_id'], SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
-            return $this->db->changes();
+            return $stmt->rowCount();
         }
 
         public function delete_friend_request($username) {
             $friend_id = $this->get_user_id($username);
-            if ($friend_id === false) {
+            $friend_id = $friend_id['id'] ?? 0;
+
+            if ($friend_id === 0) {
                 return 0;
             }
-            $friend_id = $friend_id['id'];
 
             $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :friend_id AND friend_id = :user_id');
-            $stmt->bindValue('friend_id', $friend_id, SQLITE3_INTEGER);
-            $stmt->bindValue('user_id', $_SESSION['user_id'], SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
-            return $this->db->changes();
+            return $stmt->rowCount();
         }
 
         public function find_friends() {
@@ -210,34 +194,23 @@
                     SELECT friend_id FROM friends WHERE user_id = :user_id
                 )'
             );
+            $stmt->execute(['user_id' => $user_id]);
 
-            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
-            $result = $stmt->execute();
-
-            $data = [];
-            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                $data[] = $row;
-            }
-
-            return $data;
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function send_friend_request($user_id, $friend_id) {
-            $stmt = $this->db->prepare('INSERT OR IGNORE INTO friends (user_id, friend_id) VALUES (:user_id, :friend_id)');
-            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
-            $stmt->bindValue(':friend_id', $friend_id, SQLITE3_INTEGER);
-            $stmt->execute();
+        public function send_friend_request($friend_id) {
+            $stmt = $this->db->prepare('INSERT IGNORE INTO friends (user_id, friend_id) VALUES (:user_id, :friend_id)');
+            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
-            return $this->db->changes();
+            return $stmt->rowCount();
         }
 
-        public function cancel_friend_request($user_id, $friend_id) {
+        public function cancel_friend_request($friend_id) {
             $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :user_id AND friend_id = :friend_id');
-            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
-            $stmt->bindValue(':friend_id', $friend_id, SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
-            return $this->db->changes();        
+            return $stmt->rowCount();
         }
 
         public function get_friends($username) {
@@ -254,16 +227,9 @@
                     SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
                 )
             ');
-            
-            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
-            $result = $stmt->execute();
+            $stmt->execute(['user_id' => $user_id]);
 
-            $data = [];
-            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                $data[] = $row;
-            }
-
-            return $data;
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>

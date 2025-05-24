@@ -18,6 +18,7 @@ A social media web app that allows users to use markdown syntax on posts.
 4. User Interaction System
    - Confirm and delete friend request✅
    - Send and cancel friend request ✅
+   - Display friends on friends section ✅
    - Remove friend 
    - React to posts
    - Comment on posts

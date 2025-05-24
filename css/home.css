@@ -12,6 +12,7 @@
 
     height: 100%;
     position: fixed;
+    margin: 1rem 0;
 }
 
 #side-bar span {
@@ -26,7 +27,6 @@
     gap: 1rem;
 
     padding: 0 1rem;
-    margin-top: 1rem;
 }
 
 #side-bar .user-info .profile-img {
@@ -88,31 +88,4 @@
 
 #write-post-container #create-post span {
     color: #ccc;
-}
-
-/* FRIENDS-SECTION */
-#friends-section {
-    display: flex;
-    flex-direction: column;
-
-    width: 20%;
-    height: 100%;
-
-    position: fixed;
-    right: 0;
-}
-
-#friends-section h2 {
-    color: var(--bright);
-
-    padding: 1rem;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
-#friends-section .friend-list span {
-    color: var(--bright);
-    font-size: 1rem;
-    
-    padding: 1rem;
 }

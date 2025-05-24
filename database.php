@@ -239,5 +239,31 @@
 
             return $this->db->changes();        
         }
+
+        public function get_friends($username) {
+            $result = $this->get_user_id($username);
+            $user_id = $result['id'];
+            
+            $stmt = $this->db->prepare('
+                SELECT username
+                FROM users 
+                WHERE id != :user_id
+                AND id IN (
+                    SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
+                    UNION
+                    SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
+                )
+            ');
+            
+            $stmt->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
+            $result = $stmt->execute();
+
+            $data = [];
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                $data[] = $row;
+            }
+
+            return $data;
+        }
     }
 ?>

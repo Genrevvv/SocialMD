@@ -1,0 +1,64 @@
+#friends-section {
+    display: flex;
+    flex-direction: column;
+
+    width: 20%;
+    height: 100%;
+
+    position: fixed;
+    right: 0;
+
+    margin: 1rem 0;
+}
+
+#friends-section h2 {
+    color: var(--bright);
+    font-size: 1.2rem;
+
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#friends-section .friend-list .placeholder {
+    color: var(--bright);
+    font-size: 1rem;
+    
+    padding: 1rem;
+}
+
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.friend-element {    
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    opacity: 0.5;
+}
+
+.friend-element:hover {
+    background-color: var(--dark-gray);
+    cursor: pointer;
+    opacity: 0.7;
+}
+.friend-element .profile {
+    background: url('/media/user.png');
+    background-size: cover;
+    background-position: center;
+    
+    width: 2rem;
+    height: 2rem;
+
+    border-radius: 50%;
+}
+
+.friend-element .username {
+    color: var(--bright);
+    font-weight: bold;
+}

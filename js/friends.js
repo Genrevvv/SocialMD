@@ -10,7 +10,7 @@ fetch('/friend-requests')
         }
 
         friendRequests.querySelector('.people').querySelector('.placeholder').remove();
-        for (userData of data['users']) {
+        for (let userData of data['users']) {
             console.log(userData);
             createFriendRequestUserCard(userData);
         }
@@ -53,7 +53,7 @@ function createFriendRequestUserCard(userData) {
     const deleteFriendRequest = userCardOptions.querySelector('.delete-friend-request');
 
     confirmFriendRequest.onclick = () => {
-        confirmFriendRequestHandler(userData, userCard, userCardOptions);
+        confirmFriendRequestHandler(userData, userCardOptions);
     }
 
     deleteFriendRequest.onclick = () => {

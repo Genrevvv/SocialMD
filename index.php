@@ -230,6 +230,11 @@
         echo json_encode(['success' => true]);
     });
 
+    $router->add('/get-friends', function () use ($db) {
+        $friends = $db->get_friends($_SESSION['username']);
+        echo json_encode(['users' => $friends]);
+    });
+
     $router->dispatch($path);
 
     // Auxilliary

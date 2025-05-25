@@ -45,7 +45,7 @@ header {
 
 #profile, .profile-img {
     background-color: var(--brightest);
-    background-image: url('/media/Nyawi.png');
+    background-image: url('/assets/images/Nyawi.png'); /* Placeholder, for testing only */
     background-position: center;
     background-size: cover;
     

@@ -33,7 +33,7 @@
 }
 
 #feed .post .post-header .profile-img {
-    background-image: url('/media/Nyawi.png');
+    background-image: url('/assets/images/Nyawi.png'); /* Placeholder, for testing only */
     background-position: center;
     background-size: cover;
     

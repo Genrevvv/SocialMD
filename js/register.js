@@ -25,9 +25,12 @@ form.addEventListener('submit', (e) => {
             .then(data => {
                 console.log(data);
 
-                if (data['success']) {
-                    window.location.href = '/html/login.html'
+                if (!data['success']) {
+                    document.getElementById('message').innerHTML = data['error'];
+                    return;
                 }
+
+                window.location.href = '/html/login.html'
             });
     }
 });

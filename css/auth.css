@@ -45,6 +45,7 @@ html, body {
 
 #form-container p {
     color: var(--bright);
+    margin: 0;
 }
 
 #form-container a {
@@ -88,4 +89,10 @@ html, body {
 
 #submit button:hover {
     background-color: var(--gray);
+}
+
+#message {
+    height: 1.5rem;
+    color: #ff8d8d;
+    margin: 0.5rem 0;
 }

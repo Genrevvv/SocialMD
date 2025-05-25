@@ -22,11 +22,14 @@ form.addEventListener('submit', (e) => {
             .then(res => res.json())
             .then(data => { 
                 console.log(data);
-                
-                if (data['success']) {
-                    sessionStorage.setItem('username', data['username']);                
-                    window.location.href = '/';
+                    
+                if (!data['success']) {
+                    document.getElementById('message').innerHTML = data['error'];
+                    return;
                 }
+
+                sessionStorage.setItem('username', data['username']);                
+                window.location.href = '/';
             });
     }
 

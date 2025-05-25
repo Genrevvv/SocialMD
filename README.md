@@ -19,7 +19,7 @@ A social media web app that allows users to use markdown syntax on posts.
    - Confirm and delete friend request✅
    - Send and cancel friend request ✅
    - Display friends on friends section ✅
-   - Remove friend 
+   - Unfriend user ✅
    - React to posts
    - Comment on posts
 5. Responsive Design

@@ -1,6 +1,6 @@
 const menuContent = {
     mainMenu: `<div class="user-info">
-                    <div class="profile-image" style="background-image: ${localStorage.getItem('user_profile_image')}"></div>
+                    <div class="profile-image"></div>
                     <h1>${sessionStorage.getItem('username')}</h1>
                </div>
                <div id="settings" class="menu-option">
@@ -44,6 +44,9 @@ const menuContent = {
                  </div>`
 };
 
+const navBar = document.getElementById('nav-bar');
+navBar.querySelector('.profile-image').style.backgroundImage = localStorage.getItem('user_profile_image');
+
 // Nav-bar icons
 const home = document.getElementById('home-icon');
 home.onclick = () => {
@@ -71,6 +74,7 @@ profile.onclick = (e) => {
     menuDOM = document.createElement('div');
     menuDOM.id = 'user-menu';
     menuDOM.innerHTML = menuContent.mainMenu;
+    menuDOM.querySelector('.profile-image').style.backgroundImage = localStorage.getItem('user_profile_image');
 
     profile.appendChild(menuDOM);
 

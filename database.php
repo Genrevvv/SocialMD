@@ -63,32 +63,23 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function insert_user($username, $password, $confirm) {
-            if (!(strlen($username) > 0 && strlen($password) > 0)) {
-                return ['error' => 'Empty username or password field'];
-            }
+        public function update_profile_image($profile_image) {
+            $stmt = $this->db->prepare('
+                UPDATE users 
+                SET profile_image = :profile_image 
+                WHERE id = :user_id'
+            );
+            $stmt->execute(['profile_image' => $profile_image, 'user_id' => $_SESSION['user_id']]);
 
-            if ($password != $confirm) {
-                return ['error' => 'Incorrect cofirmation password'];
-            }
-            
-            $stmt = $this->db->prepare('INSERT INTO users (username, password) VALUES (:username, :password)');
-
-            return $stmt->execute([
-                'username' => $username, 
-                'password' => password_hash($password, PASSWORD_DEFAULT)
-            ]);
-        }
-
-        public function delete_user($username) {
-            $stmt = $this->db->prepare('DELETE FROM users WHERE username = :username');
-            $stmt->execute(['username' => $username]);
-
-            return $stmt>rowCount();
+            return $stmt->rowCount();
         }
 
         public function change_username($old_username, $new_username) {
-            $stmt = $this->db->prepare('UPDATE users SET username = :new_username WHERE username = :old_username');
+            $stmt = $this->db->prepare('
+                UPDATE users 
+                SET username = :new_username 
+                WHERE username = :old_username'
+            );
             $stmt->execute(['new_username' => $new_username, 'old_username' => $old_username]);
 
             return $stmt->rowCount();

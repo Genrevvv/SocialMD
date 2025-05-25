@@ -26,10 +26,21 @@
 
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 0.5rem;
 
     padding: 0.5rem;
     border-radius: 0.5rem;
+
+    opacity: 0.7;
+}
+
+#side-bar .user-info .content { 
+    height: 2.3rem;
+   
+    display: flex;
+    align-content: center;
+    gap: 0.5rem;
 }
 
 #side-bar .user-info:hover {
@@ -37,14 +48,38 @@
     cursor: pointer;
 }
 
-#side-bar .user-info .profile-img {
+#side-bar .user-info .profile-image {
     width: 2rem;
     height: 2rem;
 }
 
-#side-bar .user-info .username-text {
+#side-bar .user-info .content .username-text {
     color: var(--bright);
+
+    display: flex;
+    align-items: center;
+
     font-size: 1.2rem;
     padding: 0;
     margin: 0;
+}
+
+.change-profile-image {
+    width: 2.3rem;
+    height: 2.3rem;
+
+    background-color: var(--dark-gray);
+    color: var(--bright);
+    font-size: 1.3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+}
+
+
+.user-info.highlighted {
+    opacity: 1 !important;
 }

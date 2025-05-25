@@ -36,3 +36,4 @@ function loadFeed() {
 }
 
 
+export { loadUser };

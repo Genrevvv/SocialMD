@@ -11,7 +11,7 @@ header {
     justify-content: space-between;
     align-items: center;
  
-    padding: 0.2rem 1rem;
+    padding: 0.3rem 1rem;
 }
 
 #nav-bar > :is(#logo, #profile) {
@@ -57,5 +57,20 @@ header {
     height: 1rem;
 
     border: 1px solid var(--darkest);
+    border-radius: 50%;
+}
+
+.profile-image {
+    /* background-color: var(--brightest); */
+    /* Placeholder, for testing only */
+    /* background-image: url('/assets/images/Nyawi.png');  */
+    background-position: center;
+    background-size: cover;
+    
+    cursor: pointer;
+
+    width: 2.8rem;
+    height: 2.8rem;
+
     border-radius: 50%;
 }

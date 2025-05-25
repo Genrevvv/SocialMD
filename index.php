@@ -17,6 +17,13 @@
         }
     });
 
+    // User Management
+    $router->add('/load-user-data', function () use ($db) {
+        $result = $db->get_user_data($_SESSION['user_id']);
+
+        echo json_encode(['success' => true, 'user_data' => $result]);
+    });
+
     // Authentications
     $router->add('/login', function () use ($db) {
         $data = get_json_input();

@@ -58,3 +58,18 @@
 #write-post-container #create-post span {
     color: #ccc;
 }
+
+.profile-image {
+    background-color: var(--brightest);
+    /* Placeholder, for testing only */
+    /* background-image: url('/assets/images/Nyawi.png');  */
+    background-position: center;
+    background-size: cover;
+    
+    cursor: pointer;
+
+    width: 2.8rem;
+    height: 2.8rem;
+
+    border-radius: 50%;
+}

@@ -43,20 +43,6 @@ header {
     font-weight: bold;
 }
 
-#profile, .profile-img {
-    background-color: var(--brightest);
-    background-image: url('/assets/images/Nyawi.png'); /* Placeholder, for testing only */
-    background-position: center;
-    background-size: cover;
-    
-    cursor: pointer;
-
-    width: 2.8rem;
-    height: 2.8rem;
-
-    border-radius: 50%;
-}
-
 #profile #drop-down {
     background-color: var(--dark-gray);
 

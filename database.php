@@ -56,6 +56,13 @@
         }
 
         // User Management
+        public function get_user_data($user_id) {
+            $stmt = $this->db->prepare('SELECT username, profile_image FROM users WHERE id = :user_id');
+            $stmt->execute(['user_id' => $user_id]);
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
         public function insert_user($username, $password, $confirm) {
             if (!(strlen($username) > 0 && strlen($password) > 0)) {
                 return ['error' => 'Empty username or password field'];

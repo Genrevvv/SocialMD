@@ -168,7 +168,7 @@
         $data = get_json_input();
 
         $result = $db->accept_friend_request($data['username']);
-        if ($result === 0) {
+        if ($result == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to accept friend request']);
             exit();
         }
@@ -176,12 +176,13 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/delete-friend-request', function () use ($db) {
+    // For deleting and canceling friend requests, and unfriending user
+    $router->add('/delete-friend-status', function () use ($db) {
         $data = get_json_input();
 
-        $result = $db->delete_friend_request($data['username']);
-        if ($result === 0) {
-            echo json_encode(['success' => false, 'error' => 'Unable to delete friend request']);
+        $result = $db->delete_friend_status($data['username']);
+        if ($result == 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to delete friend status']);
             exit();
         }
 
@@ -204,7 +205,7 @@
         $friend_id = $friend_id['id'];
 
         $result = $db->send_friend_request($friend_id);
-        if ($result === 0) {
+        if ($result == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to send friend request']);
             exit();
         }
@@ -212,24 +213,24 @@
         echo json_encode(['success' => true]);
     });
 
-    $router->add('/cancel-friend-request', function () use ($db) {
-        $data = get_json_input();
+    // $router->add('/cancel-friend-request', function () use ($db) {
+    //     $data = get_json_input();
 
-        $friend_id = $db->get_user_id($data['username']);
-        if ($friend_id == false) {
-            echo json_encode(['success' => false, 'error' => 'friend_id not found']);
-            exit();
-        }
-        $friend_id = $friend_id['id'];
+    //     $friend_id = $db->get_user_id($data['username']);
+    //     if ($friend_id == false) {
+    //         echo json_encode(['success' => false, 'error' => 'friend_id not found']);
+    //         exit();
+    //     }
+    //     $friend_id = $friend_id['id'];
 
-        $result = $db->cancel_friend_request($friend_id);
-        if ($result == 0) {
-            echo json_encode(['success' => false, 'error' => 'Unable to cancel friend request']);
-            exit();
-        }
+    //     $result = $db->cancel_friend_request($friend_id);
+    //     if ($result == 0) {
+    //         echo json_encode(['success' => false, 'error' => 'Unable to cancel friend request']);
+    //         exit();
+    //     }
 
-        echo json_encode(['success' => true]);
-    });
+    //     echo json_encode(['success' => true]);
+    // });
 
     $router->add('/get-friends', function () use ($db) {
         $friends = $db->get_friends($_SESSION['username']);

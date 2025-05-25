@@ -171,15 +171,19 @@
             return $stmt->rowCount();
         }
 
-        public function delete_friend_request($username) {
+        public function delete_friend_status($username) {
             $friend_id = $this->get_user_id($username);
-            $friend_id = $friend_id['id'] ?? 0;
+            $friend_id = is_array($friend_id) ? ($friend_id['id'] ?? 0) : 0;
 
-            if ($friend_id === 0) {
+            if ($friend_id == 0) {
                 return 0;
             }
 
-            $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :friend_id AND friend_id = :user_id');
+            $stmt = $this->db->prepare('
+                DELETE FROM friends 
+                WHERE (user_id = :user_id OR user_id = :friend_id)
+                AND (friend_id = :user_id OR friend_id = :friend_id)
+            ');
             $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
             return $stmt->rowCount();
@@ -211,12 +215,12 @@
             return $stmt->rowCount();
         }
 
-        public function cancel_friend_request($friend_id) {
-            $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :user_id AND friend_id = :friend_id');
-            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
+        // public function cancel_friend_request($friend_id) {
+        //     $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :user_id AND friend_id = :friend_id');
+        //     $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
-            return $stmt->rowCount();
-        }
+        //     return $stmt->rowCount();
+        // }
 
         public function get_friends($username) {
             $result = $this->get_user_id($username);

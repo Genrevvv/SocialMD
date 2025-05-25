@@ -38,12 +38,18 @@
     width: 90%;
     
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.7rem;
 
     padding: 0.5rem;
     border-radius: 0.5rem;
     opacity: 0.5;
+}
+
+.friend-element .friend-info {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
 }
 
 .friend-element:hover {
@@ -65,4 +71,27 @@
 .friend-element .username {
     color: var(--bright);
     font-weight: bold;
+}
+
+.friend-element .unfriend-button {
+    width: 5rem;
+    height: 2rem;
+    
+    background-color: var(--gray);
+    color: var(--bright);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 0.5rem;
+}
+
+.friend-element .unfriend-button:hover {
+    background-color: var(--light-gray);
+    cursor: pointer;
+}
+
+.friend-element.highlighted {
+    opacity: 1;
 }

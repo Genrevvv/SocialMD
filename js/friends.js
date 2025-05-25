@@ -96,7 +96,7 @@ function deleteFriendRequestHandler(userData, userCard) {
         body: JSON.stringify(userData)
     }    
     
-    fetch('/delete-friend-request', options)
+    fetch('/delete-friend-status', options)
         .then(res => res.json())
         .then(data => {
             console.log(data);
@@ -155,9 +155,10 @@ function addFriendHandler(userData, userCard, userCardOptions) {
 }
 
 function cancelRequestHandler(userData, userCard, userCardOptions, options) {
-    fetch('/cancel-friend-request', options)
+fetch('/delete-friend-status', options)
     .then(res => res.json())
     .then(data => {
+        console.log(data);
         if (!data['success']) {
             return;
         }

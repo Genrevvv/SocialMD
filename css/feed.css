@@ -233,7 +233,7 @@
     font-size: 1.3rem;
 }
 
-.post .options .button:hover > i {
+.post .options .button i:hover {
     /* background-color: var(--gray); */
     color: var(--lighter-gray);
     cursor: pointer;

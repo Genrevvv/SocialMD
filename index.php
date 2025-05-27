@@ -169,6 +169,11 @@
     });
 
     // Friends
+    $router->add('/get-friends', function () use ($db) {
+        $friends = $db->get_friends($_SESSION['username']);
+        echo json_encode(['users' => $friends]);
+    });
+
     $router->add('/friends', function () {
         if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
             header('Location: /html/friends.html');
@@ -177,7 +182,7 @@
             header('Location: /html/login.html');
         }
     });
-
+    
     $router->add('/friend-requests', function () use ($db) {
         $result = $db->get_friend_requests();
         echo json_encode(['users' => $result]);
@@ -230,30 +235,6 @@
         }
 
         echo json_encode(['success' => true]);
-    });
-
-    // $router->add('/cancel-friend-request', function () use ($db) {
-    //     $data = get_json_input();
-
-    //     $friend_id = $db->get_user_id($data['username']);
-    //     if ($friend_id == false) {
-    //         echo json_encode(['success' => false, 'error' => 'friend_id not found']);
-    //         exit();
-    //     }
-    //     $friend_id = $friend_id['id'];
-
-    //     $result = $db->cancel_friend_request($friend_id);
-    //     if ($result == 0) {
-    //         echo json_encode(['success' => false, 'error' => 'Unable to cancel friend request']);
-    //         exit();
-    //     }
-
-    //     echo json_encode(['success' => true]);
-    // });
-
-    $router->add('/get-friends', function () use ($db) {
-        $friends = $db->get_friends($_SESSION['username']);
-        echo json_encode(['users' => $friends]);
     });
 
     $router->dispatch($path);

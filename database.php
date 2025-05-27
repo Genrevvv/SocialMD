@@ -134,6 +134,25 @@
         }
 
         // Friends
+        public function get_friends($username) {
+            $result = $this->get_user_id($username);
+            $user_id = $result['id'];
+            
+            $stmt = $this->db->prepare('
+                SELECT username, profile_image
+                FROM users 
+                WHERE id != :user_id
+                AND id IN (
+                    SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
+                    UNION
+                    SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
+                )
+            ');
+            $stmt->execute(['user_id' => $user_id]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public function get_friend_requests() {
             $stmt = $this->db->prepare('
                 SELECT username
@@ -211,32 +230,6 @@
             $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
             return $stmt->rowCount();
-        }
-
-        // public function cancel_friend_request($friend_id) {
-        //     $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :user_id AND friend_id = :friend_id');
-        //     $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
-
-        //     return $stmt->rowCount();
-        // }
-
-        public function get_friends($username) {
-            $result = $this->get_user_id($username);
-            $user_id = $result['id'];
-            
-            $stmt = $this->db->prepare('
-                SELECT username
-                FROM users 
-                WHERE id != :user_id
-                AND id IN (
-                    SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
-                    UNION
-                    SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
-                )
-            ');
-            $stmt->execute(['user_id' => $user_id]);
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>

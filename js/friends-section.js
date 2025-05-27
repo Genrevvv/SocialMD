@@ -27,6 +27,10 @@ function displayFriend(userData) {
     
     friendsSection.querySelector('.friend-list').appendChild(friendElement);
 
+    const profileImage = userData['profile_image'];
+    const friendProfileImage = friendElement.querySelector('.friend-image.profile-image');
+    friendProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+
     friendElement.onclick = () => {
         if (unfriendButton !== null) {
             if (friendElement === lastFriendElement) {

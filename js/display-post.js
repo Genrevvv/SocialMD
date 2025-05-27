@@ -27,8 +27,9 @@ function displayPost(postData) {
 
     feed.insertBefore(postDOM, feed.firstChild);
 
+    const profileImage = postData['profile_image'];
     const postProfileImage = postDOM.querySelector('.profile-image');
-    postProfileImage.style.backgroundImage = `url(${postData['profile_image']})`;
+    postProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
 
     setTimeout(() => {
         const postMenuButton = postDOM.querySelector('.post-menu-button');

@@ -9,7 +9,7 @@ function loadUser() {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            const profileImagesDOM = document.querySelectorAll('.profile-image');
+            const profileImagesDOM = document.querySelectorAll('.user-image.profile-image');
             
             const profileImage = data?.user_data?.profile_image;
             const imageURL = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';

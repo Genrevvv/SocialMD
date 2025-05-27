@@ -21,7 +21,7 @@ function displayFriend(userData) {
     const friendElement = document.createElement('div');
     friendElement.classList.add('friend-element');
     friendElement.innerHTML = `<div class="friend-info">
-                                <div class="profile"></div>
+                                <div class="friend-image profile-image"></div>
                                 <span class="username">${userData['username']}</span>
                                </div>`;
     

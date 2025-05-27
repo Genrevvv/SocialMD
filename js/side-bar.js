@@ -62,7 +62,7 @@ function changeProfileImage() {
                         return;
                     }
 
-                    const profileImagesDOM = document.querySelectorAll('.profile-image');
+                    const profileImagesDOM = document.querySelectorAll('.user-image.profile-image');
                     const imageURL = `url(${imageData})`;
                     localStorage.setItem('user_profile_image', imageURL);
 
@@ -70,12 +70,12 @@ function changeProfileImage() {
                         profileDOM.style.backgroundImage = imageURL;
                     }
 
-                    const feed = document.getElementById('feed').querySelectorAll('posts');
-                    const postProfileImages = feed.querySelector('profile-image');
-                    const changeProfileImage = new CustomEvent('changeProfileImage', { profileImageURL: imageURL });
+                    const postProfileImages = document.querySelectorAll('#feed .profile-image');
+                    const changeProfileImage = new CustomEvent('changeProfileImage', { detail: { profileImageURL: imageURL } });
                     
-                    for (let profileImage of postProfileImages) {
-                        profileImage.dispatch(changeProfileImage);
+                    for (let postProfileImage of postProfileImages) {
+                        console.log(postProfileImage)
+                        postProfileImage.dispatchEvent(changeProfileImage);
                     }
                 })
         }

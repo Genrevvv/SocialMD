@@ -11,7 +11,7 @@ function displayPost(postData) {
     postDOM.classList.add('post');
     postDOM.innerHTML = `<div class="post-header">
                             <div class="user-info">
-                                <div class="profile-image"></div>
+                                <div class="user-image profile-image"></div>
                                 <div class="post-info">
                                     <span class="post-username">${postData['username']}</span>
                                     <div class="post-date">${date['date-ui']}
@@ -51,7 +51,7 @@ function displayPost(postData) {
 
         if (postData['username'] === sessionStorage.getItem('username')) {
             postProfileImage.addEventListener('changeProfileImage', (e) => {
-                postProfileImage.style.backgroundImage = e.profileImageURL;
+                postProfileImage.style.backgroundImage = e.detail.profileImageURL;
             }) 
         }
 

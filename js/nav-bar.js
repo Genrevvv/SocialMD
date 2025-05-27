@@ -1,6 +1,6 @@
 const menuContent = {
     mainMenu: `<div class="user-info">
-                    <div class="profile-image"></div>
+                    <div class="user-image profile-image"></div>
                     <h1>${sessionStorage.getItem('username')}</h1>
                </div>
                <div id="settings" class="menu-option">

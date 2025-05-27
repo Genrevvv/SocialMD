@@ -91,7 +91,11 @@
                 SELECT username, profile_image, posts.id AS post_id, date, caption, images
                 FROM posts
                 JOIN users ON posts.user_id = users.id
-                WHERE users.id = :user_id'
+                WHERE users.id = :user_id OR users.id IN (
+                    SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
+                    UNION
+                    SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
+                )'
             );
 
             $stmt->execute(['user_id' => $_SESSION['user_id']]);

@@ -36,8 +36,7 @@ fetch('/find-friends')
 function createFriendRequestUserCard(userData) {
     const userCard = document.createElement('div');
     userCard.classList.add('user-card');
-    userCard.innerHTML = `<div class="user-profile">
-                          </div>
+    userCard.innerHTML = `<div class="user-profile"></div>
                           <div class="user-info">
                             <span class="username">${userData['username']}</span>
                           </div>
@@ -47,6 +46,10 @@ function createFriendRequestUserCard(userData) {
                           </div>`; 
 
     friendRequests.querySelector('.people').appendChild(userCard);
+
+    const profileImage = userData['profile_image'];
+    const userProfileImage = userCard.querySelector('.user-profile');
+    userProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
 
     const userCardOptions = userCard.querySelector('.options');
     const confirmFriendRequest = userCardOptions.querySelector('.confirm-friend-request');
@@ -64,8 +67,7 @@ function createFriendRequestUserCard(userData) {
 function createUserCard(userData) {
     const userCard = document.createElement('div');
     userCard.classList.add('user-card');
-    userCard.innerHTML = `<div class="user-profile">
-                          </div>
+    userCard.innerHTML = `<div class="user-profile"></div>
                           <div class="user-info">
                             <span class="username">${userData['username']}</span>
                           </div>
@@ -75,7 +77,10 @@ function createUserCard(userData) {
                           </div>`; 
 
     findFriends.querySelector('.people').appendChild(userCard);
-
+    const profileImage = userData['profile_image'];
+    const userProfileImage = userCard.querySelector('.user-profile');
+    userProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+    
     const userCardOptions = userCard.querySelector('.options');
     const addFriend = userCardOptions.querySelector('.add-friend');
     const removeUser = userCardOptions.querySelector('.remove-user');

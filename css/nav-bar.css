@@ -61,9 +61,7 @@ header {
 }
 
 .profile-image {
-    /* background-color: var(--brightest); */
-    /* Placeholder, for testing only */
-    /* background-image: url('/assets/images/Nyawi.png');  */
+    background-color: var(--bright);
     background-position: center;
     background-size: cover;
     

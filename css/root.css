@@ -38,6 +38,7 @@ main {
     --very-dark: #111;
     --darkest: #000;
 
+    --lightest-gray: #ccc;
     --lighter-gray: #999;
     --light-gray: #777;
     --gray: #555;

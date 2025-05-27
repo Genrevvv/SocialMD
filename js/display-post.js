@@ -23,6 +23,16 @@ function displayPost(postData) {
                          </div>
                          <div class="md-output post-content">
                             ${parse(postData['caption'], imagesData)}
+                         </div>
+                         <div class="options">
+                            <div class="button">
+                                <i class="react-button fa-regular fa-heart"></i>
+                                <span>Like</span>
+                            </div>
+                            <div class="button">
+                                <i class="comment-button fa-regular fa-comment"></i>
+                                <span>Comment</span>
+                            </div>
                          </div>`;
 
     feed.insertBefore(postDOM, feed.firstChild);

@@ -11,7 +11,7 @@ function displayPost(postData) {
     postDOM.classList.add('post');
     postDOM.innerHTML = `<div class="post-header">
                             <div class="user-info">
-                                <div class="profile-img"></div>
+                                <div class="profile-image"></div>
                                 <div class="post-info">
                                     <span class="post-username">${postData['username']}</span>
                                     <div class="post-date">${date['date-ui']}
@@ -27,11 +27,15 @@ function displayPost(postData) {
 
     feed.insertBefore(postDOM, feed.firstChild);
 
+    const postProfileImage = postDOM.querySelector('.profile-image');
+    postProfileImage.style.backgroundImage = `url(${postData['profile_image']})`;
+
     setTimeout(() => {
-        const postMenuButton = postDOM.querySelector('.post-menu-button');    
+        const postMenuButton = postDOM.querySelector('.post-menu-button');
+        const postContent = postDOM.querySelector('.post-content');
+
         createPostMenu(postMenuButton, postDOM, postData);
 
-        const postContent = postDOM.querySelector('.post-content');
         if (postContent.scrollHeight > postContent.clientHeight) {
             const more = document.createElement('div');
             more.classList.add('more-button');
@@ -44,6 +48,13 @@ function displayPost(postData) {
                 more.remove();
             }
         }
+
+        if (postData['username'] === sessionStorage.getItem('username')) {
+            postProfileImage.addEventListener('changeProfileImage', (e) => {
+                postProfileImage.style.backgroundImage = e.profileImageURL;
+            }) 
+        }
+
     }, 0); // Delay to allow content rendering
 }
 

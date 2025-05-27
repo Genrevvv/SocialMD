@@ -32,7 +32,7 @@
     border-bottom: 1px solid var(--light-gray);
 }
 
-#feed .post .post-header .profile-img {
+#feed .post .post-header .profile-image {
     background-image: url('/assets/images/Nyawi.png'); /* Placeholder, for testing only */
     background-position: center;
     background-size: cover;

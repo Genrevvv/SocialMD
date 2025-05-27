@@ -88,13 +88,13 @@
         // Content Management
         public function get_feed() {
             $stmt = $this->db->prepare('
-                SELECT posts.id AS post_id, username, date, caption, images
+                SELECT username, profile_image, posts.id AS post_id, date, caption, images
                 FROM posts
                 JOIN users ON posts.user_id = users.id
-                WHERE users.username = :username'
+                WHERE users.id = :user_id'
             );
 
-            $stmt->execute(['username' => $_SESSION['username']]);
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }

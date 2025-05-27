@@ -69,6 +69,14 @@ function changeProfileImage() {
                     for (let profileDOM of profileImagesDOM) {
                         profileDOM.style.backgroundImage = imageURL;
                     }
+
+                    const feed = document.getElementById('feed').querySelectorAll('posts');
+                    const postProfileImages = feed.querySelector('profile-image');
+                    const changeProfileImage = new CustomEvent('changeProfileImage', { profileImageURL: imageURL });
+                    
+                    for (let profileImage of postProfileImages) {
+                        profileImage.dispatch(changeProfileImage);
+                    }
                 })
         }
 

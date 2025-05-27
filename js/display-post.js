@@ -27,11 +27,11 @@ function displayPost(postData) {
                          <div class="options">
                             <div class="button">
                                 <i class="react-button fa-regular fa-heart"></i>
-                                <span>Like</span>
+                                <span class="quantity">4</span>
                             </div>
                             <div class="button">
                                 <i class="comment-button fa-regular fa-comment"></i>
-                                <span>Comment</span>
+                                <span class="quantity">3</span>
                             </div>
                          </div>`;
 

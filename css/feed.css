@@ -233,8 +233,9 @@
     font-size: 1.3rem;
 }
 
-.post .options .button:hover {
-    background-color: var(--gray);
+.post .options .button:hover > i {
+    /* background-color: var(--gray); */
+    color: var(--lighter-gray);
     cursor: pointer;
     border-radius: 0.5rem;
 }

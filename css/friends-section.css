@@ -58,7 +58,7 @@
     opacity: 0.7;
 }
 .friend-element .profile-image {
-    background: url('/assets/images/user.png'); /* Placeholder, for testing only */
+    background-color: var(--bright);
     background-size: cover;
     background-position: center;
     

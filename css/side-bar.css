@@ -49,6 +49,7 @@
 }
 
 #side-bar .user-info .profile-image {
+    background-color: var(--bright);
     width: 2rem;
     height: 2rem;
 }

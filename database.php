@@ -155,7 +155,7 @@
 
         public function get_friend_requests() {
             $stmt = $this->db->prepare('
-                SELECT username
+                SELECT username, profile_image
                 FROM users
                 WHERE id IN (
                     SELECT user_id 
@@ -167,6 +167,32 @@
             $stmt->execute(['user_id' => $_SESSION['user_id']]);
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function find_friends() {
+            $result = $this->get_user_id($_SESSION['username']);
+            $user_id = $result['id'];
+            
+            $stmt = $this->db->prepare('
+                SELECT username, profile_image
+                FROM users 
+                WHERE id != :user_id
+                AND id NOT IN (
+                    SELECT user_id FROM friends WHERE friend_id = :user_id
+                    UNION
+                    SELECT friend_id FROM friends WHERE user_id = :user_id
+                )'
+            );
+            $stmt->execute(['user_id' => $user_id]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function send_friend_request($friend_id) {
+            $stmt = $this->db->prepare('INSERT IGNORE INTO friends (user_id, friend_id) VALUES (:user_id, :friend_id)');
+            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
+
+            return $stmt->rowCount();
         }
 
         public function accept_friend_request($username) {
@@ -201,32 +227,6 @@
                 WHERE (user_id = :user_id OR user_id = :friend_id)
                 AND (friend_id = :user_id OR friend_id = :friend_id)
             ');
-            $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
-
-            return $stmt->rowCount();
-        }
-
-        public function find_friends() {
-            $result = $this->get_user_id($_SESSION['username']);
-            $user_id = $result['id'];
-            
-            $stmt = $this->db->prepare('
-                SELECT username 
-                FROM users 
-                WHERE id != :user_id
-                AND id NOT IN (
-                    SELECT user_id FROM friends WHERE friend_id = :user_id
-                    UNION
-                    SELECT friend_id FROM friends WHERE user_id = :user_id
-                )'
-            );
-            $stmt->execute(['user_id' => $user_id]);
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        public function send_friend_request($friend_id) {
-            $stmt = $this->db->prepare('INSERT IGNORE INTO friends (user_id, friend_id) VALUES (:user_id, :friend_id)');
             $stmt->execute(['friend_id' => $friend_id, 'user_id' => $_SESSION['user_id']]);
 
             return $stmt->rowCount();

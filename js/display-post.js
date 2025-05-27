@@ -35,7 +35,7 @@ function displayPost(postData) {
         const postMenuButton = postDOM.querySelector('.post-menu-button');
         const postContent = postDOM.querySelector('.post-content');
 
-        createPostMenu(postMenuButton, postDOM, postData);
+        createPostMenu(postMenuButton, postDOM, postData, false);
 
         if (postContent.scrollHeight > postContent.clientHeight) {
             const more = document.createElement('div');
@@ -53,33 +53,12 @@ function displayPost(postData) {
         if (postData['username'] === sessionStorage.getItem('username')) {
             postProfileImage.addEventListener('changeProfileImage', (e) => {
                 postProfileImage.style.backgroundImage = e.detail.profileImageURL;
-            }) 
+            });
+
+            createPostMenu(postMenuButton, postDOM, postData, true);
         }
 
     }, 0); // Delay to allow content rendering
 }
-
-// Convert HTML input into string
-// function decodeHTML(input) {
-//     console.log(input);
-//     const patterns = [
-//         { regex: /<div>(.+)<\/div>/gms, replace: '$1\n' },
-//         { regex: /<img (.+?)>/gm, replace: '\n<img $1>' },
-//         { regex: /&lt;/gm, replace: '<' },
-//         { regex: /&gt;/gm, replace: '>' },
-//         { regex: /&amp;/gm, replace: '&' },
-//         { regex: /&quot;/gm, replace: '"' },
-//         { regex: /(?:&#39|&apos;)/gm, replace: '\'' }
-//     ];
-
-//     for (const { regex, replace } of patterns) {
-//         input = input.replace(regex, replace);
-//     }
-    
-//     input = input.replace(/\s*$/, '');
-    
-//     console.log(input);
-//     return input;
-// }
 
 export { displayPost };

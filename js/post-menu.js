@@ -3,7 +3,7 @@ import { editPostMenu } from './edit-post.js';
 let postMenu = null;
 let tempButton = null;
 
-function createPostMenu(postMenuButton, newPost, postData) {
+function createPostMenu(postMenuButton, postDOM, postData, owner) {
     postMenuButton.onclick = () => {
         if (postMenu !== null) {
             if (postMenuButton === tempButton) {
@@ -20,6 +20,16 @@ function createPostMenu(postMenuButton, newPost, postData) {
 
         tempButton = postMenuButton;
 
+        if (!owner) {
+            postMenu = createNonOwnerPostMenu(postDOM)
+            return;
+        }
+
+        postMenu = createOwnerPostMenu(postDOM, postData);
+    }
+}
+
+function createOwnerPostMenu(postDOM, postData) {
         postMenu = document.createElement('div');
         postMenu.id = 'post-menu';
         postMenu.innerHTML = `<div class="edit-post option">
@@ -31,13 +41,14 @@ function createPostMenu(postMenuButton, newPost, postData) {
                                 <span>Delete Post</span>
                              </div>`;
 
-        const postHeader = newPost.querySelector('.post-header');
+        const postHeader = postDOM.querySelector('.post-header');
         postHeader.appendChild(postMenu);
 
         // Edit Post
         const editPost = postMenu.querySelector('.edit-post');
         editPost.onclick = () => {
-            editPostMenu(postMenu, newPost, postData);
+            editPostMenu(postMenu, postDOM, postData);
+            tempButton = null;
         }
 
         // Delete Post
@@ -62,7 +73,26 @@ function createPostMenu(postMenuButton, newPost, postData) {
                 });
         }
 
+        return postMenu;
+}
+
+function createNonOwnerPostMenu(postDOM) {
+    postMenu = document.createElement('div');
+    postMenu.id = 'post-menu';
+    postMenu.innerHTML = `<div class="hide-post option">
+                            <i class="fa-solid fa-eye-slash"></i>
+                            <span>Hide Post</span>
+                        </div>`;
+
+    const postHeader = postDOM.querySelector('.post-header');
+    postHeader.appendChild(postMenu);
+
+    const hidePost = postMenu.querySelector('.hide-post');
+    hidePost.onclick = () => {
+        postDOM.remove();
     }
+
+    return postMenu;
 }
 
 export { createPostMenu };

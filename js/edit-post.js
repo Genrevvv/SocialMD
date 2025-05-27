@@ -127,7 +127,7 @@ function editPostMenu(postMenu, postDOM, postData) {
                     setTimeout(() => {
                         // Create a new post menu with the updated data
                         const postMenuButton = postDOM.querySelector('.post-menu-button');
-                        createPostMenu(postMenuButton, postDOM, postData);
+                        createPostMenu(postMenuButton, postDOM, postData, true);
 
                         // Adjust post styling againa fter editing when overflowing
                         const postContent = document.querySelector('.post-content');

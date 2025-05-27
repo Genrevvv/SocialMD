@@ -31,9 +31,9 @@ function displayPost(postData) {
                             </div>
                             <div class="button">
                                 <i class="comment-button fa-regular fa-comment"></i>
-                                <span class="quantity">3</span>
+                                <span class="quantity">3</span> 
                             </div>
-                         </div>`;
+                         </div>`; // Placeholder quantity, for display testing only
 
     feed.insertBefore(postDOM, feed.firstChild);
 

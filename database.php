@@ -55,6 +55,18 @@
             return ['success' => true];
         }
 
+        public function reaction_exist($post_id) {
+            $stmt = $this->db->prepare('
+                SELECT *
+                FROM reactions 
+                WHERE post_id = :post_id
+                AND user_id = :user_id'
+            );
+            $stmt->execute(['post_id' => $post_id, 'user_id' => $_SESSION['user_id']]);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
         // User Management
         public function get_user_data($user_id) {
             $stmt = $this->db->prepare('SELECT username, profile_image FROM users WHERE id = :user_id');
@@ -82,24 +94,36 @@
             );
             $stmt->execute(['new_username' => $new_username, 'old_username' => $old_username]);
 
-            return $stmt->rowCount();
+            return $stmt->rowCount();   
         }
         
         // Content Management
         public function get_feed() {
             $stmt = $this->db->prepare('
-                SELECT username, profile_image, posts.id AS post_id, date, caption, images
+                SELECT 
+                    username, 
+                    profile_image, 
+                    posts.id AS post_id, 
+                    date, 
+                    caption, 
+                    images, 
+                    COUNT(reactions.id) AS reactions,
+                    IF(user_reactions.id IS NOT NULL, "T", "F") AS reacted
                 FROM posts
                 JOIN users ON posts.user_id = users.id
-                WHERE users.id = :user_id OR users.id IN (
-                    SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
-                    UNION
-                    SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
-                )'
+                LEFT JOIN reactions ON posts.id = reactions.post_id
+                LEFT JOIN reactions AS user_reactions 
+                    ON posts.id = user_reactions.post_id AND user_reactions.user_id = :user_id
+                WHERE users.id = :user_id
+                OR users.id IN (
+                        SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
+                        UNION
+                        SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
+                    )
+                GROUP BY posts.id'
             );
-
             $stmt->execute(['user_id' => $_SESSION['user_id']]);
-
+            
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
@@ -135,6 +159,36 @@
             $stmt->execute(['post_id' => $post_id]);
 
             return $stmt->rowCount();
+        }
+
+        public function toggle_reaction($post_id) {
+            $result = $this->reaction_exist($post_id);
+            
+            $query = '';
+            $action = 0;
+
+            if ($result == false) {
+                $query = '
+                    INSERT INTO reactions (post_id, user_id)
+                    VALUES (:post_id, :user_id)
+                ';
+
+                $action = 1; // Add reaction
+            }
+            else {
+                $query = '
+                    DELETE FROM reactions
+                    WHERE post_id = :post_id
+                    AND user_id = :user_id
+                ';  
+
+                $action = 0; // Remove reaction
+            }
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute(['post_id' => $post_id, 'user_id' => $_SESSION['user_id']]);
+            
+            return ['changes' => $stmt->rowCount(), 'action' => $action];
         }
 
         // Friends

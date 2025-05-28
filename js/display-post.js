@@ -1,4 +1,5 @@
 import { createPostMenu  } from './post-menu.js';
+import { createPostOptions } from './post-option.js';
 import { parse } from './parse-md.js';
 
 function displayPost(postData) {
@@ -25,21 +26,27 @@ function displayPost(postData) {
                             ${parse(postData['caption'], imagesData)}
                          </div>
                          <div class="options">
-                            <div class="button">
+                            <div class="button react">
                                 <i class="react-button fa-regular fa-heart"></i>
-                                <span class="quantity">4</span>
+                                <span class="quantity">${ postData['reactions'] !== 0 ? postData['reactions'] : '' }</span>
                             </div>
-                            <div class="button">
+                            <div class="button comment">
                                 <i class="comment-button fa-regular fa-comment"></i>
                                 <span class="quantity">3</span> 
                             </div>
-                         </div>`; // Placeholder quantity, for display testing only
+                         </div>`; // Hardocoded placeholder quantity value, for display testing only
 
     feed.insertBefore(postDOM, feed.firstChild);
 
     const profileImage = postData['profile_image'];
     const postProfileImage = postDOM.querySelector('.profile-image');
     postProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+
+    const reactButton  = postDOM.querySelector('.react-button');
+    if (postData['reacted'] === 'T') {
+        reactButton.className = 'react-button fa-solid fa-heart reacted';
+    }
+
 
     setTimeout(() => {
         const postMenuButton = postDOM.querySelector('.post-menu-button');
@@ -67,6 +74,8 @@ function displayPost(postData) {
 
             createPostMenu(postMenuButton, postDOM, postData, true);
         }
+
+        createPostOptions(postDOM, postData);
 
     }, 0); // Delay to allow content rendering
 }

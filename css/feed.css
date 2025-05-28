@@ -238,3 +238,11 @@
     cursor: pointer;
     border-radius: 0.5rem;
 }
+
+.reacted {
+    color: red;
+}
+
+.reacted:hover {
+    color: rgb(167, 66, 66) !important;
+}

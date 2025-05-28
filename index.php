@@ -168,6 +168,18 @@
         echo json_encode(['success' => true]);
     });
 
+    $router->add('/toggle-reaction', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->toggle_reaction($data['post_id']);
+        if ($result['changes'] == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true, 'action' => $result['action']]);
+    });
+
     // Friends
     $router->add('/get-friends', function () use ($db) {
         $friends = $db->get_friends($_SESSION['username']);

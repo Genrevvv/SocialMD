@@ -1,3 +1,8 @@
+:root {
+    --nav-bar-height: 3.5rem;
+    --highlight-border-thickness: 0.3rem;
+}
+
 header {
     position: sticky;
     top: 0;
@@ -5,13 +10,16 @@ header {
 }
 
 #nav-bar {
+    height: calc(var(--nav-bar-height) + var(--highlight-border-thickness));
+
     background-color: var(--dark-gray);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
  
-    padding: 0.3rem 1rem;
+    /* padding: 0.3rem 1rem; */
+    padding: 0 1rem;
 }
 
 #nav-bar > :is(#logo, #profile) {
@@ -20,11 +28,15 @@ header {
 
 #nav-bar > ul {
     color: var(--bright);
-    width: 35rem;
+    width: auto;
 
     display: flex;
-    justify-content: left; /* Change to center when more option are added, or change display layout */
-    gap: 5rem;
+    justify-content: center;
+    gap: 1rem;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 
     margin: 0;
     padding: 0;
@@ -32,8 +44,17 @@ header {
 }
 
 #nav-bar > ul li i {
+    width: 7rem;
+    height: var(--nav-bar-height);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     color: var(--bright);
     font-size: 1.5rem;
+
+    border-bottom: var(--highlight-border-thickness) solid transparent;
     cursor: pointer;
 }
 
@@ -71,4 +92,8 @@ header {
     height: 2.8rem;
 
     border-radius: 50%;
+}
+
+.selected-page {
+    border-bottom: 0.3rem solid var(--blue-button) !important;
 }

@@ -1,6 +1,9 @@
 window.history.pushState({}, '', '/friends');
 console.log('/friends');
 
+const friendsIcon = document.getElementById('friends-icon');
+friendsIcon.classList.add('selected-page');
+
 const friendRequests = document.getElementById('friend-requests');
 fetch('/friend-requests')
     .then(res => res.json())

@@ -4,6 +4,9 @@ window.history.pushState({}, '', '/');
 loadUser();
 loadFeed();
 
+const homeIcon = document.getElementById('home-icon');
+homeIcon.classList.add('selected-page');
+
 function loadUser() {
     fetch('/load-user-data')
         .then(res => res.json())

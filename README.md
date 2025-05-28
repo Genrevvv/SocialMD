@@ -21,7 +21,7 @@ A social media web app that allows users to use markdown syntax on posts.
    - Send and cancel friend request ✅
    - Display friends on friends section ✅
    - Unfriend user ✅
-   - React to posts
+   - React to posts ✅
    - Comment on posts
 5. Responsive Design
 

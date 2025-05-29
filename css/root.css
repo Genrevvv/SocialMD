@@ -10,6 +10,7 @@ html, body {
 }
 
 html::-webkit-scrollbar {
+    width: 0.6rem;
     scrollbar-width: thin;
     scrollbar-color: var(--light-gray) var(--dark-gray);
 }

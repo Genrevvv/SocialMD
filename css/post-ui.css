@@ -97,6 +97,7 @@
 } 
 
 #post-text::-webkit-scrollbar {
+    width: 0.5rem;
     scrollbar-width: thin;
     scrollbar-color: var(--light-gray) var(--dark-gray);
 }

@@ -13,7 +13,6 @@ function parse(input, imagesObject) {
         { regex: /^###### (.+?)$/gm, replace: '<h6>$1</h6>' },
         { regex: /^> (.+?)$/gm, replace: '<span class="quote">$1</span>' },
         { regex: /^`([^`]+)`$/gm, replace: '<span class="inline-code">$1</span>' },
-        { regex: /^```([\s\S]+)```$/gm, replace: '<pre class="code-block">$1</pre>' },
         { regex: /\[(.+)\]\((.+)\)/gm, replace:'<a href="$2">$1</a>' },
         { regex: /\*\*(.+?)\*\*/gm, replace: '<strong>$1</strong>' },
         { regex: /__(.+?)__/gm, replace: '<strong>$1</strong>' },
@@ -24,16 +23,40 @@ function parse(input, imagesObject) {
         
     ];
 
-    const regex = /!\[(.+?)\]\((.+?)\)/gm;
-    input = input.replace(regex, (match, alt, src) => {
+    // Temporarily save code blocks
+    const codeBlocks = [];
+    input = input.replace(/```([\s\S]*)```/gm, (_, code) => {
+        codeBlocks.push(code);
+        return `<codeblock${codeBlocks.length - 1}>`;
+    });
+
+    // Format images
+    const imageRegex = /!\[(.+?)\]\((.+?)\)/gm;
+    input = input.replace(imageRegex, (_, alt, src) => {
         return `<img alt="${alt}" src="${imagesObject[src]}"`;
     });
 
+    // Format all the other patterns
     for (const { regex , replace } of patterns) {
         input = input.replace(regex, replace);
     }
 
+    // Input regex back from temporary codeBlock array
+    input = input.replace(/<codeblock(\d+)>/g, (_, i) => {
+        return `<pre class="code-block">${escapeHTML(codeBlocks[i])}</pre>`;
+    });
+    
     return input;
 }
+
+function escapeHTML(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 
 export { parse };

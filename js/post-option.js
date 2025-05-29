@@ -36,7 +36,8 @@ function createPostOptions(postDOM, postData) {
                     return;
                 }
 
-                reactQuantityDOM.innerText =  postData['reacted'] === 'T' ? reactQuantity - 1: reactQuantity;
+                reactQuantityDOM.innerText =  postData['reacted'] === 'T' ? (reactQuantity - 1 <= 0 ? '' : reactQuantity - 1) : 
+                                                                            (reactQuantity - 1 <= 0 ? '' : reactQuantity);
                 reactButton.className = 'react-button fa-regular fa-heart';
             });
     }

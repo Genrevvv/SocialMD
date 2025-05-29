@@ -12,7 +12,7 @@ function displayPost(postData) {
     postDOM.classList.add('post');
     postDOM.innerHTML = `<div class="post-header">
                             <div class="user-info">
-                                <div class="user-image profile-image"></div>
+                                <div class="profile-image"></div>
                                 <div class="post-info">
                                     <span class="post-username">${postData['username']}</span>
                                     <div class="post-date">${date['date-ui']}
@@ -47,7 +47,6 @@ function displayPost(postData) {
         reactButton.className = 'react-button fa-solid fa-heart reacted';
     }
 
-
     setTimeout(() => {
         const postMenuButton = postDOM.querySelector('.post-menu-button');
         const postContent = postDOM.querySelector('.post-content');
@@ -68,10 +67,7 @@ function displayPost(postData) {
         }
 
         if (postData['username'] === sessionStorage.getItem('username')) {
-            postProfileImage.addEventListener('changeProfileImage', (e) => {
-                postProfileImage.style.backgroundImage = e.detail.profileImageURL;
-            });
-
+            postProfileImage.classList.add('user-image');
             createPostMenu(postMenuButton, postDOM, postData, true);
         }
 

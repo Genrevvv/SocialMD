@@ -30,13 +30,13 @@ function createPostOptions(postDOM, postData) {
                 console.log(reactQuantity);
 
                 if (data['action'] == 1) {
-                    reactQuantityDOM.innerText = postData['reacted'] ? reactQuantity : reactQuantity + 1;
+                    reactQuantityDOM.innerText = postData['reacted'] === 'T' ? reactQuantity : reactQuantity + 1;
                     reactButton.className = 'react-button fa-solid fa-heart reacted';
 
                     return;
                 }
 
-                reactQuantityDOM.innerText = reactQuantity - 1 < 0 ? '' : reactQuantity - 1;
+                reactQuantityDOM.innerText =  postData['reacted'] === 'T' ? reactQuantity - 1: reactQuantity;
                 reactButton.className = 'react-button fa-regular fa-heart';
             });
     }

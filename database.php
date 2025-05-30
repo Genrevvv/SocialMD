@@ -130,8 +130,8 @@
                     posts.date AS date, 
                     caption, 
                     images, 
-                    COUNT(reactions.id) AS reactions,
-                    COUNT(comments.id) AS comments,
+                    COUNT(DISTINCT reactions.id) AS reactions,
+                    COUNT(DISTINCT comments.id) AS comments,
                     IF(user_reactions.id IS NOT NULL, "T", "F") AS reacted
                 FROM posts
                 JOIN users ON posts.user_id = users.id

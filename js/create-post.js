@@ -34,7 +34,7 @@ createPost.onclick = () => {
                              </div>`;   
 
     document.getElementById('main').appendChild(writePostUI);
-
+    
     const postText = document.getElementById('post-text'); 
     const addImage = document.getElementById('add-image');
     const cancelCreate = document.getElementById('cancel-create');

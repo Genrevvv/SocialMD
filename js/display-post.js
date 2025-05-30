@@ -39,7 +39,7 @@ function displayPost(parentDOM, postData) {
 
     const profileImage = postData['profile_image'];
     const postProfileImage = postDOM.querySelector('.profile-image');
-    postProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+    postProfileImage.style.backgroundImage = localStorage.getItem('user_profile_image');
 
     const reactButton  = postDOM.querySelector('.react-button');
     if (postData['reacted'] === 'T') {

@@ -64,7 +64,7 @@ function changeProfileImage() {
 
                     const profileImagesDOM = document.querySelectorAll('.user-image.profile-image');
                     const imageURL = `url(${imageData})`;
-                    localStorage.setItem('user_profile_image', imageURL);
+                    localStorage.setItem('user_profile_image', imageData);
 
                     for (let profileDOM of profileImagesDOM) {
                         profileDOM.style.backgroundImage = imageURL;

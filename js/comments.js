@@ -33,13 +33,16 @@ function displayComments(postData) {
 
     document.getElementById('main').appendChild(commentsUI);
 
+    const commentText = commentsUI.querySelector('#comment-text');
     const postContent = commentsUI.querySelector('.post-content');
     const closeComments = commentsUI.querySelector('#close-comments');
     const commentProfileImage = commentsUI.querySelector('.user-image.profile-image');
     const submitComment = commentsUI.querySelector('#submit-comment');
 
+    commentText.focus();
+    
     displayPost(postContent, postData);
-    commentProfileImage.style.backgroundImage = localStorage.getItem('user_profile_image');
+    commentProfileImage.style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
 
     loadComments(commentsUI, postData);
 
@@ -67,7 +70,7 @@ function loadComments(commentsUI, postData) {
     fetch('/load-comments', options)
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            console.log(data['result']);
 
             for (let commentData of data['result']) {
                 console.log(commentData);
@@ -101,7 +104,8 @@ function submitCommentHandler(commentsUI, postData) {
             const commentData = {
                 'username': sessionStorage.getItem('username'),
                 'date': data['data']['date'],
-                'comment_text': commentText.value
+                'comment_text': commentText.value,
+                'profile_image': localStorage.getItem('user_profile_image')
             }
 
             displayComment(commentsContainer, commentData);
@@ -126,7 +130,7 @@ function displayComment(commentsContainer, commentData) {
     commentsContainer.insertBefore(commentDOM, commentsContainer.firstChild);
 
     const commentProfileImage = commentDOM.querySelector('.user-image.profile-image');
-    commentProfileImage.style.backgroundImage = localStorage.getItem('user_profile_image');
+    commentProfileImage.style.backgroundImage = `url(${commentData['profile_image']})`;
 }
 
 export { displayComments };

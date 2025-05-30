@@ -143,6 +143,7 @@
         $data['images'] = $data['images'];
         $data['reactions'] = 0;
         $data['reacted'] = 'F';
+        $data['comments'] = 0;
 
         echo json_encode(['success' => true, 'post_data' => $data]);
     });

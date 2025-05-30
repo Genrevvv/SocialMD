@@ -45,7 +45,7 @@ const menuContent = {
 };
 
 const navBar = document.getElementById('nav-bar');
-navBar.querySelector('.profile-image').style.backgroundImage = localStorage.getItem('user_profile_image');
+navBar.querySelector('.profile-image').style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
 
 // Nav-bar icons
 const home = document.getElementById('home-icon');
@@ -74,7 +74,7 @@ profile.onclick = (e) => {
     menuDOM = document.createElement('div');
     menuDOM.id = 'user-menu';
     menuDOM.innerHTML = menuContent.mainMenu;
-    menuDOM.querySelector('.profile-image').style.backgroundImage = localStorage.getItem('user_profile_image');
+    menuDOM.querySelector('.profile-image').style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
 
     profile.appendChild(menuDOM);
 

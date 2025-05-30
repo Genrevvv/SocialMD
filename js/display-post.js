@@ -37,9 +37,11 @@ function displayPost(parentDOM, postData) {
 
     parentDOM.insertBefore(postDOM, parentDOM.firstChild);
 
-    const profileImage = postData['profile_image'];
+    const profileImage = postData['username'] === sessionStorage.getItem('username') ? 
+                         localStorage.getItem('user_profile_image') : postData['profile_image'];
+
     const postProfileImage = postDOM.querySelector('.profile-image');
-    postProfileImage.style.backgroundImage = localStorage.getItem('user_profile_image');
+    postProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
 
     const reactButton  = postDOM.querySelector('.react-button');
     if (postData['reacted'] === 'T') {

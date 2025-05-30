@@ -16,7 +16,7 @@ function loadUser() {
             
             const profileImage = data?.user_data?.profile_image;
             const imageURL = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
-            localStorage.setItem('user_profile_image', imageURL);
+            localStorage.setItem('user_profile_image', profileImage);
 
             for (let profileDOM of profileImagesDOM) {
                 profileDOM.style.backgroundImage = imageURL;

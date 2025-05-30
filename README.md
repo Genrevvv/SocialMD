@@ -22,7 +22,12 @@ A social media web app that allows users to use markdown syntax on posts.
    - Display friends on friends section ✅
    - Unfriend user ✅
    - React to posts ✅
-   - Comment on posts
+   - Post comments:
+      - Load post comments ✅
+      - Create a comment ✅
+      - Delete a comment (tentative)
+      - Edit a comment (tentative)
+      - React to comments (tentative)
 5. Responsive Design
 
 ### Requirements:

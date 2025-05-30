@@ -127,16 +127,18 @@
                     username, 
                     profile_image, 
                     posts.id AS post_id, 
-                    date, 
+                    posts.date AS date, 
                     caption, 
                     images, 
                     COUNT(reactions.id) AS reactions,
+                    COUNT(comments.id) AS comments,
                     IF(user_reactions.id IS NOT NULL, "T", "F") AS reacted
                 FROM posts
                 JOIN users ON posts.user_id = users.id
                 LEFT JOIN reactions ON posts.id = reactions.post_id
                 LEFT JOIN reactions AS user_reactions 
                     ON posts.id = user_reactions.post_id AND user_reactions.user_id = :user_id
+                LEFT JOIN comments ON posts.id = comments.post_id AND users.id = comments.user_id
                 WHERE users.id = :user_id
                 OR users.id IN (
                         SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"

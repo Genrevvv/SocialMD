@@ -31,9 +31,9 @@ function displayPost(parentDOM, postData) {
                             </div>
                             <div class="button comment">
                                 <i class="comment-button fa-regular fa-comment"></i>
-                                <span class="quantity">3</span> 
+                                <span class="quantity">${ postData['comments'] !== 0 ? postData['comments'] : '' }</span> 
                             </div>
-                         </div>`; // Hardocoded placeholder quantity value, for display testing only
+                         </div>`;
 
     parentDOM.insertBefore(postDOM, parentDOM.firstChild);
 
@@ -46,6 +46,8 @@ function displayPost(parentDOM, postData) {
         reactButton.className = 'react-button fa-solid fa-heart reacted';
     }
     
+    console.log(postData);
+
     setTimeout(() => {
         const postMenuButton = postDOM.querySelector('.post-menu-button');
         const postContent = postDOM.querySelector('.post-content');

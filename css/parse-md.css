@@ -33,6 +33,8 @@
 }
 
 .md-output span:is(.inline-code) {
+    display: inline-block;
+        
     background-color: var(--dark-gray);
     color: var(--bright);
     

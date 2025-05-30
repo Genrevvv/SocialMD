@@ -12,7 +12,7 @@ function parse(input, imagesObject) {
         { regex: /^##### (.+?)$/gm, replace: '<h5>$1</h5>' },
         { regex: /^###### (.+?)$/gm, replace: '<h6>$1</h6>' },
         { regex: /^> (.+?)$/gm, replace: '<span class="quote">$1</span>' },
-        { regex: /^`([^`]+)`$/gm, replace: '<span class="inline-code">$1</span>' },
+        { regex: /`([^`]+?)`/g, replace: '<span class="inline-code">$1</span>' },
         { regex: /\[(.+)\]\((.+)\)/gm, replace:'<a href="$2">$1</a>' },
         { regex: /\*\*(.+?)\*\*/gm, replace: '<strong>$1</strong>' },
         { regex: /__(.+?)__/gm, replace: '<strong>$1</strong>' },

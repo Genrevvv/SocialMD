@@ -1,4 +1,4 @@
-CREATE DATABASE socialMD;
+CREATE DATABASE IF NOT EXISTS socialMD;
 USE socialMD;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -29,9 +29,19 @@ CREATE TABLE IF NOT EXISTS posts (
 
 CREATE TABLE IF NOT EXISTS reactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    post_id INT NOT NULL,
     user_id INT NOT NULL,
-    UNIQUE (post_id, user_id),
-    FOREIGN KEY (post_id) REFERENCES posts(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    post_id INT NOT NULL,
+    UNIQUE (user_id, post_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    date TEXT NOT NULL,
+    comment_text TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
 );

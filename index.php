@@ -182,6 +182,28 @@
         echo json_encode(['success' => true, 'action' => $result['action']]);
     });
 
+    $router->add('/load-comments', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->get_comments($data['post_id']);
+        echo json_encode(['result' => $result]);
+    });
+
+    $router->add('/create-comment', function () use ($db) {
+        $data = get_json_input();
+        $date = date('F d, Y');
+        
+        $result = $db->create_comment($data['post_id'], $date, $data['comment_text']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        $data['date'] = $date;
+
+        echo json_encode(['success' => true, 'data' => $data]);
+    });
+
     // Friends
     $router->add('/get-friends', function () use ($db) {
         $friends = $db->get_friends($_SESSION['username']);

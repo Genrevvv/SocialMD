@@ -214,6 +214,38 @@
             return ['changes' => $stmt->rowCount(), 'action' => $action];
         }
 
+        public function get_comments($post_id) {
+            $stmt = $this->db->prepare('
+                SELECT
+                    username,
+                    profile_image,
+                    date,
+                    comment_text
+                FROM comments 
+                JOIN users ON comments.user_id = users.id
+                WHERE post_id = :post_id'
+            );
+            $stmt->execute(['post_id' => $post_id]);
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function create_comment($post_id, $date, $comment_text) {
+            $stmt = $this->db->prepare('
+                INSERT INTO comments (user_id, post_id, date, comment_text)
+                VALUES (:user_id, :post_id, :date, :comment_text);
+            ');
+
+            $stmt->execute([
+                'user_id' => $_SESSION['user_id'],
+                'post_id' => $post_id,
+                'date' => $date,
+                'comment_text' => $comment_text
+            ]);
+
+            return $stmt->rowCount();
+        }
+
         // Friends
         public function get_friends($username) {
             $result = $this->get_user_id($username);

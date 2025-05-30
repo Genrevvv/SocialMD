@@ -135,3 +135,41 @@
     color: var(--link);
     cursor: pointer;
 }
+
+.comments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+
+    padding: 0.5rem 0.7rem;
+}
+
+.comments-container .comment {
+    background-color: inherit;
+
+    display: flex;
+    gap: 0.7rem;
+    
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--gray);
+}
+
+.comments-container .comment .content {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment .content .username {
+    font-weight: bold;
+}
+
+.comment .content .date  {
+    color: var(--lighter-gray);
+    font-size: 0.7rem;
+}
+
+.comment .content .comment-content {
+    display: block; 
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+}

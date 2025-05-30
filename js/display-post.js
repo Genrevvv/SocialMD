@@ -2,8 +2,7 @@ import { createPostMenu  } from './post-menu.js';
 import { createPostOptions } from './post-option.js';
 import { parse } from './parse-md.js';
 
-function displayPost(postData) {
-    const feed = document.getElementById('feed');
+function displayPost(parentDOM, postData) {
     const date = JSON.parse(postData['date']);
     let imagesData = postData['images'];
     imagesData = typeof imagesData === 'object' ? imagesData : JSON.parse(imagesData);
@@ -36,7 +35,7 @@ function displayPost(postData) {
                             </div>
                          </div>`; // Hardocoded placeholder quantity value, for display testing only
 
-    feed.insertBefore(postDOM, feed.firstChild);
+    parentDOM.insertBefore(postDOM, parentDOM.firstChild);
 
     const profileImage = postData['profile_image'];
     const postProfileImage = postDOM.querySelector('.profile-image');
@@ -46,7 +45,7 @@ function displayPost(postData) {
     if (postData['reacted'] === 'T') {
         reactButton.className = 'react-button fa-solid fa-heart reacted';
     }
-
+    
     setTimeout(() => {
         const postMenuButton = postDOM.querySelector('.post-menu-button');
         const postContent = postDOM.querySelector('.post-content');

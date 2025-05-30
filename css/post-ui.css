@@ -1,6 +1,6 @@
 #write-post {
-    background-color: #444;
-    color: #fff;
+    background-color: var(--dark-gray);
+    color: var(--bright);
 
     width: 50rem;
     height: 40rem;
@@ -9,6 +9,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -45%);
+    z-index: 1;
 
     border-radius: 1rem;
 }
@@ -98,17 +99,6 @@
 
 #post-text::-webkit-scrollbar {
     width: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--light-gray) var(--dark-gray);
-}
-
-#post-text::-webkit-scrollbar-thumb {
-    background-color: var(--light-gray);
-    border-radius: 1rem;
-}
-
-#post-text::-webkit-scrollbar-track {
-    background-color: var(--dark-gray);
 }
 
 .images-list-section {

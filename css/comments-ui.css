@@ -1,0 +1,131 @@
+#comments-ui {
+    width: 50rem;
+    height: 40rem;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--dark);
+    color: var(--bright);
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    z-index: 1;
+
+    border-radius: 1rem;
+    overflow-y: hidden;
+}
+
+#comments-ui::-webkit-scrollbar {
+    height: 0.5rem;
+}
+
+#comments-ui .header {
+    background-color: inherit;
+    display: flex;
+    justify-content: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom: 1px solid var(--gray);
+}
+
+#comments-ui .header h1 {
+    font-size: 1.5rem;
+}
+
+#close-comments {
+    background-color: #555;
+    cursor: pointer;
+
+    position: absolute;
+    right: 0;
+    transform: translate(-1rem, 0.5rem);
+
+    font-size: 2rem;
+    text-align: center;
+    align-content: center;
+
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+}
+
+#comments-ui .content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 6rem;
+}
+
+#comments-ui .post-content {
+    border-bottom: 1px solid var(--gray);
+}
+
+#comments-ui .post {
+    width: 95%;
+    background-color: inherit;
+}
+
+
+.comment-input-bar {
+    background-color: inherit;
+    width: calc(100% - 1.4rem); /* max height - total horizontal padding */
+    height: 10rem;
+
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.7rem;
+
+    position: fixed;
+    bottom: 0;
+}
+
+.comment-text-container {
+    background-color: var(--dark-gray);
+    flex: 1;
+    
+    display: flex;
+    overflow-y: auto;
+
+    padding: 0.3rem;
+    border-radius: 0.7rem;
+}
+
+#comment-text {
+    background-color: inherit;
+    flex: 1;
+
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 1px;
+    line-height: 1.5;
+
+
+    border: none;
+    resize: none;
+}
+
+#comment-text:focus {
+    outline: none;
+}
+
+.submit-comment-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#submit-comment {
+    color: var(--blue-button);
+    font-weight: bold;
+    margin: 1rem 0.5rem;
+}
+
+#submit-comment:hover {
+    color: var(--link);
+    cursor: pointer;
+}

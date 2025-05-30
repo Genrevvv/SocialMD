@@ -33,8 +33,10 @@ function loadFeed() {
                 return;
             }
             
+            const feed = document.getElementById('feed');
+
             for (let postData of data['result']) {
-                displayPost(postData);
+                displayPost(feed, postData);
             }
         });
 }

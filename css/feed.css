@@ -9,7 +9,7 @@
     margin-bottom: 1rem;
 }
 
-#feed .post {
+.post {
     background-color: var(--dark);
     
     width: 60%;
@@ -20,7 +20,7 @@
     overflow-y: hidden;
 }
 
-#feed .post .post-header {
+.post .post-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,10 +29,9 @@
     position: relative;
 
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--light-gray);
 }
 
-#feed .post .post-header .profile-image {
+.post .post-header .profile-image {
     background-color: var(--bright);
     background-position: center;
     background-size: cover;
@@ -45,32 +44,34 @@
     border-radius: 50%;
 }
 
-#feed .post .post-header .user-info {
+.post .post-header .user-info {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-#feed .post .post-username {
+.post .post-username {
     color: var(--bright);
     font-size: 1rem;
     font-weight: bold;
 }
 
-#feed .post .post-date {
+.post .post-date {
     width: auto;
     
     position: relative;
+    z-index: 1;
+    
     color: #bbb;
     font-size: smaller;
 }
 
-#feed .post .post-date:hover {
+.post .post-date:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-#feed .post .hover-date {
+.post .hover-date {
     color: var(--darkest);
 
     width: 13.5rem;
@@ -83,7 +84,7 @@
     visibility: hidden;
 }
 
-#feed .post .post-date:hover .hover-date {
+.post .post-date:hover .hover-date {
     background-color: #bbb;
 
     text-align: center;
@@ -94,7 +95,7 @@
     visibility: visible;
 }
 
-#feed .post .post-header .post-menu-button {
+.post .post-header .post-menu-button {
     width: 2rem;
     height: 2rem;
 
@@ -108,12 +109,12 @@
     border-radius: 50%;
 }
 
-#feed .post .post-header .post-menu-button:hover {
+.post .post-header .post-menu-button:hover {
     background-color: var(--dark-gray);
     cursor: pointer;
 }
 
-#feed .post .post-content {
+.post .post-content {
     color: var(--bright);
     max-height: 25rem; /* ADJUST TO SOMETHING HIGHER LATER*/
     
@@ -123,7 +124,7 @@
     overflow-y: hidden;
 }
 
-#feed .post .more-button {
+.post .more-button {
     background: linear-gradient(to top, 
         #333 0%,
         #333  40%,
@@ -151,7 +152,7 @@
     transition: background-size 1s ease, color 1s ease;
 }
 
-#feed .post .more-button:hover {
+.post .more-button:hover {
     background: linear-gradient(to top, 
         #333 0%,
         #333a 40%,
@@ -164,7 +165,7 @@
     color: var(--bright);
 }
 
-#feed .post img {
+.post img {
     max-width: 20rem;
     max-height: 20rem;
 

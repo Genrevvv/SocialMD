@@ -85,15 +85,4 @@
 
 .md-output pre.code-block::-webkit-scrollbar {
     height: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--light-gray) var(--dark-gray);
-}
-
-.md-output pre.code-block::-webkit-scrollbar-thumb {
-    background-color: var(--light-gray);
-    border-radius: 1rem;
-}
-
-.md-output pre.code-block::-webkit-scrollbar-track {
-    background-color: var(--dark-gray);
 }

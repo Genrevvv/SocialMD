@@ -4,6 +4,11 @@ import { parse } from './parse-md.js';
 let commentsUI = null;
 
 function displayComments(postData) {
+    if (commentsUI !== null) {
+        return;
+    }
+
+    console.log('dwdwd');
     commentsUI = document.createElement('div');
     commentsUI.id = 'comments-ui';
     commentsUI.innerHTML = `<div class="header">
@@ -40,6 +45,7 @@ function displayComments(postData) {
 
     closeComments.onclick = () => {
         commentsUI.remove();
+        commentsUI = null;
     }
 
     submitComment.onclick = () => {

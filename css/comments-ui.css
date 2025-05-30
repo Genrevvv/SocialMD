@@ -1,3 +1,7 @@
+:root {
+    --input-bar-height: 10rem;
+}
+
 #comments-ui {
     width: 50rem;
     height: 40rem;
@@ -57,7 +61,9 @@
 #comments-ui .content {
     flex: 1;
     overflow-y: auto;
-    padding-bottom: 6rem;
+
+    /* Ghost margin, allocates space for displaying the comment input bar*/
+    margin-bottom: calc(var(--input-bar-height) + 1rem);
 }
 
 #comments-ui .post-content {
@@ -73,7 +79,7 @@
 .comment-input-bar {
     background-color: inherit;
     width: calc(100% - 1.4rem); /* max height - total horizontal padding */
-    height: 10rem;
+    height: var(--input-bar-height);
 
     display: flex;
     gap: 0.5rem;
@@ -86,7 +92,7 @@
 .comment-text-container {
     background-color: var(--dark-gray);
     flex: 1;
-    
+
     display: flex;
     overflow-y: auto;
 

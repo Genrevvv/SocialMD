@@ -102,7 +102,8 @@ createPost.onclick = () => {
                 console.log(postData['date']);
                 console.log(JSON.parse(postData['date']));
 
-                displayPost(postData);
+                const feed = document.getElementById('feed');
+                displayPost(feed, postData);
                 
                 writePostUI.remove();
                 writePostUI = null;

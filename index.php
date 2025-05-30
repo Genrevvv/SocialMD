@@ -141,6 +141,8 @@
         $data['date'] = $date;
         $data['post_id'] = $result['post_id']; 
         $data['images'] = $data['images'];
+        $data['reactions'] = 0;
+        $data['reacted'] = 'F';
 
         echo json_encode(['success' => true, 'post_data' => $data]);
     });

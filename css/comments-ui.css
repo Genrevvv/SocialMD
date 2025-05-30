@@ -63,7 +63,7 @@
     overflow-y: auto;
 
     /* Ghost margin, allocates space for displaying the comment input bar*/
-    margin-bottom: calc(var(--input-bar-height) + 1rem);
+    /* margin-bottom: calc(var(--input-bar-height) + 1rem); */
 }
 
 #comments-ui .post-content {
@@ -85,7 +85,7 @@
     gap: 0.5rem;
     padding: 0.7rem;
 
-    position: fixed;
+    position: sticky;
     bottom: 0;
 }
 

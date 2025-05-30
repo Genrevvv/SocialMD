@@ -4,7 +4,6 @@
 
         public function __construct($db_name = 'socialMD.db') {
             $config = require 'config.php';
-            $config = require 'config.php';
 
             try {
                 $this->db = new PDO(
@@ -68,6 +67,30 @@
         }
 
         // User Management
+        public function insert_user($username, $password, $confirm) {
+            if (!(strlen($username) > 0 && strlen($password) > 0)) {
+                return ['error' => 'Empty username or password field'];
+            }
+
+            if ($password != $confirm) {
+                return ['error' => 'Incorrect cofirmation password'];
+            }
+            
+            $stmt = $this->db->prepare('INSERT INTO users (username, password) VALUES (:username, :password)');
+
+            return $stmt->execute([
+                'username' => $username, 
+                'password' => password_hash($password, PASSWORD_DEFAULT)
+            ]);
+        }
+
+        public function delete_user($username) {
+            $stmt = $this->db->prepare('DELETE FROM users WHERE username = :username');
+            $stmt->execute(['username' => $username]);
+
+            return $stmt->rowCount();
+        }
+
         public function get_user_data($user_id) {
             $stmt = $this->db->prepare('SELECT username, profile_image FROM users WHERE id = :user_id');
             $stmt->execute(['user_id' => $user_id]);

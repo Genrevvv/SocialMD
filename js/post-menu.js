@@ -68,7 +68,7 @@ function createOwnerPostMenu(postDOM, postData) {
                 .then(res => res.json())
                 .then(data => {
                     if (data['success']) {
-                        newPost.remove();
+                        postDOM.remove();
                     }
                 });
         }
@@ -82,7 +82,7 @@ function createNonOwnerPostMenu(postDOM) {
     postMenu.innerHTML = `<div class="hide-post option">
                             <i class="fa-solid fa-eye-slash"></i>
                             <span>Hide Post</span>
-                        </div>`;
+                         </div>`;
 
     const postHeader = postDOM.querySelector('.post-header');
     postHeader.appendChild(postMenu);

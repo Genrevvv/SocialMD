@@ -33,8 +33,13 @@ createPost.onclick = () => {
                                 <div id="submit-post">Post</div>
                              </div>`;   
 
-    document.getElementById('main').appendChild(writePostUI);
-    
+    const uiBlock = document.createElement('div');
+    uiBlock.id = 'ui-block';
+    uiBlock.appendChild(writePostUI);
+
+    document.getElementById('main').appendChild(uiBlock);
+    document.body.style.overflowY = 'hidden'; // Prevent user from scrolling
+
     const postText = document.getElementById('post-text'); 
     const addImage = document.getElementById('add-image');
     const cancelCreate = document.getElementById('cancel-create');
@@ -73,7 +78,9 @@ createPost.onclick = () => {
 
     // Close create post UI
     cancelCreate.onclick = () => {
-        writePostUI.remove()
+        document.body.style.overflowY = 'auto';
+        uiBlock.remove();
+
         writePostUI = null;
     }
 
@@ -105,7 +112,9 @@ createPost.onclick = () => {
                 const feed = document.getElementById('feed');
                 displayPost(feed, postData, localStorage.getItem('user_profile_image'));
                 
-                writePostUI.remove();
+                document.body.style.overflowY = 'auto';
+                uiBlock.remove();
+
                 writePostUI = null;
             });
     }

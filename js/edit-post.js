@@ -39,7 +39,13 @@ function editPostMenu(postMenu, postDOM, postData) {
                             <div id="update-post">Save</div>
                             </div>`;   
 
-    document.getElementById('main').appendChild(editPostUI);
+
+    const uiBlock = document.createElement('div');
+    uiBlock.id = 'ui-block';
+    uiBlock.appendChild(editPostUI);
+
+    document.getElementById('main').appendChild(uiBlock);
+    document.body.style.overflowY = 'hidden'; // Prevent user from scrolling
 
     const postText = document.getElementById('post-text');
     const addImage = document.getElementById('add-image');
@@ -91,7 +97,9 @@ function editPostMenu(postMenu, postDOM, postData) {
 
     // Close edit post UI
     cancelEdit.onclick = () => {
-        editPostUI.remove()
+        document.body.style.overflowY = 'auto';
+        uiBlock.remove();
+        
         editPostUI = null;
     }
 
@@ -121,7 +129,9 @@ function editPostMenu(postMenu, postDOM, postData) {
                     const postContent = postDOM.querySelector('.post-content');
                     postContent.innerHTML = parse(postData['caption'], postData['images']);
 
-                    editPostUI.remove();
+                    document.body.style.overflowY = 'auto';
+                    uiBlock.remove();
+                    
                     editPostUI = null;
                     
                     setTimeout(() => {

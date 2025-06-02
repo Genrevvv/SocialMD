@@ -8,7 +8,6 @@ function displayComments(postData) {
         return;
     }
 
-    console.log('dwdwd');
     commentsUI = document.createElement('div');
     commentsUI.id = 'comments-ui';
     commentsUI.innerHTML = `<div class="header">
@@ -31,7 +30,12 @@ function displayComments(postData) {
                                 </div>
                             </div>`;
 
-    document.getElementById('main').appendChild(commentsUI);
+    const uiBlock = document.createElement('div');
+    uiBlock.id = 'ui-block';
+    uiBlock.appendChild(commentsUI);
+
+    document.getElementById('main').appendChild(uiBlock);
+    document.body.style.overflowY = 'hidden'; // Prevent user from scrolling
 
     const commentText = commentsUI.querySelector('#comment-text');
     const postContent = commentsUI.querySelector('.post-content');
@@ -47,7 +51,9 @@ function displayComments(postData) {
     loadComments(commentsUI, postData);
 
     closeComments.onclick = () => {
-        commentsUI.remove();
+        document.body.style.overflowY = 'auto';
+        uiBlock.remove();
+
         commentsUI = null;
     }
 

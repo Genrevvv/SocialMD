@@ -58,3 +58,15 @@
 #write-post-container #create-post span {
     color: #ccc;
 }
+
+/* General style for UI block */
+#ui-block {
+    width: 100vw;
+    height: 100vh;
+    background-color: #000a;
+
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+

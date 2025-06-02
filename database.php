@@ -76,11 +76,14 @@
                 return ['error' => 'Incorrect cofirmation password'];
             }
             
-            $stmt = $this->db->prepare('INSERT INTO users (username, password) VALUES (:username, :password)');
+            $stmt = $this->db->prepare('
+                INSERT INTO users (username, password, profile_image)
+                 VALUES (:username, :password, :profile_image)');
 
             return $stmt->execute([
                 'username' => $username, 
-                'password' => password_hash($password, PASSWORD_DEFAULT)
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'profile_image' => '/assets/images/user.png'
             ]);
         }
 

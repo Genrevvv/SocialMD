@@ -103,7 +103,7 @@ createPost.onclick = () => {
                 console.log(JSON.parse(postData['date']));
 
                 const feed = document.getElementById('feed');
-                displayPost(feed, postData);
+                displayPost(feed, postData, localStorage.getItem('user_profile_image'));
                 
                 writePostUI.remove();
                 writePostUI = null;

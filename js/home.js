@@ -14,8 +14,8 @@ function loadUser() {
             console.log(data);
             const profileImagesDOM = document.querySelectorAll('.user-image.profile-image');
             
-            const profileImage = data?.user_data?.profile_image;
-            const imageURL = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+            const profileImage = data['user_data']['profile_image'];
+            const imageURL =  `url(${profileImage})`;
             localStorage.setItem('user_profile_image', profileImage);
 
             for (let profileDOM of profileImagesDOM) {
@@ -36,7 +36,7 @@ function loadFeed() {
             const feed = document.getElementById('feed');
 
             for (let postData of data['result']) {
-                displayPost(feed, postData);
+                displayPost(feed, postData, postData['profile_image']);
             }
         });
 }

@@ -2,7 +2,7 @@ import { createPostMenu  } from './post-menu.js';
 import { createPostOptions } from './post-option.js';
 import { parse } from './parse-md.js';
 
-function displayPost(parentDOM, postData) {
+function displayPost(parentDOM, postData, userProfileImage) {
     const date = JSON.parse(postData['date']);
     let imagesData = postData['images'];
     imagesData = typeof imagesData === 'object' ? imagesData : JSON.parse(imagesData);
@@ -37,11 +37,8 @@ function displayPost(parentDOM, postData) {
 
     parentDOM.insertBefore(postDOM, parentDOM.firstChild);
 
-    const profileImage = postData['username'] === sessionStorage.getItem('username') ? 
-                         localStorage.getItem('user_profile_image') : postData['profile_image'];
-
     const postProfileImage = postDOM.querySelector('.profile-image');
-    postProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+    postProfileImage.style.backgroundImage = `url(${userProfileImage})`;
 
     const reactButton  = postDOM.querySelector('.react-button');
     if (postData['reacted'] === 'T') {

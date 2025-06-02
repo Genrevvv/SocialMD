@@ -3,7 +3,7 @@ import { parse } from './parse-md.js';
 
 let commentsUI = null;
 
-function displayComments(postData) {
+function displayComments(postData, postDOM) {
     if (commentsUI !== null) {
         return;
     }
@@ -50,6 +50,15 @@ function displayComments(postData) {
     commentProfileImage.style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
 
     loadComments(commentsUI, postData);
+
+    uiBlock.addEventListener('delete-post', () => {
+        document.body.style.overflowY = 'auto';
+        uiBlock.remove();
+
+        commentsUI = null;  
+
+        postDOM.remove();
+    });
 
     closeComments.onclick = () => {
         document.body.style.overflowY = 'auto';

@@ -67,9 +67,17 @@ function createOwnerPostMenu(postDOM, postData) {
             fetch('/delete-post', options)
                 .then(res => res.json())
                 .then(data => {
-                    if (data['success']) {
-                        postDOM.remove();
+                    if (!data['success']) {
+                        return;
                     }
+
+                    const uiBlock = document.getElementById('ui-block');
+                    if (uiBlock) {
+                        const deletePostEvent = new CustomEvent('delete-post');
+                        uiBlock.dispatchEvent(deletePostEvent);
+                    }
+
+                    postDOM.remove();
                 });
         }
 

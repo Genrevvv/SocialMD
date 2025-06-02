@@ -11,7 +11,7 @@ function createPostOptions(postDOM, postData) {
 
     commentButton.onclick= () => {
         console.log('You clicked comment');
-        displayComments(postData);
+        displayComments(postData, postDOM);
     }
 
 }

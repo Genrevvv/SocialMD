@@ -128,8 +128,8 @@
         
         date_default_timezone_set('Asia/Manila');
         $date = [
-            'date-ui' => date('M j \a\t g:i A'),
-            'date-tooltip' => date('l, M j, Y \a\t g:i A')
+            'date-ui' => date('F j \a\t g:i A'),
+            'date-tooltip' => date('l, F j, Y \a\t g:i A')
         ];
         $date = json_encode($date);
 
@@ -192,7 +192,7 @@
 
     $router->add('/create-comment', function () use ($db) {
         $data = get_json_input();
-        $date = date('F d, Y');
+        $date = date('F j, Y');
         
         $result = $db->create_comment($data['post_id'], $date, $data['comment_text']);
         if ($result == 0) {

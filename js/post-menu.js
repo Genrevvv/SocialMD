@@ -71,10 +71,10 @@ function createOwnerPostMenu(postDOM, postData) {
                         return;
                     }
 
-                    const uiBlock = document.getElementById('ui-block');
-                    if (uiBlock) {
+                    const commentsUI = document.getElementById('comments-ui');
+                    if (commentsUI) {
                         const deletePostEvent = new CustomEvent('delete-post');
-                        uiBlock.dispatchEvent(deletePostEvent);
+                        commentsUI.dispatchEvent(deletePostEvent);
                     }
 
                     postDOM.remove();

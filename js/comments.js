@@ -51,7 +51,7 @@ function displayComments(postData, postDOM) {
 
     loadComments(commentsUI, postData);
 
-    uiBlock.addEventListener('delete-post', () => {
+    commentsUI.addEventListener('delete-post', () => {
         document.body.style.overflowY = 'auto';
         uiBlock.remove();
 

@@ -71,6 +71,15 @@ function displayComments(postData, postDOM) {
         postDOM.remove();
     });
 
+    commentsUI.addEventListener('hide-post', () => {
+        document.body.style.overflowY = 'auto';
+        uiBlock.remove();
+
+        commentsUI = null;  
+
+        postDOM.remove();
+    });
+
     closeComments.onclick = () => {
         document.body.style.overflowY = 'auto';
         uiBlock.remove();

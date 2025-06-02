@@ -97,6 +97,12 @@ function createNonOwnerPostMenu(postDOM) {
 
     const hidePost = postMenu.querySelector('.hide-post');
     hidePost.onclick = () => {
+        const commentsUI = document.getElementById('comments-ui');
+        if (commentsUI) {
+            const hidePostEvent = new CustomEvent('hide-post');
+            commentsUI.dispatchEvent(hidePostEvent);
+        }
+
         postDOM.remove();
     }
 

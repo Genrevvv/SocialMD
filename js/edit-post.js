@@ -108,6 +108,7 @@ function editPostMenu(postMenu, postDOM, postData) {
         postData['caption'] = postText.value;
         postData['images'] = imagesObject;
 
+        // UPDATED POST DATA
         const updatedPostData = {
             post_id: postData['post_id'],
             caption: postData['caption'],
@@ -128,35 +129,46 @@ function editPostMenu(postMenu, postDOM, postData) {
                 if (data['success']) {
                     const postContent = postDOM.querySelector('.post-content');
                     postContent.innerHTML = parse(postData['caption'], postData['images']);
-
-                    document.body.style.overflowY = 'auto';
-                    uiBlock.remove();
                     
-                    editPostUI = null;
-                    
-                    setTimeout(() => {
-                        // Create a new post menu with the updated data
-                        const postMenuButton = postDOM.querySelector('.post-menu-button');
-                        createPostMenu(postMenuButton, postDOM, postData, true);
+                    const commentsUI = document.getElementById('comments-ui');
+                    if (commentsUI) {
+                        const updatePostEvent = new CustomEvent('update-post', { detail: postData });
+                        commentsUI.dispatchEvent(updatePostEvent);
+                    }
 
-                        // Adjust post styling againa fter editing when overflowing
-                        const postContent = document.querySelector('.post-content');
-                        if (postContent.scrollHeight > postContent.clientHeight) {
-                            const more = document.createElement('div');
-                            more.classList.add('more-button');
-                            more.textContent = '(See more)';
-
-                            postContent.appendChild(more);
-
-                            more.onclick = () => {
-                                postContent.style.maxHeight = 'none';
-                                more.remove();
-                            }
-                        }
-                    }, 10); // Delay to allow content rendering
+                    recreatePostMenu(postData, postDOM);
                 }
+
+                // Remove it even tho it didn't change anything :)
+                document.body.style.overflowY = 'auto';
+                uiBlock.remove();
+                
+                editPostUI = null;       
             });
     }
 }
 
-export { editPostMenu };
+function recreatePostMenu(postData, postDOM) {
+    setTimeout(() => {
+        // Create a new post menu with the updated data
+        const postMenuButton = postDOM.querySelector('.post-menu-button');
+        createPostMenu(postMenuButton, postDOM, postData, true);
+
+        // Adjust post styling again after editing when overflowing
+        const postContent = document.querySelector('.post-content');
+        if (postContent.scrollHeight > postContent.clientHeight) {
+            const more = document.createElement('div');
+            more.classList.add('more-button');
+            more.textContent = '(See more)';
+
+            postContent.appendChild(more);
+
+            more.onclick = () => {
+                postContent.style.maxHeight = 'none';
+                more.remove();
+            }
+        }
+    }, 10); // Delay to allow content rendering
+}
+
+export { editPostMenu, recreatePostMenu };

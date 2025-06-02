@@ -33,7 +33,7 @@ function parse(input, imagesObject) {
     // Format images
     const imageRegex = /!\[(.+?)\]\((.+?)\)/gm;
     input = input.replace(imageRegex, (_, alt, src) => {
-        return `<img alt="${alt}" src="${imagesObject[src]}"`;
+        return `<img alt="${alt}" src="${imagesObject[src]}">`;
     });
 
     // Format all the other patterns

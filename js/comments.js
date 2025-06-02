@@ -1,5 +1,6 @@
 import { displayPost } from "./display-post.js";
 import { parse } from './parse-md.js';
+import { recreatePostMenu } from "./edit-post.js";
 
 let commentsUI = null;
 
@@ -45,11 +46,21 @@ function displayComments(postData, postDOM) {
 
     commentText.focus();
     
-    
     displayPost(postContent, postData, postData['profile_image']);
     commentProfileImage.style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
 
     loadComments(commentsUI, postData);
+
+    commentsUI.addEventListener('update-post', (e) => {
+        console.log('The post is updated :)');
+        console.log(e.detail);
+
+        const postContent = postDOM.querySelector('.post-content');
+        postContent.innerHTML = parse(postData['caption'], postData['images']);
+        
+        // e.detail is the updated postData object of the post
+        recreatePostMenu(e.detail, postDOM); 
+    });
 
     commentsUI.addEventListener('delete-post', () => {
         document.body.style.overflowY = 'auto';

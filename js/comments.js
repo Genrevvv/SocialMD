@@ -45,6 +45,7 @@ function displayComments(postData) {
 
     commentText.focus();
     
+    
     displayPost(postContent, postData, postData['profile_image']);
     commentProfileImage.style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
 

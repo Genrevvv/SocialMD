@@ -6,6 +6,7 @@ function displayPost(parentDOM, postData, userProfileImage) {
     const date = JSON.parse(postData['date']);
     let imagesData = postData['images'];
     imagesData = typeof imagesData === 'object' ? imagesData : JSON.parse(imagesData);
+    postData['profile_image'] = userProfileImage; // Update data when user profile image didn't came from postData
 
     const postDOM = document.createElement('div');
     postDOM.classList.add('post');
@@ -38,7 +39,7 @@ function displayPost(parentDOM, postData, userProfileImage) {
     parentDOM.insertBefore(postDOM, parentDOM.firstChild);
 
     const postProfileImage = postDOM.querySelector('.profile-image');
-    postProfileImage.style.backgroundImage = `url(${userProfileImage})`;
+    postProfileImage.style.backgroundImage = `url(${postData['profile_image']})`;
 
     const reactButton  = postDOM.querySelector('.react-button');
     if (postData['reacted'] === 'T') {

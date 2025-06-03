@@ -205,6 +205,17 @@
         echo json_encode(['success' => true, 'data' => $data]);
     });
 
+    $router->add('/delete-comment', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->delete_comment($data['comment_id']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
     
     // Friends
     $router->add('/get-friends', function () use ($db) {

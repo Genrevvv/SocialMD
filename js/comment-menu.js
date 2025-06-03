@@ -46,17 +46,20 @@ function createOwnerCommentMenu(commentDOM, commentData) {
         body: JSON.stringify(data)
     }
 
-    fetch('/delete-comment', options)
-        .then(res => res.json())
-        .then(data => { 
-            console.log(data);
+    const deleteComment = commentDOM.querySelector('.delete-comment');
+        deleteComment.onclick = () => {
+        fetch('/delete-comment', options)
+            .then(res => res.json())
+            .then(data => { 
+                console.log(data);
 
-            if (!data['success']) {
-                return;
-            }
+                if (!data['success']) {
+                    return;
+                }
 
-            commentDOM.remove();
-        });
+                commentDOM.remove();
+            });
+    }
 
     return commentMenu;
 }
@@ -71,8 +74,8 @@ function createNonOwnerCommentMenu(commentDOM) {
 
     commentDOM.appendChild(commentMenu);
 
-    const hidePost = commentDOM.querySelector('.hide-comment');
-    hidePost.onclick = () => {
+    const hideComment = commentDOM.querySelector('.hide-comment');
+    hideComment.onclick = () => {
         commentDOM.remove();
     }
 

@@ -252,6 +252,13 @@
             return $stmt->rowCount();
         }
 
+        public function delete_comment($comment_id) {
+            $stmt = $this->db->prepare('DELETE FROM comments WHERE id = :comment_id');
+            $stmt->execute(['comment_id' => $comment_id]);
+
+            return $stmt->rowCount();
+        }
+
         // Friends
         public function get_friends($username) {
             $result = $this->get_user_id($username);

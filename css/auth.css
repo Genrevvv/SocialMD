@@ -77,18 +77,19 @@ html, body {
 }
 
 #submit button {
-    background-color: var(--dark-gray);
+    flex: 1;
+    background-color: #3157ff;
     color: var(--bright);
 
     padding: 0.7rem 2.5rem;
-    border: 1px solid var(--bright);
+    border: none;
     border-radius: 0.5rem;
 
     cursor: pointer;
 }
 
 #submit button:hover {
-    background-color: var(--gray);
+    background-color: #102ba3;
 }
 
 #message {

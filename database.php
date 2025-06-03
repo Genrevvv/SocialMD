@@ -249,7 +249,7 @@
                 'comment_text' => $comment_text
             ]);
 
-            return $stmt->rowCount();
+            return ['changes' => $stmt->rowCount(), 'comment_id' => $this->db->lastInsertID()];
         }
 
         public function delete_comment($comment_id) {

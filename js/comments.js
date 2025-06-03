@@ -142,9 +142,11 @@ function submitCommentHandler(commentsUI, postData) {
                 'username': sessionStorage.getItem('username'),
                 'date': data['data']['date'],
                 'comment_text': commentText.value,
-                'profile_image': localStorage.getItem('user_profile_image')
+                'profile_image': localStorage.getItem('user_profile_image'),
+                'comment_id': data['data']['comment_id']
             }
 
+            console.log(commentData);
             displayComment(commentsContainer, commentData);
             commentText.value = '';
         })

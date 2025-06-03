@@ -195,13 +195,14 @@
         $date = date('F j, Y');
         
         $result = $db->create_comment($data['post_id'], $date, $data['comment_text']);
-        if ($result == 0) {
+        if ($result['changes'] == 0) {
             echo json_encode(['success' => false]);
             exit();
         }
 
         $data['date'] = $date;
-
+        $data['comment_id'] = $result['comment_id'];
+        
         echo json_encode(['success' => true, 'data' => $data]);
     });
 

@@ -52,8 +52,6 @@ function displayPost(parentDOM, postData, userProfileImage) {
         const postMenuButton = postDOM.querySelector('.post-menu-button');
         const postContent = postDOM.querySelector('.post-content');
 
-        createPostMenu(postMenuButton, postDOM, postData, false);
-
         if (postContent.scrollHeight > postContent.clientHeight) {
             const more = document.createElement('div');
             more.classList.add('more-button');
@@ -70,6 +68,9 @@ function displayPost(parentDOM, postData, userProfileImage) {
         if (postData['username'] === sessionStorage.getItem('username')) {
             postProfileImage.classList.add('user-image');
             createPostMenu(postMenuButton, postDOM, postData, true);
+        }
+        else {
+            createPostMenu(postMenuButton, postDOM, postData, false);
         }
 
         createPostOptions(postDOM, postData);

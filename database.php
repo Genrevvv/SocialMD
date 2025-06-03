@@ -222,6 +222,7 @@
         public function get_comments($post_id) {
             $stmt = $this->db->prepare('
                 SELECT
+                    comments.id as comment_id,
                     username,
                     profile_image,
                     date,

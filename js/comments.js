@@ -1,3 +1,4 @@
+import { createCommentMenu } from "./comment-menu.js";
 import { displayPost } from "./display-post.js";
 import { parse } from './parse-md.js';
 import { recreatePostMenu } from "./edit-post.js";
@@ -161,9 +162,11 @@ function displayComment(commentsContainer, commentData) {
                                 <div class="md-output comment-content">
                                     ${parse(commentData['comment_text'])}
                                 </div>
-                            </div>`;
+                            </div>
+                            <i class="comment-menu-button fa-solid fa-ellipsis"></i>`;
 
     commentsContainer.insertBefore(commentDOM, commentsContainer.firstChild);
+    createCommentMenu(commentDOM, commentData);
 
     const commentProfileImage = commentDOM.querySelector('.user-image.profile-image');
     commentProfileImage.style.backgroundImage = `url(${commentData['profile_image']})`;

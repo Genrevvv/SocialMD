@@ -205,6 +205,7 @@
         echo json_encode(['success' => true, 'data' => $data]);
     });
 
+    
     // Friends
     $router->add('/get-friends', function () use ($db) {
         $friends = $db->get_friends($_SESSION['username']);

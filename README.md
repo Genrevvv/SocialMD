@@ -25,7 +25,7 @@ A social media web app that allows users to use markdown syntax on posts.
    - Post comments:
       - Load post comments ✅
       - Create a comment ✅
-      - Delete a comment (tentative)
+      - Delete a comment ✅
       - Edit a comment (tentative)
       - React to comments (tentative)
 5. Responsive Design

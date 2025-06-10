@@ -179,3 +179,17 @@
 
     cursor: pointer;
 }
+
+#ui-block .message {
+    background-color: var(--lightest-gray);
+    color: var(--darkest);
+
+    position: fixed;
+    top: 18%;
+    left: 50%;
+    transform: translate(-50%, 82%);
+    z-index: 1;
+
+    padding: 0.7rem;
+    border-radius: 1rem;
+}

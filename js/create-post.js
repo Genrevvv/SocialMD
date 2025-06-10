@@ -130,12 +130,23 @@ function insertNewImage(imageName, imageData, imagesList, imagesObject) {
 
     const imageDOM = document.createElement('div');
     imageDOM.classList.add('image');
-    imageDOM.innerHTML = `<span>${truncate(imageName, 12)}</span>
+    imageDOM.innerHTML = `<div class="image-info">
+                            <i class="copy-image fa-solid fa-copy"></i>
+                            <span>${truncate(imageName, 10)}</span>
+                          </div>
                           <i class="remove-image fa-solid fa-xmark"></i>`;
 
     imagesList.appendChild(imageDOM);
 
+    const copyImage = imageDOM.querySelector('.copy-image');
     const removeImage = imageDOM.querySelector('.remove-image');
+
+    copyImage.onclick = () => {
+        navigator.clipboard.writeText(`![alt](${imageName})`);
+        const uiBlock = document.getElementById('ui-block');
+        flushMessage('image copied!', uiBlock);
+    }
+
     removeImage.onclick = () => {
         delete imagesObject[imageName];
         imageDOM.remove();
@@ -148,4 +159,16 @@ function truncate(text, maxLength) {
     : text;
 }
 
+function flushMessage(message, parentElement) {
+    const messageDOM = document.createElement('div');
+    messageDOM.classList.add('message');
+    messageDOM.innerHTML = message;
+    
+    parentElement.appendChild(messageDOM);
+
+    //Remove message after 1s
+    setTimeout(() => {
+        messageDOM.remove();
+    }, 1000); 
+}
 export { insertNewImage };

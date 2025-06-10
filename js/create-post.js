@@ -130,7 +130,8 @@ function insertNewImage(imageName, imageData, imagesList, imagesObject) {
 
     const imageDOM = document.createElement('div');
     imageDOM.classList.add('image');
-    imageDOM.innerHTML = `<span>${imageName}</span><i class="remove-image fa-solid fa-xmark"></i>`;
+    imageDOM.innerHTML = `<span>${truncate(imageName, 12)}</span>
+                          <i class="remove-image fa-solid fa-xmark"></i>`;
 
     imagesList.appendChild(imageDOM);
 
@@ -139,6 +140,12 @@ function insertNewImage(imageName, imageData, imagesList, imagesObject) {
         delete imagesObject[imageName];
         imageDOM.remove();
     }
+}
+
+function truncate(text, maxLength) {
+  return text.length > maxLength
+    ? text.slice(0, maxLength) + '...'
+    : text;
 }
 
 export { insertNewImage };

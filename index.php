@@ -307,6 +307,16 @@
         echo json_encode(['success' => true]);
     });
 
+    $router->add('/unhide-hidden-users', function () use ($db) {
+        $result = $db->unhide_hidden_users();
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
     $router->dispatch($path);
 
     // Auxilliary

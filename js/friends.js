@@ -1,54 +1,86 @@
 window.history.pushState({}, '', '/friends');
 console.log('/friends');
 
+let hiddenUserCount = 0;
+
 const friendsIcon = document.getElementById('friends-icon');
 friendsIcon.classList.add('selected-page');
 
 const friendRequests = document.getElementById('friend-requests');
-fetch('/friend-requests')
-    .then(res => res.json())
-    .then(data => {
-        if (data['users'].length === 0) {
-            return;
-        }
-
-        friendRequests.querySelector('.people').querySelector('.placeholder').remove();
-        for (let userData of data['users']) {
-            console.log(userData);
-            createFriendRequestUserCard(userData);
-        }
-
-    });
-
 const findFriends = document.getElementById('find-friends');
-fetch('/find-friends')
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
+friendRequestsHanlder();
+findFriendsHandler();
 
-        if (data['hidden_users'] !== 0) {
-            const text = data['hidden_users'] === 1
-                         ? 'Unhide hidden user'
-                         : 'Unhide hidden users';
-            
-            const subHeader = findFriends.querySelector('.sub-header');
-            const unHideAllUserButton = document.createElement('div');
-            unHideAllUserButton.classList.add('unhide-all-user-button');
-            unHideAllUserButton.innerHTML = text;
-
-            subHeader.appendChild(unHideAllUserButton);
-        }
-
-        if (data['users'].length !== 0) {
-            findFriends.querySelector('.people').querySelector('.placeholder').remove();
-            for (userData of data['users']) {
-                console.log(userData);
-                createUserCard(userData);
+// Friend requests handler (Load friend requests)
+function friendRequestsHanlder() {
+    fetch('/friend-requests')
+        .then(res => res.json())
+        .then(data => {
+            if (data['users'].length === 0) {
+                return;
             }
-        }
 
-    });
+            friendRequests.querySelector('.people').querySelector('.placeholder').remove();
+            for (let userData of data['users']) {
+                console.log(userData);
+                createFriendRequestUserCard(userData);
+            }
 
+        });
+}
+
+// Find friends handler (Load users to add)
+function findFriendsHandler() {
+    fetch('/find-friends')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            if (data['hidden_users'] !== 0) {
+                hiddenUserCount = data['hidden_users'];
+                createUnhideAllUsersButton();
+            }
+
+            if (data['users'].length !== 0) {
+                findFriends.querySelector('.people').querySelector('.placeholder').remove();
+                for (userData of data['users']) {
+                    console.log(userData);
+                    createUserCard(userData);
+                }
+            }
+
+        });
+}
+// Creating user cards
+function createUserCard(userData) {
+    const userCard = document.createElement('div');
+    userCard.classList.add('user-card');
+    userCard.innerHTML = `<div class="user-profile"></div>
+                          <div class="user-info">
+                            <span class="username">${userData['username']}</span>
+                          </div>
+                          <div class="options">
+                            <div class="add-friend button">Add friend</div>
+                            <div class="remove-user button">Remove</div>
+                          </div>`; 
+
+    findFriends.querySelector('.people').appendChild(userCard);
+    const profileImage = userData['profile_image'];
+    const userProfileImage = userCard.querySelector('.user-profile');
+    userProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
+    
+    const userCardOptions = userCard.querySelector('.options');
+    const addFriend = userCardOptions.querySelector('.add-friend');
+    const removeUser = userCardOptions.querySelector('.remove-user');
+
+    addFriend.onclick = () => {
+        addFriendHandler(userData, userCard, userCardOptions);
+    }
+
+    removeUser.onclick = () => {
+        hideUserHandler(userData, userCard);
+    }
+}
 
 function createFriendRequestUserCard(userData) {
     const userCard = document.createElement('div');
@@ -81,34 +113,24 @@ function createFriendRequestUserCard(userData) {
     }
 }
 
-function createUserCard(userData) {
-    const userCard = document.createElement('div');
-    userCard.classList.add('user-card');
-    userCard.innerHTML = `<div class="user-profile"></div>
-                          <div class="user-info">
-                            <span class="username">${userData['username']}</span>
-                          </div>
-                          <div class="options">
-                            <div class="add-friend button">Add friend</div>
-                            <div class="remove-user button">Remove</div>
-                          </div>`; 
-
-    findFriends.querySelector('.people').appendChild(userCard);
-    const profileImage = userData['profile_image'];
-    const userProfileImage = userCard.querySelector('.user-profile');
-    userProfileImage.style.backgroundImage = profileImage ? `url(${profileImage})` : 'url(/assets/images/user.png)';
-    
-    const userCardOptions = userCard.querySelector('.options');
-    const addFriend = userCardOptions.querySelector('.add-friend');
-    const removeUser = userCardOptions.querySelector('.remove-user');
-
-    addFriend.onclick = () => {
-        addFriendHandler(userData, userCard, userCardOptions);
+// Accepting and deleting friend requests
+function confirmFriendRequestHandler(userData, userCardOptions) {
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
     }
 
-    removeUser.onclick = () => {
-        hideUserHandler(userData, userCard);
-    }
+    fetch('/accept-friend-request', options)
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            userCardOptions.innerHTML = `<div class="message">You are now friends with ${userData['username']}</div>
+                                         <div class="request-accepted button">Request Accepted</div>`;
+        });
 }
 
 function deleteFriendRequestHandler(userData, userCard) {
@@ -131,25 +153,7 @@ function deleteFriendRequestHandler(userData, userCard) {
         });
 }
 
-function confirmFriendRequestHandler(userData, userCardOptions) {
-    const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-    }
-
-    fetch('/accept-friend-request', options)
-        .then(res => res.json())
-        .then(data => {
-            if (!data['success']) {
-                return;
-            }
-
-            userCardOptions.innerHTML = `<div class="message">You are now friends with ${userData['username']}</div>
-                                         <div class="request-accepted button">Request Accepted</div>`;
-        });
-}
-
+// Sending and canceling friend request
 function addFriendHandler(userData, userCard, userCardOptions) {
     console.log('You\'ve added ' + userData['username']);
         
@@ -176,24 +180,6 @@ function addFriendHandler(userData, userCard, userCardOptions) {
         });
 }
 
-function hideUserHandler(userData, userCard) {
-    const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-    }    
-
-    fetch('/hide-user', options)
-        .then(res => res.json())
-        .then(data => {
-            if (!data['success']) {
-                return;
-            }
-
-            userCard.remove();
-        })
-}
-
 function cancelRequestHandler(userData, userCard, userCardOptions, options) {
 fetch('/delete-friend-status', options)
     .then(res => res.json())
@@ -216,4 +202,66 @@ fetch('/delete-friend-status', options)
             userCard.remove();
         }
     });
+}
+
+// Hiding and unhiding users
+function hideUserHandler(userData, userCard) {
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+    }    
+
+    fetch('/hide-user', options)
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            hiddenUserCount++;
+            if (hiddenUserCount !== 0) {
+                createUnhideAllUsersButton();
+            }
+
+            userCard.remove();
+        })
+}
+
+function unhideAllUserHandler(e) {
+    fetch('/unhide-hidden-users')
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            // window.location.href = '/friends';
+            findFriendsHandler();
+            e.target.remove();
+
+            hiddenUserCount = 0;
+        });
+}
+
+function createUnhideAllUsersButton() {
+    let unhideAllUserButton = findFriends.querySelector('.unhide-all-user-button');
+    if (unhideAllUserButton !== null) {
+        unhideAllUserButton.remove();
+    }
+
+    const text = hiddenUserCount === 1
+                ? 'Unhide hidden user'
+                : 'Unhide hidden users';
+    
+    const subHeader = findFriends.querySelector('.sub-header');
+    unHideAllUserButton = document.createElement('div');
+    unHideAllUserButton.classList.add('unhide-all-user-button');
+    unHideAllUserButton.innerHTML = text;
+
+    subHeader.appendChild(unHideAllUserButton);
+
+    unHideAllUserButton.onclick = (e) => {
+        unhideAllUserHandler(e);
+    }
 }

@@ -381,5 +381,12 @@
 
             return $stmt->rowCount();
         }
+
+        public function unhide_hidden_users() {
+            $stmt = $this->db->prepare('DELETE FROM friends WHERE user_id = :user_id AND status = "H"');
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
+            
+            return $stmt->rowCount();
+        }
     }
 ?>

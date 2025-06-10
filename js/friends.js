@@ -24,15 +24,29 @@ const findFriends = document.getElementById('find-friends');
 fetch('/find-friends')
     .then(res => res.json())
     .then(data => {
-        if (data['users'].length === 0) {
-            return;
+        console.log(data);
+
+        if (data['hidden_users'] !== 0) {
+            const text = data['hidden_users'] === 1
+                         ? 'Unhide hidden user'
+                         : 'Unhide hidden users';
+            
+            const subHeader = findFriends.querySelector('.sub-header');
+            const unHideAllUserButton = document.createElement('div');
+            unHideAllUserButton.classList.add('unhide-all-user-button');
+            unHideAllUserButton.innerHTML = text;
+
+            subHeader.appendChild(unHideAllUserButton);
         }
-    
-        findFriends.querySelector('.people').querySelector('.placeholder').remove();
-        for (userData of data['users']) {
-            console.log(userData);
-            createUserCard(userData);
+
+        if (data['users'].length !== 0) {
+            findFriends.querySelector('.people').querySelector('.placeholder').remove();
+            for (userData of data['users']) {
+                console.log(userData);
+                createUserCard(userData);
+            }
         }
+
     });
 
 
@@ -93,7 +107,7 @@ function createUserCard(userData) {
     }
 
     removeUser.onclick = () => {
-        userCard.remove();
+        hideUserHandler(userData, userCard);
     }
 }
 
@@ -160,6 +174,24 @@ function addFriendHandler(userData, userCard, userCardOptions) {
                 cancelRequestHandler(userData, userCard, userCardOptions, options);
             }
         });
+}
+
+function hideUserHandler(userData, userCard) {
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+    }    
+
+    fetch('/hide-user', options)
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            userCard.remove();
+        })
 }
 
 function cancelRequestHandler(userData, userCard, userCardOptions, options) {

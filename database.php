@@ -357,5 +357,29 @@
 
             return $stmt->rowCount();
         }
+
+        // Hide users and hidden users
+        public function get_hidden_users_count() {
+            $stmt = $this->db->prepare('SELECT COUNT(*) as hidden_users FROM friends WHERE user_id = :user_id AND status = "H"');
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['hidden_users'];
+        }
+
+        public function hide_user($friend_id) {
+            $stmt = $this->db->prepare('
+                INSERT IGNORE INTO friends (user_id, friend_id, status)
+                VALUES (:user_id, :friend_id, :status)'
+            );
+            
+            $stmt->execute([
+                'friend_id' => $friend_id, 
+                'user_id' => $_SESSION['user_id'],
+                'status' => 'H'
+            ]);
+
+            return $stmt->rowCount();
+        }
     }
 ?>

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS friends (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     friend_id INT NOT NULL,
-    status ENUM('P', 'F') NOT NULL DEFAULT 'P',
+    status ENUM('P', 'F', 'H') NOT NULL DEFAULT 'P', -- Pending, Friends, Hidden
     UNIQUE (user_id, friend_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (friend_id) REFERENCES users(id) ON DELETE CASCADE

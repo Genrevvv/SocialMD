@@ -26,7 +26,20 @@
 
 .sub-header {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 0.7rem;
+}
+
+.sub-header .unhide-all-user-button {
+    width: max-content;
+    height: max-content;
+
+    background-color: var(--gray);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 .sub-header h1 {

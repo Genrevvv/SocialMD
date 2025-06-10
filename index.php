@@ -240,7 +240,8 @@
 
     $router->add('/find-friends', function () use ($db) {
         $result = $db->find_friends();
-        echo json_encode(['users' => $result]);
+        $hidden_users = $db->get_hidden_users_count();
+        echo json_encode(['users' => $result, 'hidden_users' => $hidden_users]);
     });
 
     $router->add('/add-friend', function () use ($db) {
@@ -281,6 +282,25 @@
         $result = $db->delete_friend_status($data['username']);
         if ($result == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to delete friend status']);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
+    $router->add('/hide-user', function () use ($db) {
+        $data = get_json_input();
+
+        $friend_id = $db->get_user_id($data['username']);
+        if ($friend_id == false) {
+            echo json_encode(['success' => false, 'error' => 'friend_id not found']);
+            exit();
+        }
+        $friend_id = $friend_id['id'];
+
+        $result = $db->hide_user($friend_id);
+        if ($result == 0) {
+            echo json_encode(['success' => false, 'error' => 'Unable to hide user']);
             exit();
         }
 

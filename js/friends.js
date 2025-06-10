@@ -1,3 +1,5 @@
+import { searchUserHandler } from "./search-user.js";
+
 window.history.pushState({}, '', '/friends');
 console.log('/friends');
 
@@ -25,7 +27,6 @@ function friendRequestsHanlder() {
                 console.log(userData);
                 createFriendRequestUserCard(userData);
             }
-
         });
 }
 
@@ -49,11 +50,13 @@ function findFriendsHandler() {
 
                 const people =findFriends.querySelector('.people');
                 people.innerHTML = '';
-                
-                for (userData of data['users']) {
+
+                for (let userData of data['users']) {
                     console.log(userData);
                     createUserCard(userData);
                 }
+
+                searchUserHandler();
             }
 
         });
@@ -61,6 +64,7 @@ function findFriendsHandler() {
 // Creating user cards
 function createUserCard(userData) {
     const userCard = document.createElement('div');
+    userCard.id = userData['username'];
     userCard.classList.add('user-card');
     userCard.innerHTML = `<div class="user-profile"></div>
                           <div class="user-info">

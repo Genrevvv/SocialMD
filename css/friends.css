@@ -46,6 +46,22 @@
     font-size: 1.5rem;
 }
 
+#find-friends .sub-header {
+    margin-bottom: 0;
+}
+
+.search-bar-container {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.search-bar-container #user-search-bar {
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+}
+
 .people {
     width: 90%;
     

@@ -266,13 +266,13 @@ function createUnhideAllUsersButton() {
                 : 'Unhide hidden users';
     
     const subHeader = findFriends.querySelector('.sub-header');
-    unHideAllUserButton = document.createElement('div');
-    unHideAllUserButton.classList.add('unhide-all-user-button');
-    unHideAllUserButton.innerHTML = text;
+    unhideAllUserButton = document.createElement('div');
+    unhideAllUserButton.classList.add('unhide-all-user-button');
+    unhideAllUserButton.innerHTML = text;
 
-    subHeader.appendChild(unHideAllUserButton);
+    subHeader.appendChild(unhideAllUserButton);
 
-    unHideAllUserButton.onclick = (e) => {
+    unhideAllUserButton.onclick = (e) => {
         unhideAllUserHandler(e);
     }
 }

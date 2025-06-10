@@ -42,7 +42,11 @@ function findFriendsHandler() {
             }
 
             if (data['users'].length !== 0) {
-                findFriends.querySelector('.people').querySelector('.placeholder').remove();
+                const placeholder = findFriends.querySelector('.people').querySelector('.placeholder');
+                if (placeholder != null) {
+                    placeholder.remove();
+                }
+                
                 for (userData of data['users']) {
                     console.log(userData);
                     createUserCard(userData);

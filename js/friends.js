@@ -46,6 +46,9 @@ function findFriendsHandler() {
                 if (placeholder != null) {
                     placeholder.remove();
                 }
+
+                const people =findFriends.querySelector('.people');
+                people.innerHTML = '';
                 
                 for (userData of data['users']) {
                     console.log(userData);

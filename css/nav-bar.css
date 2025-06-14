@@ -24,6 +24,8 @@ header {
 
 #nav-bar > :is(#logo, #profile) {
     text-decoration: none;
+    user-select: none;
+    cursor: pointer;
 }
 
 #nav-bar > ul {

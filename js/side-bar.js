@@ -76,3 +76,5 @@ function changeProfileImage() {
     }
     input.click();
 }
+
+export { changeProfileImage };

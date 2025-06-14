@@ -1,0 +1,41 @@
+#main-menu {
+    background-color: var(--light-gray);
+
+    width: 10rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 3rem;
+    left: 2rem;
+    z-index: 2;
+
+    padding: 0 0.4rem;
+    border-radius: 0.5rem;
+
+    overflow: hidden;
+}
+
+#main-menu .option {
+    color: var(--bright);
+    width: 100%;
+    padding: 0.4rem;
+}
+
+#main-menu .option:hover {
+    background-color: var(--gray);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+    #main-menu {
+        width: 12rem;
+    }
+
+    #main-menu .option {
+        font-size: 1.2rem;
+    }
+}

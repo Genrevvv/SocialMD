@@ -1,3 +1,5 @@
+import { createMainMenu } from "./main-menu.js";
+
 const menuContent = {
     mainMenu: `<div class="user-info">
                     <div class="user-image profile-image"></div>
@@ -46,6 +48,11 @@ const menuContent = {
 
 const navBar = document.getElementById('nav-bar');
 navBar.querySelector('.profile-image').style.backgroundImage = `url(${localStorage.getItem('user_profile_image')})`;
+
+const logo = document.getElementById('logo');
+logo.onclick = () => {
+    createMainMenu();
+}
 
 // Nav-bar icons
 const home = document.getElementById('home-icon');

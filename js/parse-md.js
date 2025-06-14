@@ -20,8 +20,9 @@ function parse(input, imagesObject) {
         { regex: /_(.+?)_/gm, replace: '<em>$1</em>' },
         { regex: /^---$/gm, replace: '<hr>' },
         { regex: /^(?!<(?:.+?)>)(.+|\n)(?!<\/(?:.+?)>)$/gm, replace: '<p>$1</p>' }
-        
     ];
+
+    input = input.replace(/\u200e/g, '');
 
     // Temporarily save code blocks
     const codeBlocks = [];

@@ -270,15 +270,14 @@
         align-items: flex-start;
         gap: 1rem;
     }
-
     
     .post .post-header .profile-image {
-        width: 4rem;
-        height: 4rem;
+        width: 3rem;
+        height: 3rem;
     }
 
     .post .post-username {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .post .post-date {

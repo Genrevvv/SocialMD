@@ -87,7 +87,7 @@ createPost.onclick = () => {
     // Submit post
     submitPost.onclick = () => {
         if (postText.value === '') {
-            flushMessage('Please add something to the post :)', uiBlock,1500);
+            flushMessage('Please add something to the post', uiBlock,1500);
             return;
         }
         

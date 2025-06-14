@@ -86,6 +86,11 @@ createPost.onclick = () => {
 
     // Submit post
     submitPost.onclick = () => {
+        if (postText.value === '') {
+            flushMessage('Please add something to the post :)', uiBlock,1500);
+            return;
+        }
+        
         const postData = {
             username: sessionStorage.getItem('username'),
             caption: postText.value,
@@ -144,7 +149,7 @@ function insertNewImage(imageName, imageData, imagesList, imagesObject) {
     copyImage.onclick = () => {
         navigator.clipboard.writeText(`![alt](${imageName})`);
         const uiBlock = document.getElementById('ui-block');
-        flushMessage('image copied!', uiBlock);
+        flushMessage('image copied!', uiBlock, 1000);
     }
 
     removeImage.onclick = () => {
@@ -159,7 +164,7 @@ function truncate(text, maxLength) {
     : text;
 }
 
-function flushMessage(message, parentElement) {
+function flushMessage(message, parentElement, delay) {
     const messageDOM = document.createElement('div');
     messageDOM.classList.add('message');
     messageDOM.innerHTML = message;
@@ -169,6 +174,6 @@ function flushMessage(message, parentElement) {
     //Remove message after 1s
     setTimeout(() => {
         messageDOM.remove();
-    }, 1000); 
+    }, delay); 
 }
 export { insertNewImage };

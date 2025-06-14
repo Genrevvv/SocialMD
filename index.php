@@ -133,11 +133,11 @@
         ];
         $date = json_encode($date);
 
-        if ($data['caption'] === '') {
+        if ($data['caption'] == '') {
             echo json_encode(['success' => false, 'error' => 'No post caption input found']);
             exit();
         }
-        
+
         $result = $db->create_post($data['caption'], $data['images'], $date);
         if ($result['changes'] == 0) {
             echo json_encode(['success' => false, 'error' => 'Unable to createa post']);

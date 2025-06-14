@@ -1,99 +1,275 @@
-html, body {
-    background-color: var(--darker);
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body {
+    background-color: var(--darker);
+    color: var(--bright);
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    min-height: 100vh;
+    padding-right: 2rem;
+}
+
+
+#logo {
+    background: url('/assets/images/SMD-removebg-preview.png') no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    height: 500px; 
+    max-width: 400px;
+
+    margin-bottom: 7rem;
+    margin-right: 20rem;
+    
+}
+
+#tagline {
+    font-size: 1.1rem;
+    color: var(--lightest-gray);
+    max-width: 300px;
+
+    margin-left: 3rem;
+    margin-top: 27rem;
+
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.8);
+}
+
+#container {
+    width: 100%;
+    max-width: 400px;
+
+    background-color: var(--dark);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    transition: box-shadow 0.3s ease-in-out;
+
+    margin-right: 15rem;
+    padding: 2rem;
+}
+
+#container:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
 }
 
 #header-content {
-    color: var(--bright);
+    color: var(--lighter-gray);
+    text-align: center;
+    margin-bottom: 1.5rem;
 
-    display: flex;
-    justify-content: center;
-}
-
-#header-content span {
-    font-size: 1.5rem;
-    padding: 1rem 0.5rem;
-    margin-bottom: 1rem;
-}
-
-#form-container {
-    background-color: var(--dark-gray);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 35rem;
-    height: 27rem;
-
-    border: 1px solid var(--bright);
-    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 #form-container h1 {
-    color: var(--bright);
-    margin-top: 0;
-}
-
-#form-container p {
-    color: var(--bright);
-    margin: 0;
-}
-
-#form-container a {
-    color: var(--link);
-}
-
-#form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    text-align: center;
+    font-size: 2rem;
+    color: var(--brightest);
+    margin-bottom: 1.5rem;
 }
 
 .input {
-    color: var(--bright);
+    margin-bottom: 1.2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+}
+
+.input span {
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+    color: var(--light-gray);
 }
 
 .input input {
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--dark-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--darker);
+    color: var(--brightest);
+    transition: border 0.2s ease-in-out, background-color 0.3s;
+}
+
+.input input:focus {
+    border-color: var(--blue-button);
+    background-color: var(--dark);
+    box-shadow: 0 0 0 3px var(--blue-button-transparent);
 }
 
 #submit {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 0.5rem;
+    margin-top: 1rem;
+    text-align: center;
 }
 
-#submit button {
-    flex: 1;
-    background-color: #3157ff;
-    color: var(--bright);
-
-    padding: 0.7rem 2.5rem;
+#register {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
     border: none;
-    border-radius: 0.5rem;
-
+    background-color: var(--blue-button);
+    color: var(--brightest);
+    border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
 
-#submit button:hover {
-    background-color: #102ba3;
+#register:hover {
+    background-color: var(--link);
+}
+
+#login{
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    background-color: var(--blue-button);
+    color: var(--brightest);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#login:hover {
+    background-color: var(--blue-button);
 }
 
 #message {
+    display: block;
+    margin-top: 1rem;
     height: 1.5rem;
-    color: #ff8d8d;
-    margin: 0.5rem 0;
+    color: #ff4d4d;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--light-gray);
+}
+
+p a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        justify-content: center;
+        align-items: flex-start;
+        padding: 1.5rem;
+        background-color: var(--very-dark, #000); /* fallback */
+        color: var(--brightest, #fff);
+        position: relative;
+        padding-top: 4rem; 
+        
+    }
+
+    #logo {
+        display: block;
+        position: absolute;
+        top: 1.2rem;
+        left: 1.2rem;
+        width: 50px;
+        height: 50px;
+        background: url('/assets/images/SMD-removebg-preview.png') no-repeat center center;
+        background-size: contain;
+        margin: 0;
+        padding: 2rem;
+    }
+
+    #tagline{
+        display: none;
+    }
+
+
+    #container {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        padding: 2rem 1.2rem;
+        box-shadow: none;
+        background-color: inherit;  /* Use body’s background */
+        color: inherit;
+        margin: 0;
+    }
+
+    #form-container h1 {
+        font-size: 2rem;
+        text-align: left;
+        margin-bottom: 1rem;
+        color: inherit;
+    }
+
+    .input {
+        margin-bottom: 1.5rem;
+    }
+
+    .input span {
+        font-size: 1rem;
+        color: var(--light-gray, #ccc); /* or just inherit if needed */
+        margin-bottom: 0.3rem;
+    }
+
+    .input input {
+        font-size: 1.05rem;
+        padding: 1rem;
+        background-color: inherit;
+        color: inherit;
+        border: 1px solid var(--gray, #333);
+        border-radius: 20px;
+    }
+
+    .input input:focus {
+        border-color: var(--blue-button, #1d9bf0);
+        box-shadow: 0 0 0 2px var(--blue-button-transparent, rgba(29, 155, 240, 0.3));
+    }
+
+    #register,
+    #login {
+        font-size: 1rem;
+        padding: 0.9rem;
+        border-radius: 9999px;
+        background-color: var(--blue-button, #1d9bf0);
+        color: inherit;
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+
+    #register:hover,
+    #login:hover {
+        background-color: var(--link, #1a8cd8);
+    }
+
+    #message {
+        display: block;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #ff4d4d;
+        text-align: center;
+    }
+
+    p {
+        font-size: 0.95rem;
+        color: inherit;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    p a {
+        color: var(--link, #1d9bf0);
+    }
+
+    p a:hover {
+        text-decoration: underline;
+    }
 }

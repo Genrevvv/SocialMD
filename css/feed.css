@@ -247,3 +247,82 @@
 .reacted:hover {
     color: rgb(167, 66, 66) !important;
 }
+
+
+@media screen and (max-width: 600px) {
+    *{
+        margin-bottom: 0;
+        padding: 0;
+        scrollbar-width: none;
+    }
+    
+    #side-bar, #friends-section{
+        display: none;
+    }
+
+    .post{
+        width: 160%;
+        padding: 0.8rem;
+    }
+    
+    .post .post-header{
+        flex-direction: inherit;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    
+    .post .post-header .profile-image {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .post .post-username {
+        font-size: 1.5rem;
+    }
+
+    .post .post-date {
+        font-size: 0.90rem;
+    }
+
+    .post .post-content {
+        padding: 0.8rem 0.3rem;
+        font-size: 1rem;
+    }
+
+    .post img {
+        max-width: 100%;
+        max-height: 15rem;
+    }
+
+
+    .post .more-button {
+        font-size: 1rem;
+        height: 5rem;
+    }
+
+    .post .options {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .post .options .button {
+        max-width: 150%;
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    #post-menu {
+        width: 8rem;
+        font-size: 1rem;
+    }
+
+    #post-menu .option {
+        padding: 0.4rem;
+    }
+}

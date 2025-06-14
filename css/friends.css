@@ -165,3 +165,8 @@
     cursor: not-allowed !important;
 }
 
+@media screen and (max-width: 600px) {
+    #container{
+        display: inline;
+    }
+}

@@ -225,3 +225,34 @@
     background-color: var(--lighter-gray);
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+     :root {
+        --input-bar-height: 4rem;   
+    }
+
+    #comments-ui {
+        width: 95vw;
+        height: 90vh;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+    }
+
+    #comments-ui .header {
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+
+    #comments-ui .header h1 {
+        font-size: 1.2rem;
+    }
+
+    #close-comments {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.4rem;
+        transform: translate(0, 0);
+        position: static;
+    }
+
+}

@@ -166,7 +166,63 @@
 }
 
 @media screen and (max-width: 600px) {
-    #container{
-        display: inline;
+   html, body {
+        overflow-x: hidden;
+    }
+
+    #container {
+        padding: 1rem 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .people {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+
+        gap: 1rem;
+        padding: 0 1rem;
+        width: 90%;
+    }
+
+    .people .user-card {
+        flex: 0 0 80%; 
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+
+        height: 24rem;
+
+        border-radius: 1rem;
+        overflow: hidden;
+
+        box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+    }
+
+    .user-card .options {
+        flex-direction: column;
+        padding: 0.5rem;
+    }
+
+    .sub-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .search-bar-container {
+        justify-content: center;
+    }
+
+    #user-search-bar {
+        width: 100%;
+    }
+
+    .people::-webkit-scrollbar {
+        display: none;
+    }
+
+    .people {
+        scrollbar-width: none; 
     }
 }

@@ -1,3 +1,5 @@
+import { changeProfileImage } from "./auxiliary.js";
+
 // Set username display
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.username-text').innerText = sessionStorage.getItem('username');
@@ -37,44 +39,3 @@ userInfo.onclick = () => {
         changeProfileImage();
     }
 }
-
-function changeProfileImage() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-        const file = e.target.files[0];
-
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-            const imageData = fileReader.result;
-
-            const options = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({'profile_image': imageData})
-            }
-
-            fetch('/update-profile-image', options)
-                .then(res => res.json())
-                .then(data => {
-                    if (!data['success']) {
-                        return;
-                    }
-
-                    const profileImagesDOM = document.querySelectorAll('.user-image.profile-image');
-                    const imageURL = `url(${imageData})`;
-                    localStorage.setItem('user_profile_image', imageData);
-
-                    for (let profileDOM of profileImagesDOM) {
-                        profileDOM.style.backgroundImage = imageURL;
-                    }
-                })
-        }
-
-        fileReader.readAsDataURL(file);
-    }
-    input.click();
-}
-
-export { changeProfileImage };

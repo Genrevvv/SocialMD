@@ -224,6 +224,15 @@
     });
     
     // Friends
+    $router->add('/my-friends', function () use ($db) {
+        if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
+            header('Location: /html/my-friends.html');
+        }
+        else {
+            header('Location: /html/login.html');
+        }
+    });
+
     $router->add('/get-friends', function () use ($db) {
         $friends = $db->get_friends($_SESSION['username']);
         echo json_encode(['users' => $friends]);

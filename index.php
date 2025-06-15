@@ -224,6 +224,18 @@
         echo json_encode(['success' => true, 'data' => $data]);
     });
 
+    $router->add('/hide-comment', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->hide_comment($data['comment_id']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
     $router->add('/delete-comment', function () use ($db) {
         $data = get_json_input();
 

@@ -25,7 +25,7 @@ function createCommentMenu(commentDOM, commentData) {
             return;
         }
 
-        commentMenu = createNonOwnerCommentMenu(commentDOM);
+        commentMenu = createNonOwnerCommentMenu(commentDOM, commentData);
     }
 }
 
@@ -39,6 +39,8 @@ function createOwnerCommentMenu(commentDOM, commentData) {
                              
     commentDOM.appendChild(commentMenu);
 
+    const deleteComment = commentDOM.querySelector('.delete-comment');
+    deleteComment.onclick = () => {
     const data = { comment_id: commentData['comment_id'] };
     const options = {
         method: 'POST',
@@ -46,25 +48,23 @@ function createOwnerCommentMenu(commentDOM, commentData) {
         body: JSON.stringify(data)
     }
 
-    const deleteComment = commentDOM.querySelector('.delete-comment');
-        deleteComment.onclick = () => {
-        fetch('/delete-comment', options)
-            .then(res => res.json())
-            .then(data => { 
-                console.log(data);
+    fetch('/delete-comment', options)
+        .then(res => res.json())
+        .then(data => { 
+            console.log(data);
 
-                if (!data['success']) {
-                    return;
-                }
+            if (!data['success']) {
+                return;
+            }
 
-                commentDOM.remove();
-            });
+            commentDOM.remove();
+        });
     }
 
     return commentMenu;
 }
 
-function createNonOwnerCommentMenu(commentDOM) {
+function createNonOwnerCommentMenu(commentDOM, commentData) {
     commentMenu = document.createElement('div');
     commentMenu.id = 'comment-menu';
     commentMenu.innerHTML = `<div class="hide-comment option">
@@ -76,7 +76,22 @@ function createNonOwnerCommentMenu(commentDOM) {
 
     const hideComment = commentDOM.querySelector('.hide-comment');
     hideComment.onclick = () => {
-        commentDOM.remove();
+        const data = { comment_id: commentData['comment_id'] };
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }
+
+        fetch('/hide-comment', options)
+            .then(res => res.json())
+            .then(data => {
+                if (!data['success']) {
+                    return;
+                }
+
+                commentDOM.remove();
+            });
     }
 
     return commentMenu;

@@ -142,6 +142,9 @@
                 LEFT JOIN reactions AS user_reactions 
                     ON posts.id = user_reactions.post_id AND user_reactions.user_id = :user_id
                 LEFT JOIN comments ON posts.id = comments.post_id
+                    AND comments.id NOT IN (
+                        SELECT comment_id FROM hidden_comments WHERE user_id = :user_id
+                    )                
                 WHERE users.id = :user_id
                 OR users.id IN (
                         SELECT user_id FROM friends WHERE friend_id = :user_id AND status = "F"
@@ -239,9 +242,12 @@
                     comment_text
                 FROM comments 
                 JOIN users ON comments.user_id = users.id
-                WHERE post_id = :post_id'
+                WHERE post_id = :post_id
+                AND comments.id NOT IN (
+                    SELECT comment_id FROM hidden_comments WHERE user_id = :user_id
+                )'
             );
-            $stmt->execute(['post_id' => $post_id]);
+            $stmt->execute(['user_id' => $_SESSION['user_id'],'post_id' => $post_id]);
             
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -260,6 +266,13 @@
             ]);
 
             return ['changes' => $stmt->rowCount(), 'comment_id' => $this->db->lastInsertID()];
+        }
+
+        public function hide_comment($comment_id) {
+            $stmt = $this->db->prepare('INSERT INTO hidden_comments (user_id, comment_id) VALUES (:user_id, :comment_id)');
+            $stmt->execute(['user_id' => $_SESSION['user_id'], 'comment_id' => $comment_id]);
+            
+            return $stmt->rowCount();
         }
 
         public function delete_comment($comment_id) {

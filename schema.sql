@@ -1,4 +1,5 @@
 DROP DATABASE socialMD;
+
 CREATE DATABASE IF NOT EXISTS socialMD;
 USE socialMD;
 
@@ -63,4 +64,4 @@ CREATE TABLE IF NOT EXISTS hidden_comments (
     UNIQUE (user_id, comment_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE
-)
+);

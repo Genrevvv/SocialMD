@@ -21,7 +21,7 @@ function createPostMenu(postMenuButton, postDOM, postData, owner) {
         tempButton = postMenuButton;
 
         if (!owner) {
-            postMenu = createNonOwnerPostMenu(postDOM)
+            postMenu = createNonOwnerPostMenu(postDOM, postData);
             return;
         }
 
@@ -84,7 +84,7 @@ function createOwnerPostMenu(postDOM, postData) {
         return postMenu;
 }
 
-function createNonOwnerPostMenu(postDOM) {
+function createNonOwnerPostMenu(postDOM, postData) {
     postMenu = document.createElement('div');
     postMenu.id = 'post-menu';
     postMenu.innerHTML = `<div class="hide-post option">
@@ -97,13 +97,31 @@ function createNonOwnerPostMenu(postDOM) {
 
     const hidePost = postMenu.querySelector('.hide-post');
     hidePost.onclick = () => {
-        const commentsUI = document.getElementById('comments-ui');
-        if (commentsUI) {
-            const hidePostEvent = new CustomEvent('hide-post');
-            commentsUI.dispatchEvent(hidePostEvent);
-        }
+        const postID = {
+            post_id: postData['post_id']
+        };
 
-        postDOM.remove();
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postID)
+        };
+
+        fetch('/hide-post', options)
+            .then(res =>  res.json())
+            .then(data => {
+                if (!data['success']) {
+                    return;
+                }
+                
+                const commentsUI = document.getElementById('comments-ui');
+                if (commentsUI) {
+                    const hidePostEvent = new CustomEvent('hide-post');
+                    commentsUI.dispatchEvent(hidePostEvent);
+                }
+                
+                postDOM.remove();
+            });
     }
 
     return postMenu;

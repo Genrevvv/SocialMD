@@ -165,12 +165,25 @@
         echo json_encode(['success' => true]);
     });
 
+    $router->add('/hide-post', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->hide_post($data['post_id']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
     $router->add('/delete-post', function () use ($db) {
         $data = get_json_input();
 
         $result = $db->delete_post($data['post_id']);
         if ($result == 0) {
             echo json_encode(['success' => false]);
+            exit();
         }
 
         echo json_encode(['success' => true]);

@@ -1,3 +1,4 @@
+DROP DATABASE socialMD;
 CREATE DATABASE IF NOT EXISTS socialMD;
 USE socialMD;
 
@@ -25,6 +26,15 @@ CREATE TABLE IF NOT EXISTS posts (
     caption TEXT,
     images LONGTEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS hidden_posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    UNIQUE (user_id, post_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS reactions (

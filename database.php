@@ -148,6 +148,9 @@
                         UNION
                         SELECT friend_id FROM friends WHERE user_id = :user_id AND status = "F"
                     )
+                AND posts.id NOT IN (
+                        SELECT post_id FROM hidden_posts WHERE user_id = :user_id
+                    )
                 GROUP BY posts.id'
             );
             $stmt->execute(['user_id' => $_SESSION['user_id']]);
@@ -179,6 +182,13 @@
                 'post_id' => $post_id
             ]);
 
+            return $stmt->rowCount();
+        }
+
+        public function hide_post($post_id) {
+            $stmt = $this->db->prepare('INSERT INTO hidden_posts (user_id, post_id) VALUES (:user_id, :post_id)');
+            $stmt->execute(['user_id' => $_SESSION['user_id'], 'post_id' => $post_id]);
+            
             return $stmt->rowCount();
         }
 
@@ -325,7 +335,7 @@
             $friend_id = $this->get_user_id($username);
             $friend_id = $friend_id['id'] ?? 0;
 
-            if ($friend_id === 0) {
+            if ($friend_id == 0) {
                 return 0;
             }
 

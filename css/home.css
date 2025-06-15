@@ -26,6 +26,24 @@
     padding: 0.7rem 2rem;
 }
 
+#feed-options {
+    width: calc(60% + 1.5rem);
+    display: flex;
+    justify-content: flex-end;
+}
+
+#unhide-all-posts-button {
+    width: max-content;
+    height: max-content;
+
+    background-color: var(--gray);
+    color: var(--bright);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
 #write-post-container {
     background-color: var(--dark);
     width: 60%;
@@ -93,6 +111,12 @@
         flex-direction: column;
         align-items: center;
         padding: 1rem;
+    }
+
+    #feed-options {
+        width: calc(160% + 1.5rem);
+        display: flex;
+        justify-content: flex-end;
     }
 
     #write-post-container .profile-image {

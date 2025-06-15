@@ -239,22 +239,6 @@ function hideUserHandler(userData, userCard) {
         })
 }
 
-function unhideAllUserHandler(e) {
-    fetch('/unhide-hidden-users')
-        .then(res => res.json())
-        .then(data => {
-            if (!data['success']) {
-                return;
-            }
-
-            // window.location.href = '/friends';
-            findFriendsHandler();
-            e.target.remove();
-
-            hiddenUserCount = 0;
-        });
-}
-
 function createUnhideAllUsersButton() {
     let unhideAllUserButton = findFriends.querySelector('.unhide-all-user-button');
     if (unhideAllUserButton !== null) {
@@ -275,4 +259,20 @@ function createUnhideAllUsersButton() {
     unhideAllUserButton.onclick = (e) => {
         unhideAllUserHandler(e);
     }
+}
+
+function unhideAllUserHandler(e) {
+    fetch('/unhide-hidden-users')
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            // window.location.href = '/friends';
+            findFriendsHandler();
+            e.target.remove();
+
+            hiddenUserCount = 0;
+        });
 }

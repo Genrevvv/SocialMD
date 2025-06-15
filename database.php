@@ -161,6 +161,13 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function get_hidden_posts_count() {
+            $stmt = $this->db->prepare('SELECT COUNT(*) AS count FROM hidden_posts WHERE user_id = :user_id');
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
         public function create_post($caption, $images, $date) {
             $stmt = $this->db->prepare('INSERT INTO posts (user_id, date, caption, images) VALUES (:user_id, :date, :caption, :images)');
             $stmt->execute([
@@ -191,6 +198,13 @@
         public function hide_post($post_id) {
             $stmt = $this->db->prepare('INSERT INTO hidden_posts (user_id, post_id) VALUES (:user_id, :post_id)');
             $stmt->execute(['user_id' => $_SESSION['user_id'], 'post_id' => $post_id]);
+            
+            return $stmt->rowCount();
+        }
+
+        public function unhide_hidden_posts() {
+            $stmt = $this->db->prepare('DELETE FROM hidden_posts WHERE user_id = :user_id');
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
             
             return $stmt->rowCount();
         }

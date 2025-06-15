@@ -25,21 +25,72 @@ function loadUser() {
 }
 
 function loadFeed() {
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
+
     fetch('/load-feed')
         .then(res => res.json())
         .then(data => {
-            if (data['result'].length === 0) {
+            if (data['posts'].length === 0) {
                 console.log('There are currently no posts.');
                 return;
             }
-            
-            const feed = document.getElementById('feed');
 
-            for (let postData of data['result']) {
+            if (data['hidden_posts'] !== 0) {
+                createUnhideAllpostsButton();
+            }
+
+            for (let postData of data['posts']) {
                 displayPost(feed, postData, postData['profile_image']);
             }
         });
 }
 
+
+let unhideAllPostsButton = null;
+let hiddenPostsCount = 0;
+function createUnhideAllpostsButton() {
+    let unhideAllPostsButton = document.getElementById('unhide-all-posts-button');
+    if (unhideAllPostsButton !== null) {
+        unhideAllPostsButton.remove();
+    }
+
+    const text = hiddenPostsCount === 1
+                ? 'Unhide hidden post'
+                : 'Unhide hidden posts';
+    
+    unhideAllPostsButton = document.createElement('div');
+    unhideAllPostsButton.id = 'unhide-all-posts-button';
+    unhideAllPostsButton.innerHTML = text;
+
+    const feedOptions = document.getElementById('feed-options');
+    feedOptions.appendChild(unhideAllPostsButton);
+
+    unhideAllPostsButton.onclick = (e) => {
+        unhideAllPostsHandler(e);
+        console.log('hiiiii');
+    }
+}
+
+function unhideAllPostsHandler(e) {
+    fetch('/unhide-hidden-posts')
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            // window.location.href = '/friends';
+            loadFeed();
+            e.target.remove();
+
+            hiddenPostsCount = 0;
+        });
+}
+
+document.addEventListener('hide-post', (e) => {
+    hiddenPostsCount++;
+    createUnhideAllpostsButton();
+});
 
 export { loadUser };

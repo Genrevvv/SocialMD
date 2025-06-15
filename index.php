@@ -119,8 +119,9 @@
 
     // Content Management
     $router->add('/load-feed', function () use ($db) {
-        $result = $db->get_feed();
-        echo json_encode(['result' => $result]);
+        $posts = $db->get_feed();
+        $hidden_posts = $db->get_hidden_posts_count();
+        echo json_encode(['posts' => $posts, 'hidden_posts' => $hidden_posts['count']]);
     });
 
     $router->add('/create-post', function () use ($db) {
@@ -157,6 +158,16 @@
         $data = get_json_input();
 
         $result = $db->update_post($data['post_id'], $data['caption'], $data['images']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
+    $router->add('/unhide-hidden-posts', function () use ($db) {
+        $result = $db->unhide_hidden_posts();
         if ($result == 0) {
             echo json_encode(['success' => false]);
             exit();

@@ -114,11 +114,13 @@ function createNonOwnerPostMenu(postDOM, postData) {
                     return;
                 }
                 
+                const hidePostEvent = new CustomEvent('hide-post');
                 const commentsUI = document.getElementById('comments-ui');
                 if (commentsUI) {
-                    const hidePostEvent = new CustomEvent('hide-post');
                     commentsUI.dispatchEvent(hidePostEvent);
                 }
+                
+                document.dispatchEvent(hidePostEvent);
                 
                 postDOM.remove();
             });

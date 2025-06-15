@@ -28,7 +28,7 @@ A social media web app that allows users to use markdown syntax on posts.
       - Delete a comment ✅
       - Edit a comment (tentative)
       - React to comments (tentative)
-5. Responsive Design
+5. Responsive Design ✅
 
 ### Requirements:
 1. PHP

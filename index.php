@@ -215,8 +215,10 @@
     $router->add('/load-comments', function () use ($db) {
         $data = get_json_input();
 
-        $result = $db->get_comments($data['post_id']);
-        echo json_encode(['result' => $result]);
+        $comments = $db->get_comments($data['post_id']);
+        $hidden_comments = $db->get_hidden_comments_count($data['post_id']);
+
+        echo json_encode(['comments' => $comments, 'hidden_comments' => $hidden_comments['count']]);
     });
 
     $router->add('/create-comment', function () use ($db) {
@@ -239,6 +241,18 @@
         $data = get_json_input();
 
         $result = $db->hide_comment($data['comment_id']);
+        if ($result == 0) {
+            echo json_encode(['success' => false]);
+            exit();
+        }
+
+        echo json_encode(['success' => true]);
+    });
+
+    $router->add('/unhide-hidden-comments', function () use ($db) {
+        $data = get_json_input();
+
+        $result = $db->unhide_hidden_comments($data['post_id']);
         if ($result == 0) {
             echo json_encode(['success' => false]);
             exit();

@@ -266,6 +266,20 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function get_hidden_comments_count($post_id) {
+            $stmt = $this->db->prepare('
+                SELECT COUNT(*) AS count 
+                FROM hidden_comments 
+                WHERE user_id = :user_id
+                AND comment_id IN (
+                    SELECT id FROM comments WHERE post_id = :post_id
+                )'
+            );
+            $stmt->execute(['user_id' => $_SESSION['user_id'], 'post_id' => $post_id]);
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
         public function create_comment($post_id, $date, $comment_text) {
             $stmt = $this->db->prepare('
                 INSERT INTO comments (user_id, post_id, date, comment_text)
@@ -285,6 +299,19 @@
         public function hide_comment($comment_id) {
             $stmt = $this->db->prepare('INSERT INTO hidden_comments (user_id, comment_id) VALUES (:user_id, :comment_id)');
             $stmt->execute(['user_id' => $_SESSION['user_id'], 'comment_id' => $comment_id]);
+            
+            return $stmt->rowCount();
+        }
+
+        public function unhide_hidden_comments($post_id) {
+            $stmt = $this->db->prepare('
+                DELETE FROM hidden_comments 
+                WHERE user_id = :user_id
+                AND comment_id IN (
+                    SELECT id FROM comments WHERE post_id = :post_id
+                )'
+            );
+            $stmt->execute(['user_id' => $_SESSION['user_id'], 'post_id' => $post_id]);
             
             return $stmt->rowCount();
         }

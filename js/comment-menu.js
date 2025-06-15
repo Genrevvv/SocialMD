@@ -90,6 +90,9 @@ function createNonOwnerCommentMenu(commentDOM, commentData) {
                     return;
                 }
 
+                const hideCommentEvent = new CustomEvent('hide-comment');
+                document.dispatchEvent(hideCommentEvent);
+
                 commentDOM.remove();
             });
     }

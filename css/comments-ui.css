@@ -176,6 +176,25 @@
     overflow-wrap: break-word;
 }
 
+#comment-options {
+    width: calc(100% - 0.3rem * 2);
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.3rem;
+}
+
+#unhide-all-comments-button {
+        width: max-content;
+    height: max-content;
+
+    background-color: var(--gray);
+    color: var(--bright);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
 .comment {
     position: relative;
 }

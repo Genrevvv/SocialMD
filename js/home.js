@@ -68,7 +68,6 @@ function createUnhideAllpostsButton() {
 
     unhideAllPostsButton.onclick = (e) => {
         unhideAllPostsHandler(e);
-        console.log('hiiiii');
     }
 }
 
@@ -80,7 +79,6 @@ function unhideAllPostsHandler(e) {
                 return;
             }
 
-            // window.location.href = '/friends';
             loadFeed();
             e.target.remove();
 

@@ -5,7 +5,7 @@ import { recreatePostMenu } from "./edit-post.js";
 
 let commentsUI = null;
 
-function displayComments(postData, postDOM) {
+function displayComments(postData, postDOM) { 
     if (commentsUI !== null) {
         return;
     }
@@ -19,6 +19,7 @@ function displayComments(postData, postDOM) {
                             <div class="content">
                                 <div class="post-content">
                                 </div>
+                                <div id="comment-options"></div>
                                 <div class="comments-container">
                                 </div>
                             </div>
@@ -94,7 +95,15 @@ function displayComments(postData, postDOM) {
 }
 
 function loadComments(commentsUI, postData) {
+    hiddenCommentsCount = 0; // Reset hidden comments count
+
+    document.addEventListener('hide-comment', (e) => {
+        hiddenCommentsCount++;
+        createUnhideAllCommentsButton(postData);
+    });
+
     const commentsContainer = commentsUI.querySelector('.comments-container');
+    commentsContainer.innerHTML = '';
 
     const data = { 'post_id': postData['post_id'] }
     const options = {
@@ -107,9 +116,18 @@ function loadComments(commentsUI, postData) {
     fetch('/load-comments', options)
         .then(res => res.json())
         .then(data => {
-            console.log(data['result']);
+            console.log(data);
+            if (data['comments'].length === 0) {
+                console.log('This post have no comment');
+                return;
+            }
 
-            for (let commentData of data['result']) {
+            if (data['hidden_comments'] !== 0) {
+                hiddenCommentsCount = data['hidden_comments'];
+                createUnhideAllCommentsButton(postData);
+            }
+
+            for (let commentData of data['comments']) {
                 console.log(commentData);
                 displayComment(commentsContainer, commentData);  
             }
@@ -172,6 +190,53 @@ function displayComment(commentsContainer, commentData) {
 
     const commentProfileImage = commentDOM.querySelector('.user-image.profile-image');
     commentProfileImage.style.backgroundImage = `url(${commentData['profile_image']})`;
+}
+
+let unhideAllCommentsButton = null;
+let hiddenCommentsCount = 0;
+function createUnhideAllCommentsButton(postData) {
+    let unhideAllCommentsButton = document.getElementById('unhide-all-comments-button');
+    if (unhideAllCommentsButton !== null) {
+        unhideAllCommentsButton.remove();
+    }
+
+    const text = hiddenCommentsCount === 1
+                ? 'Unhide hidden comment'
+                : 'Unhide hidden comments';
+    
+    unhideAllCommentsButton = document.createElement('div');
+    unhideAllCommentsButton.id = 'unhide-all-comments-button';
+    unhideAllCommentsButton.innerHTML = text;
+
+    const commentOptions = document.getElementById('comment-options');
+    commentOptions.appendChild(unhideAllCommentsButton);
+
+    unhideAllCommentsButton.onclick = (e) => {
+        unhideAllCommentsHandler(e, postData);
+    }
+}
+
+function unhideAllCommentsHandler(e, postData) {
+    const data = { post_id: postData['post_id'] };
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }
+    
+    fetch('/unhide-hidden-comments', options)
+        .then(res => res.json())
+        .then(data => {
+            if (!data['success']) {
+                return;
+            }
+
+            loadComments(commentsUI, postData);
+
+            e.target.remove();
+
+            hiddenCommentsCount = 0;
+        });
 }
 
 export { displayComments };

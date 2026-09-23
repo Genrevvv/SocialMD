@@ -36,7 +36,7 @@ A social media web app that allows users to use markdown syntax on posts.
 1. PHP
 2. MySQL
 
-### Setup
+### Setup:
 1. Create a MySQL database named `socialMD`.
 2. Import the schema SQL file.
 3. Configure DB credentials in `config.php`.
